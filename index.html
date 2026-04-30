@@ -1,0 +1,890 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Gautam Singh — Data & ML Engineer</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg:          #080c14;
+      --surface:     #0d1525;
+      --surface-2:   #111d30;
+      --border:      #1e2d45;
+      --text:        #e2e8f0;
+      --muted:       #64748b;
+      --accent:      #0ea5e9;
+      --accent-dim:  rgba(14,165,233,0.1);
+      --purple:      #8b5cf6;
+      --green:       #10b981;
+      --gradient:    linear-gradient(135deg, #0ea5e9 0%, #8b5cf6 100%);
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Inter', system-ui, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+
+    a { color: var(--accent); text-decoration: none; transition: opacity 0.2s; }
+    a:hover { opacity: 0.75; }
+
+    .container { max-width: 1100px; margin: 0 auto; padding: 0 28px; }
+
+    section { padding: 110px 0; }
+
+    .section-label {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 12px;
+      color: var(--accent);
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      margin-bottom: 12px;
+    }
+
+    .section-title {
+      font-size: clamp(28px, 5vw, 44px);
+      font-weight: 800;
+      margin-bottom: 56px;
+      line-height: 1.15;
+    }
+
+    /* ── Navbar ── */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      padding: 18px 0;
+      transition: background 0.3s, border-color 0.3s;
+    }
+
+    nav.scrolled {
+      background: rgba(8, 12, 20, 0.88);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border-bottom: 1px solid var(--border);
+    }
+
+    nav .container { display: flex; align-items: center; justify-content: space-between; }
+
+    .nav-logo {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 22px;
+      font-weight: 500;
+      background: var(--gradient);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .nav-links { display: flex; gap: 36px; list-style: none; }
+
+    .nav-links a {
+      color: var(--muted);
+      font-size: 14px;
+      font-weight: 500;
+      transition: color 0.2s;
+    }
+    .nav-links a:hover { color: var(--text); opacity: 1; }
+
+    /* ── Hero ── */
+    #hero {
+      position: relative;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      overflow: hidden;
+      padding: 0;
+    }
+
+    #hero-canvas {
+      position: absolute;
+      inset: 0;
+      opacity: 0.45;
+    }
+
+    /* Ambient glow orbs */
+    #hero::before, #hero::after {
+      content: '';
+      position: absolute;
+      border-radius: 50%;
+      filter: blur(120px);
+      pointer-events: none;
+    }
+    #hero::before {
+      width: 600px; height: 600px;
+      background: rgba(14, 165, 233, 0.08);
+      top: -100px; left: -100px;
+    }
+    #hero::after {
+      width: 400px; height: 400px;
+      background: rgba(139, 92, 246, 0.07);
+      bottom: 0; right: 0;
+    }
+
+    .hero-content { position: relative; z-index: 1; }
+
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      background: var(--accent-dim);
+      border: 1px solid rgba(14,165,233,0.25);
+      border-radius: 100px;
+      padding: 7px 18px;
+      font-size: 13px;
+      color: var(--accent);
+      margin-bottom: 28px;
+      font-family: 'JetBrains Mono', monospace;
+    }
+
+    .hero-badge .dot {
+      width: 8px; height: 8px;
+      background: var(--green);
+      border-radius: 50%;
+      box-shadow: 0 0 8px var(--green);
+      animation: pulse 2s ease-in-out infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50%       { opacity: 0.5; transform: scale(0.8); }
+    }
+
+    .hero-name {
+      font-size: clamp(50px, 9vw, 92px);
+      font-weight: 800;
+      letter-spacing: -3px;
+      background: linear-gradient(135deg, #f1f5f9 20%, #94a3b8 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      margin-bottom: 18px;
+      line-height: 1.0;
+    }
+
+    .hero-role {
+      font-size: clamp(20px, 3vw, 30px);
+      font-weight: 500;
+      color: var(--muted);
+      margin-bottom: 24px;
+      min-height: 44px;
+    }
+
+    #typed-text {
+      color: var(--accent);
+      border-right: 2px solid var(--accent);
+      padding-right: 3px;
+      animation: blink 0.75s step-end infinite;
+    }
+
+    @keyframes blink {
+      0%, 100% { border-color: var(--accent); }
+      50%       { border-color: transparent; }
+    }
+
+    .hero-desc {
+      font-size: 17px;
+      color: var(--muted);
+      max-width: 540px;
+      margin-bottom: 44px;
+      line-height: 1.75;
+    }
+
+    .hero-desc strong { color: var(--text); font-weight: 600; }
+
+    .hero-btns { display: flex; gap: 14px; flex-wrap: wrap; }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 13px 28px;
+      border-radius: 9px;
+      font-size: 15px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s;
+      border: none;
+      font-family: 'Inter', sans-serif;
+    }
+
+    .btn-primary {
+      background: var(--accent);
+      color: #000;
+    }
+    .btn-primary:hover {
+      background: #38bdf8;
+      opacity: 1;
+      transform: translateY(-2px);
+      box-shadow: 0 10px 28px rgba(14,165,233,0.35);
+    }
+
+    .btn-outline {
+      background: transparent;
+      color: var(--text);
+      border: 1px solid var(--border);
+    }
+    .btn-outline:hover {
+      border-color: var(--accent);
+      color: var(--accent);
+      opacity: 1;
+      transform: translateY(-2px);
+    }
+
+    .scroll-cue {
+      position: absolute;
+      bottom: 40px;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
+      color: var(--muted);
+      font-size: 11px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      font-family: 'JetBrains Mono', monospace;
+      animation: bob 2.5s ease-in-out infinite;
+    }
+
+    .scroll-cue::after {
+      content: '';
+      width: 1px; height: 48px;
+      background: linear-gradient(to bottom, var(--muted), transparent);
+    }
+
+    @keyframes bob {
+      0%, 100% { transform: translateX(-50%) translateY(0); }
+      50%       { transform: translateX(-50%) translateY(10px); }
+    }
+
+    /* ── About ── */
+    #about .about-grid {
+      display: grid;
+      grid-template-columns: 1.1fr 0.9fr;
+      gap: 72px;
+      align-items: start;
+    }
+
+    .about-text p {
+      color: var(--muted);
+      font-size: 16px;
+      line-height: 1.85;
+      margin-bottom: 18px;
+    }
+    .about-text p:last-child { margin-bottom: 0; }
+    .about-text strong { color: var(--text); font-weight: 600; }
+
+    .skill-groups { display: flex; flex-direction: column; gap: 26px; }
+
+    .skill-group h4 {
+      font-size: 11px;
+      font-family: 'JetBrains Mono', monospace;
+      letter-spacing: 2.5px;
+      color: var(--accent);
+      text-transform: uppercase;
+      margin-bottom: 10px;
+    }
+
+    .tag-row { display: flex; flex-wrap: wrap; gap: 8px; }
+
+    .tag {
+      padding: 5px 13px;
+      border-radius: 6px;
+      font-size: 13px;
+      font-weight: 500;
+      background: var(--surface-2);
+      border: 1px solid var(--border);
+      color: var(--text);
+      transition: all 0.2s;
+      cursor: default;
+    }
+    .tag:hover { border-color: var(--accent); color: var(--accent); }
+
+    /* ── Projects ── */
+    #projects { background: var(--surface); }
+
+    .projects-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(460px, 1fr));
+      gap: 24px;
+    }
+
+    .project-card {
+      background: var(--surface-2);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 34px;
+      transition: all 0.3s ease;
+      position: relative;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .project-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 2px;
+      background: var(--gradient);
+      opacity: 0;
+      transition: opacity 0.3s;
+    }
+
+    .project-card:hover {
+      border-color: rgba(14,165,233,0.35);
+      transform: translateY(-5px);
+      box-shadow: 0 24px 48px rgba(0,0,0,0.5), 0 0 0 1px rgba(14,165,233,0.1);
+    }
+    .project-card:hover::before { opacity: 1; }
+
+    .project-header {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      margin-bottom: 20px;
+    }
+
+    .project-icon {
+      width: 46px; height: 46px;
+      border-radius: 12px;
+      background: var(--accent-dim);
+      border: 1px solid rgba(14,165,233,0.2);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 22px;
+    }
+
+    .project-links { display: flex; gap: 14px; }
+
+    .project-links a {
+      color: var(--muted);
+      font-size: 13px;
+      font-weight: 500;
+      transition: color 0.2s;
+    }
+    .project-links a:hover { color: var(--accent); opacity: 1; }
+
+    .project-title {
+      font-size: 21px;
+      font-weight: 700;
+      margin-bottom: 10px;
+      color: var(--text);
+    }
+
+    .project-desc {
+      color: var(--muted);
+      font-size: 14px;
+      line-height: 1.75;
+      margin-bottom: 24px;
+      flex: 1;
+    }
+
+    .project-tags { display: flex; flex-wrap: wrap; gap: 8px; }
+
+    .ptag {
+      padding: 4px 11px;
+      border-radius: 5px;
+      font-size: 12px;
+      font-family: 'JetBrains Mono', monospace;
+      background: var(--accent-dim);
+      color: var(--accent);
+      border: 1px solid rgba(14,165,233,0.18);
+    }
+
+    /* ── Experience ── */
+    .timeline {
+      position: relative;
+      padding-left: 36px;
+    }
+
+    .timeline::before {
+      content: '';
+      position: absolute;
+      left: 5px; top: 8px; bottom: 0;
+      width: 1px;
+      background: linear-gradient(to bottom, var(--accent), var(--purple) 60%, transparent);
+    }
+
+    .tl-item {
+      position: relative;
+      margin-bottom: 52px;
+    }
+    .tl-item:last-child { margin-bottom: 0; }
+
+    .tl-dot {
+      position: absolute;
+      left: -42px;
+      top: 5px;
+      width: 12px; height: 12px;
+      border-radius: 50%;
+      background: var(--accent);
+      box-shadow: 0 0 14px rgba(14,165,233,0.7);
+      border: 2px solid var(--bg);
+    }
+
+    .tl-date {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 12px;
+      color: var(--accent);
+      letter-spacing: 1px;
+      margin-bottom: 6px;
+    }
+
+    .tl-role {
+      font-size: 19px;
+      font-weight: 700;
+      margin-bottom: 4px;
+    }
+
+    .tl-company {
+      font-size: 14px;
+      color: var(--muted);
+      margin-bottom: 14px;
+    }
+
+    .tl-bullets { list-style: none; }
+
+    .tl-bullets li {
+      font-size: 14px;
+      color: var(--muted);
+      padding: 4px 0 4px 18px;
+      position: relative;
+      line-height: 1.65;
+    }
+
+    .tl-bullets li::before {
+      content: '▸';
+      position: absolute;
+      left: 0;
+      color: var(--accent);
+      font-size: 12px;
+      top: 6px;
+    }
+
+    /* ── Education ── */
+    .edu-wrap { margin-top: 72px; }
+
+    .edu-card {
+      background: var(--surface-2);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 28px 32px;
+      display: flex;
+      gap: 20px;
+      align-items: center;
+      margin-top: 24px;
+      transition: border-color 0.2s;
+    }
+    .edu-card:hover { border-color: rgba(139,92,246,0.4); }
+
+    .edu-icon {
+      width: 50px; height: 50px;
+      border-radius: 12px;
+      background: rgba(139,92,246,0.1);
+      border: 1px solid rgba(139,92,246,0.2);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 24px;
+      flex-shrink: 0;
+    }
+
+    .edu-degree { font-size: 17px; font-weight: 700; margin-bottom: 4px; }
+    .edu-school { font-size: 15px; color: var(--accent); margin-bottom: 4px; }
+    .edu-date   { font-size: 12px; color: var(--muted); font-family: 'JetBrains Mono', monospace; }
+
+    /* ── Contact ── */
+    #contact { background: var(--surface); text-align: center; }
+
+    .contact-desc {
+      color: var(--muted);
+      font-size: 17px;
+      max-width: 500px;
+      margin: -24px auto 44px;
+      line-height: 1.75;
+    }
+
+    .contact-btns { display: flex; justify-content: center; gap: 16px; flex-wrap: wrap; }
+
+    /* ── Footer ── */
+    footer {
+      text-align: center;
+      padding: 28px;
+      color: var(--muted);
+      font-size: 13px;
+      border-top: 1px solid var(--border);
+      font-family: 'JetBrains Mono', monospace;
+    }
+
+    /* ── Scroll-reveal ── */
+    .reveal {
+      opacity: 0;
+      transform: translateY(28px);
+      transition: opacity 0.65s ease, transform 0.65s ease;
+    }
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .reveal-left {
+      opacity: 0;
+      transform: translateX(-28px);
+      transition: opacity 0.65s ease, transform 0.65s ease;
+    }
+    .reveal-left.visible {
+      opacity: 1;
+      transform: translateX(0);
+    }
+
+    /* stagger children */
+    .stagger > * { transition-delay: calc(var(--i, 0) * 90ms); }
+
+    /* ── Responsive ── */
+    @media (max-width: 800px) {
+      #about .about-grid { grid-template-columns: 1fr; gap: 48px; }
+      .projects-grid { grid-template-columns: 1fr; }
+      .nav-links { display: none; }
+      .hero-btns { flex-direction: column; }
+      .btn { width: 100%; justify-content: center; }
+      section { padding: 80px 0; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ── Navigation ── -->
+<nav id="navbar">
+  <div class="container">
+    <span class="nav-logo">gs.</span>
+    <ul class="nav-links">
+      <li><a href="#about">About</a></li>
+      <li><a href="#projects">Projects</a></li>
+      <li><a href="#experience">Experience</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+  </div>
+</nav>
+
+<!-- ── Hero ── -->
+<section id="hero">
+  <canvas id="hero-canvas"></canvas>
+  <div class="container">
+    <div class="hero-content">
+      <div class="hero-badge">
+        <span class="dot"></span>
+        Guelph, Ontario, Canada
+      </div>
+      <h1 class="hero-name">Gautam Singh</h1>
+      <div class="hero-role"><span id="typed-text"></span></div>
+      <p class="hero-desc">
+        CS graduate building <strong>data pipelines</strong> and <strong>machine learning systems</strong>
+        for financial markets. I turn raw market data into scalable, production-ready applications.
+      </p>
+      <div class="hero-btns">
+        <a href="#projects" class="btn btn-primary">View My Work ↓</a>
+        <a href="https://github.com/Gautamstar" target="_blank" class="btn btn-outline">GitHub ↗</a>
+        <a href="YOUR_LINKEDIN_URL" target="_blank" class="btn btn-outline">LinkedIn ↗</a>
+      </div>
+    </div>
+  </div>
+  <div class="scroll-cue">scroll</div>
+</section>
+
+<!-- ── About ── -->
+<section id="about">
+  <div class="container">
+    <p class="section-label">About</p>
+    <h2 class="section-title reveal">Who I Am</h2>
+    <div class="about-grid">
+      <div class="about-text reveal">
+        <p>
+          I'm a <strong>Computer Science graduate from Conestoga College</strong> focused on building
+          data-driven systems and machine learning applications. I work at the intersection of
+          engineering and finance — processing real market data and turning it into meaningful,
+          production-grade insights.
+        </p>
+        <p>
+          At <strong>The Almanac</strong>, I built the LSTM-based forecasting engine — engineering
+          features from raw price and volume history into behavior-focused signals, tuning
+          hyperparameters with walk-forward validation, and integrating predictions directly into
+          the REST API and mobile app.
+        </p>
+        <p>
+          At <strong>PAMT Consulting</strong> (now part of Ateko, a Bell Canada entity), I tested
+          and validated enterprise ServiceNow applications, developed test cases for workflows and
+          API integrations, and delivered on client projects across multi-functional teams.
+        </p>
+      </div>
+      <div class="skill-groups reveal stagger">
+        <div class="skill-group" style="--i:0">
+          <h4>Languages</h4>
+          <div class="tag-row">
+            <span class="tag">Python</span>
+            <span class="tag">SQL</span>
+            <span class="tag">C++</span>
+            <span class="tag">C#</span>
+            <span class="tag">JavaScript</span>
+          </div>
+        </div>
+        <div class="skill-group" style="--i:1">
+          <h4>Data Engineering</h4>
+          <div class="tag-row">
+            <span class="tag">dbt</span>
+            <span class="tag">Prefect</span>
+            <span class="tag">PostgreSQL</span>
+            <span class="tag">SQL Server</span>
+            <span class="tag">Pandas</span>
+            <span class="tag">Azure Data Factory</span>
+            <span class="tag">Databricks</span>
+          </div>
+        </div>
+        <div class="skill-group" style="--i:2">
+          <h4>ML / AI</h4>
+          <div class="tag-row">
+            <span class="tag">PyTorch</span>
+            <span class="tag">TensorFlow</span>
+            <span class="tag">LSTM</span>
+            <span class="tag">FinBERT</span>
+            <span class="tag">Scikit-learn</span>
+          </div>
+        </div>
+        <div class="skill-group" style="--i:3">
+          <h4>Cloud & Tools</h4>
+          <div class="tag-row">
+            <span class="tag">AWS EC2</span>
+            <span class="tag">Azure</span>
+            <span class="tag">Docker</span>
+            <span class="tag">Git</span>
+            <span class="tag">Django REST</span>
+            <span class="tag">ServiceNow</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── Projects ── -->
+<section id="projects">
+  <div class="container">
+    <p class="section-label">Projects</p>
+    <h2 class="section-title reveal">What I've Built</h2>
+    <div class="projects-grid">
+
+      <div class="project-card reveal">
+        <div class="project-header">
+          <div class="project-icon">📈</div>
+          <div class="project-links">
+            <a href="https://github.com/Gautamstar/market-data-pipeline" target="_blank">GitHub ↗</a>
+          </div>
+        </div>
+        <h3 class="project-title">Market Data Pipeline</h3>
+        <p class="project-desc">
+          End-to-end equity data pipeline ingesting daily OHLCV data for S&P 500 stocks and sector
+          ETFs via yfinance. dbt models compute SMA 20/50/200, Bollinger Bands, RSI 14, and rolling
+          returns (1d → 1y) directly in PostgreSQL. Prefect orchestrates daily runs after market
+          close. Live Streamlit dashboard with candlestick charts and a momentum screener.
+        </p>
+        <div class="project-tags">
+          <span class="ptag">Python</span>
+          <span class="ptag">PostgreSQL</span>
+          <span class="ptag">dbt</span>
+          <span class="ptag">Prefect</span>
+          <span class="ptag">Streamlit</span>
+          <span class="ptag">yfinance</span>
+        </div>
+      </div>
+
+      <div class="project-card reveal">
+        <div class="project-header">
+          <div class="project-icon">🤖</div>
+          <div class="project-links">
+            <a href="https://almanac.services" target="_blank">Live ↗</a>
+          </div>
+        </div>
+        <h3 class="project-title">The Almanac</h3>
+        <p class="project-desc">
+          AI-powered stock market analytics platform built as a capstone at Conestoga College.
+          Led the LSTM forecasting engine — transforming raw price and volume history into
+          behavior-focused features, tuning hyperparameters with walk-forward validation, and
+          integrating weekly return predictions into the Django REST API. Includes real-time market
+          data, FinBERT sentiment analysis, and portfolio tracking across web and mobile.
+        </p>
+        <div class="project-tags">
+          <span class="ptag">PyTorch</span>
+          <span class="ptag">LSTM</span>
+          <span class="ptag">Django REST</span>
+          <span class="ptag">Azure</span>
+          <span class="ptag">Databricks</span>
+          <span class="ptag">FinBERT</span>
+          <span class="ptag">Flutter</span>
+          <span class="ptag">AWS EC2</span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ── Experience ── -->
+<section id="experience">
+  <div class="container">
+    <p class="section-label">Experience</p>
+    <h2 class="section-title reveal">Where I've Worked</h2>
+    <div class="timeline">
+
+      <div class="tl-item reveal">
+        <div class="tl-dot"></div>
+        <p class="tl-date">SEP 2025 — DEC 2025</p>
+        <h3 class="tl-role">Data & Quality Control Analyst</h3>
+        <p class="tl-company">PAMT Consulting (Ateko · Bell Canada Entity) &mdash; Remote, Waterloo ON</p>
+        <ul class="tl-bullets">
+          <li>Tested and validated enterprise applications on the ServiceNow platform, ensuring functionality, performance, and reliability across releases</li>
+          <li>Developed and executed test cases for workflows, integrations, and APIs, improving release quality and reducing regression defects</li>
+          <li>Debugged issues and verified fixes across multiple environments; maintained structured update sets following platform best practices</li>
+          <li>Delivered client projects in collaboration with multi-functional teams</li>
+        </ul>
+      </div>
+
+      <div class="tl-item reveal">
+        <div class="tl-dot"></div>
+        <p class="tl-date">SEP 2024 — DEC 2024</p>
+        <h3 class="tl-role">Data Analyst & Quality Control</h3>
+        <p class="tl-company">PAMT Consulting &mdash; Remote, Kitchener ON</p>
+        <ul class="tl-bullets">
+          <li>Supported integration and QA of enterprise ServiceNow solutions for client deployments</li>
+          <li>Tested and validated platform configurations, scripted workflows, and API integrations for functionality and scalability</li>
+          <li>Deployed ServiceNow best practices and maintained structured update sets for clean release processes</li>
+        </ul>
+      </div>
+
+    </div>
+
+    <div class="edu-wrap">
+      <p class="section-label">Education</p>
+      <div class="edu-card reveal">
+        <div class="edu-icon">🎓</div>
+        <div>
+          <p class="edu-degree">Bachelor of Computer Science (Honors)</p>
+          <p class="edu-school">Conestoga College</p>
+          <p class="edu-date">SEP 2021 — SEP 2025</p>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ── Contact ── -->
+<section id="contact">
+  <div class="container">
+    <p class="section-label">Contact</p>
+    <h2 class="section-title reveal">Let's Connect</h2>
+    <p class="contact-desc reveal">
+      I'm actively looking for data engineering and data science roles in finance.
+      If you have an opportunity or just want to talk data, I'd love to hear from you.
+    </p>
+    <div class="contact-btns reveal">
+      <a href="mailto:gautamsingh2189@gmail.com" class="btn btn-primary">Send an Email ↗</a>
+      <a href="https://github.com/Gautamstar" target="_blank" class="btn btn-outline">GitHub ↗</a>
+      <a href="YOUR_LINKEDIN_URL" target="_blank" class="btn btn-outline">LinkedIn ↗</a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <p>© <span id="year"></span> Gautam Singh</p>
+</footer>
+
+<script>
+  // ── Navbar ──
+  const navbar = document.getElementById('navbar');
+  addEventListener('scroll', () => navbar.classList.toggle('scrolled', scrollY > 40));
+
+  // ── Typing animation ──
+  const roles  = ['Data Engineer', 'ML Engineer', 'Python Developer', 'Finance Tech Builder'];
+  const el     = document.getElementById('typed-text');
+  let ri = 0, ci = 0, del = false;
+
+  (function tick() {
+    const word = roles[ri];
+    el.textContent = del ? word.slice(0, --ci) : word.slice(0, ++ci);
+    let wait = del ? 45 : 95;
+    if (!del && ci === word.length)        { wait = 1900; del = true; }
+    else if (del && ci === 0)              { del = false; ri = (ri + 1) % roles.length; wait = 320; }
+    setTimeout(tick, wait);
+  })();
+
+  // ── Canvas particle network ──
+  const canvas = document.getElementById('hero-canvas');
+  const ctx    = canvas.getContext('2d');
+
+  function resize() {
+    canvas.width  = innerWidth;
+    canvas.height = innerHeight;
+  }
+  resize();
+  addEventListener('resize', resize);
+
+  const pts = Array.from({ length: 65 }, () => ({
+    x: Math.random() * innerWidth,
+    y: Math.random() * innerHeight,
+    vx: (Math.random() - 0.5) * 0.38,
+    vy: (Math.random() - 0.5) * 0.38,
+    r: Math.random() * 1.8 + 0.8,
+  }));
+
+  (function frame() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    for (const p of pts) {
+      p.x += p.vx; p.y += p.vy;
+      if (p.x < 0 || p.x > canvas.width)  p.vx *= -1;
+      if (p.y < 0 || p.y > canvas.height) p.vy *= -1;
+      ctx.beginPath();
+      ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+      ctx.fillStyle = 'rgba(14,165,233,0.8)';
+      ctx.fill();
+    }
+    for (let i = 0; i < pts.length; i++) {
+      for (let j = i + 1; j < pts.length; j++) {
+        const dx = pts[i].x - pts[j].x;
+        const dy = pts[i].y - pts[j].y;
+        const d  = Math.sqrt(dx * dx + dy * dy);
+        if (d < 130) {
+          ctx.beginPath();
+          ctx.moveTo(pts[i].x, pts[i].y);
+          ctx.lineTo(pts[j].x, pts[j].y);
+          ctx.strokeStyle = `rgba(14,165,233,${0.18 * (1 - d / 130)})`;
+          ctx.lineWidth = 0.6;
+          ctx.stroke();
+        }
+      }
+    }
+    requestAnimationFrame(frame);
+  })();
+
+  // ── Scroll reveal ──
+  const io = new IntersectionObserver(
+    entries => entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); }),
+    { threshold: 0.12 }
+  );
+  document.querySelectorAll('.reveal, .reveal-left').forEach(el => io.observe(el));
+
+  // ── Footer year ──
+  document.getElementById('year').textContent = new Date().getFullYear();
+</script>
+</body>
+</html>
