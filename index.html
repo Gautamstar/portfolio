@@ -590,8 +590,8 @@
       <h1 class="hero-name">Gautam Singh</h1>
       <div class="hero-role"><span id="typed-text"></span></div>
       <p class="hero-desc">
-        CS grad building <strong>data pipelines</strong> and <strong>ML systems</strong>
-        for financial markets.
+        CS grad and full-stack engineer building <strong>data pipelines</strong>,
+        <strong>ML systems</strong>, and <strong>backend APIs</strong> for financial markets.
       </p>
       <div class="hero-btns">
         <a href="#projects" class="btn btn-primary">View My Work ↓</a>
@@ -611,19 +611,20 @@
     <div class="about-grid">
       <div class="about-text reveal">
         <p>
-          <strong>Computer Science grad from Conestoga College</strong>, focused on data engineering
-          and ML in the finance space. Most of my work is about taking raw market data and building
-          reliable systems around it.
+          <strong>Computer Science grad from Conestoga College</strong> and full-stack engineer who
+          ships production systems end to end, from backend REST APIs and web frontends to
+          cross-platform mobile clients. Most of my work lives in the finance space: taking raw
+          market data and building reliable pipelines and ML around it.
         </p>
         <p>
-          At <strong>The Almanac</strong>, built the LSTM forecasting engine. Took raw price and
-          volume history through feature engineering and walk forward validation, then wired the
-          predictions into the REST API and mobile app.
+          At <strong>The Almanac</strong> (capstone), I built the full delivery layer and a
+          three-tier medallion pipeline on Databricks and Azure Data Factory, then trained a PyTorch
+          LSTM forecasting next-day returns at a mean R² of 0.853 across walk-forward validation.
         </p>
         <p>
-          At <strong>PAMT Consulting</strong> (now part of Ateko, a Bell Canada entity), tested and
-          validated enterprise ServiceNow applications, wrote test cases for workflows and API
-          integrations, and shipped client projects across multiple teams.
+          At <strong>PAMT Consulting</strong>, I worked as a ServiceNow Developer and QA Specialist,
+          building HRSD onboarding workflows in App Engine Studio and Flow Designer, validating data
+          flows across environments, and resolving integration defects before release.
         </p>
       </div>
       <div class="skill-groups reveal stagger">
@@ -632,21 +633,23 @@
           <div class="tag-row">
             <span class="tag">Python</span>
             <span class="tag">SQL</span>
-            <span class="tag">C++</span>
-            <span class="tag">C#</span>
+            <span class="tag">Java</span>
             <span class="tag">JavaScript</span>
+            <span class="tag">C++</span>
+            <span class="tag">C</span>
           </div>
         </div>
         <div class="skill-group" style="--i:1">
           <h4>Data Engineering</h4>
           <div class="tag-row">
-            <span class="tag">dbt</span>
-            <span class="tag">Prefect</span>
-            <span class="tag">PostgreSQL</span>
-            <span class="tag">SQL Server</span>
-            <span class="tag">Pandas</span>
             <span class="tag">Azure Data Factory</span>
             <span class="tag">Databricks</span>
+            <span class="tag">PySpark</span>
+            <span class="tag">Apache Spark</span>
+            <span class="tag">Hadoop</span>
+            <span class="tag">dbt</span>
+            <span class="tag">Prefect</span>
+            <span class="tag">ETL / ELT</span>
           </div>
         </div>
         <div class="skill-group" style="--i:2">
@@ -654,20 +657,45 @@
           <div class="tag-row">
             <span class="tag">PyTorch</span>
             <span class="tag">TensorFlow</span>
+            <span class="tag">XGBoost</span>
+            <span class="tag">LightGBM</span>
+            <span class="tag">Scikit-learn</span>
+            <span class="tag">LangChain</span>
+            <span class="tag">FAISS</span>
             <span class="tag">LSTM</span>
             <span class="tag">FinBERT</span>
-            <span class="tag">Scikit-learn</span>
           </div>
         </div>
         <div class="skill-group" style="--i:3">
-          <h4>Cloud & Tools</h4>
+          <h4>Databases</h4>
           <div class="tag-row">
-            <span class="tag">AWS EC2</span>
+            <span class="tag">PostgreSQL</span>
+            <span class="tag">MySQL</span>
+            <span class="tag">MongoDB</span>
+            <span class="tag">Azure SQL</span>
+          </div>
+        </div>
+        <div class="skill-group" style="--i:4">
+          <h4>Web & Tools</h4>
+          <div class="tag-row">
+            <span class="tag">Django</span>
+            <span class="tag">FastAPI</span>
+            <span class="tag">React</span>
+            <span class="tag">Streamlit</span>
+            <span class="tag">ServiceNow</span>
+            <span class="tag">JMeter</span>
+          </div>
+        </div>
+        <div class="skill-group" style="--i:5">
+          <h4>Cloud & DevOps</h4>
+          <div class="tag-row">
             <span class="tag">Azure</span>
+            <span class="tag">AWS</span>
             <span class="tag">Docker</span>
             <span class="tag">Git</span>
-            <span class="tag">Django REST</span>
-            <span class="tag">ServiceNow</span>
+            <span class="tag">Grafana</span>
+            <span class="tag">Power BI</span>
+            <span class="tag">Tableau</span>
           </div>
         </div>
       </div>
@@ -684,16 +712,74 @@
 
       <div class="project-card reveal">
         <div class="project-header">
+          <div class="project-icon">🤖</div>
+          <div class="project-links">
+            <a href="https://gautamstar.github.io/almanac-predictor" target="_blank">Live ↗</a>
+            <a href="https://github.com/Gautamstar/almanac-predictor" target="_blank">GitHub ↗</a>
+          </div>
+        </div>
+        <h3 class="project-title">The Almanac · Capstone</h3>
+        <p class="project-desc">
+          Cloud data pipeline and forecasting platform. Built a three-tier medallion pipeline on
+          Databricks and Azure Data Factory (Bronze OHLCV ingestion, Silver PySpark indicators,
+          Gold join to Azure SQL), cutting data latency 35%. Trained a 2-layer PyTorch LSTM on
+          11,213 sliding windows of AAPL data predicting next-day returns at a mean R² of 0.853
+          across 5-fold walk-forward validation. Shipped the full delivery layer: a Django REST API,
+          a Bootstrap web client, and a cross-platform Flutter app, with Grafana and Power BI
+          monitoring.
+        </p>
+        <div class="project-tags">
+          <span class="ptag">PyTorch</span>
+          <span class="ptag">LSTM</span>
+          <span class="ptag">Databricks</span>
+          <span class="ptag">Azure Data Factory</span>
+          <span class="ptag">PySpark</span>
+          <span class="ptag">Azure SQL</span>
+          <span class="ptag">Django REST</span>
+          <span class="ptag">Flutter</span>
+          <span class="ptag">Grafana</span>
+        </div>
+      </div>
+
+      <div class="project-card reveal">
+        <div class="project-header">
+          <div class="project-icon">📑</div>
+          <div class="project-links">
+            <a href="https://github.com/Gautamstar/rag-financial-qa" target="_blank">GitHub ↗</a>
+          </div>
+        </div>
+        <h3 class="project-title">Financial Document Q&A · RAG</h3>
+        <p class="project-desc">
+          Local RAG pipeline that answers natural-language questions over real SEC 10-K filings
+          (JPMorgan, Goldman Sachs, MetLife, Prudential, AIG). Hybrid BM25 + FAISS retrieval with
+          reciprocal rank fusion beats single-method search; a locally hosted Gemma model streams
+          answers token by token. FastAPI backend, Streamlit frontend with company filtering and
+          chat history, retrieval quality measured with RAGAS, and the whole thing containerized.
+        </p>
+        <div class="project-tags">
+          <span class="ptag">LangChain</span>
+          <span class="ptag">FAISS</span>
+          <span class="ptag">BM25</span>
+          <span class="ptag">FastAPI</span>
+          <span class="ptag">Streamlit</span>
+          <span class="ptag">RAGAS</span>
+          <span class="ptag">Docker</span>
+        </div>
+      </div>
+
+      <div class="project-card reveal">
+        <div class="project-header">
           <div class="project-icon">📈</div>
           <div class="project-links">
             <a href="https://github.com/Gautamstar/market-data-pipeline" target="_blank">GitHub ↗</a>
           </div>
         </div>
-        <h3 class="project-title">Market Data Pipeline</h3>
+        <h3 class="project-title">Equity Market Data Pipeline</h3>
         <p class="project-desc">
-          Daily equity pipeline for S&P 500 stocks and sector ETFs. dbt computes SMA 20/50/200,
-          Bollinger Bands, RSI 14, and rolling returns in PostgreSQL. Prefect runs it each market
-          close. Streamlit dashboard with candlestick charts and a momentum screener.
+          End-to-end pipeline ingesting daily OHLCV data for S&P 500 stocks and sector ETFs into
+          PostgreSQL. dbt models compute staging tables, technical indicators (SMA, Bollinger Bands,
+          RSI), and rolling performance metrics. Prefect orchestrates the daily run at market close,
+          feeding a Streamlit dashboard with candlestick charts and a momentum screener.
         </p>
         <div class="project-tags">
           <span class="ptag">Python</span>
@@ -707,27 +793,90 @@
 
       <div class="project-card reveal">
         <div class="project-header">
-          <div class="project-icon">🤖</div>
+          <div class="project-icon">📉</div>
           <div class="project-links">
-            <a href="https://almanac.services" target="_blank">Live ↗</a>
+            <a href="https://github.com/Gautamstar/rates-funding-risk" target="_blank">GitHub ↗</a>
           </div>
         </div>
-        <h3 class="project-title">The Almanac</h3>
+        <h3 class="project-title">Rates Funding Risk</h3>
         <p class="project-desc">
-          Stock analytics platform built as a capstone at Conestoga. Led the LSTM forecasting
-          engine, taking raw price and volume data through feature engineering and walk forward
-          validation to weekly return predictions in the REST API. Real time quotes, FinBERT
-          sentiment, and portfolio tracking on web and mobile.
+          Fixed-income interest-rate risk framework. Computes DV01 across the curve (3M, 2Y, 5Y, 10Y,
+          30Y), runs stress scenarios (parallel shifts, bear steepeners, bull flatteners), and
+          attributes PnL by maturity bucket so you can see exactly which tenors drive portfolio
+          moves. Results export to CSV for reporting.
         </p>
         <div class="project-tags">
-          <span class="ptag">PyTorch</span>
-          <span class="ptag">LSTM</span>
-          <span class="ptag">Django REST</span>
-          <span class="ptag">Azure</span>
-          <span class="ptag">Databricks</span>
-          <span class="ptag">FinBERT</span>
-          <span class="ptag">Flutter</span>
-          <span class="ptag">AWS EC2</span>
+          <span class="ptag">Python</span>
+          <span class="ptag">Pandas</span>
+          <span class="ptag">NumPy</span>
+          <span class="ptag">Fixed Income</span>
+          <span class="ptag">Risk</span>
+        </div>
+      </div>
+
+      <div class="project-card reveal">
+        <div class="project-header">
+          <div class="project-icon">🔁</div>
+          <div class="project-links"></div>
+        </div>
+        <h3 class="project-title">Customer Churn Prediction</h3>
+        <p class="project-desc">
+          End-to-end ML pipeline covering null imputation, outlier handling, categorical encoding,
+          class-imbalance handling, and feature engineering with Pandas and SQL. Trained and compared
+          XGBoost, LightGBM, and Random Forest, improving recall 15% over a logistic-regression
+          baseline and selecting the best model by ROC-AUC, accuracy, and F1. Ranked feature
+          importance to surface the top churn drivers.
+        </p>
+        <div class="project-tags">
+          <span class="ptag">Python</span>
+          <span class="ptag">XGBoost</span>
+          <span class="ptag">LightGBM</span>
+          <span class="ptag">scikit-learn</span>
+          <span class="ptag">Pandas</span>
+        </div>
+      </div>
+
+      <div class="project-card reveal">
+        <div class="project-header">
+          <div class="project-icon">💹</div>
+          <div class="project-links">
+            <a href="https://github.com/Gautamstar/StockPredictor" target="_blank">GitHub ↗</a>
+          </div>
+        </div>
+        <h3 class="project-title">AMD Stock Predictor</h3>
+        <p class="project-desc">
+          Classifier predicting next-day price direction for AMD. Pulls historical OHLCV from Yahoo
+          Finance, engineers technical indicators (moving averages, RSI, MACD) with the ta library,
+          handles missing data, and trains a HistGradientBoostingClassifier evaluated on a held-out
+          test set.
+        </p>
+        <div class="project-tags">
+          <span class="ptag">Python</span>
+          <span class="ptag">scikit-learn</span>
+          <span class="ptag">Pandas</span>
+          <span class="ptag">NumPy</span>
+          <span class="ptag">ta</span>
+        </div>
+      </div>
+
+      <div class="project-card reveal">
+        <div class="project-header">
+          <div class="project-icon">🧩</div>
+          <div class="project-links">
+            <a href="https://github.com/Gautamstar/data-structs" target="_blank">GitHub ↗</a>
+          </div>
+        </div>
+        <h3 class="project-title">Data Structs</h3>
+        <p class="project-desc">
+          Interactive lessons walking through the data structures and algorithms that come up in
+          coding interviews, built as a hands-on study tool to reinforce the fundamentals with
+          visual, in-browser examples.
+        </p>
+        <div class="project-tags">
+          <span class="ptag">JavaScript</span>
+          <span class="ptag">HTML</span>
+          <span class="ptag">Algorithms</span>
+          <span class="ptag">DSA</span>
         </div>
       </div>
 
@@ -744,26 +893,24 @@
 
       <div class="tl-item reveal">
         <div class="tl-dot"></div>
-        <p class="tl-date">SEP 2025 to DEC 2025</p>
-        <h3 class="tl-role">Data & Quality Control Analyst</h3>
-        <p class="tl-company">PAMT Consulting (Ateko · Bell Canada Entity), Remote, Waterloo ON</p>
+        <p class="tl-date">SEP 2024 to DEC 2024 · SEP 2025 to DEC 2025</p>
+        <h3 class="tl-role">ServiceNow Developer & QA Specialist</h3>
+        <p class="tl-company">PAMT Consulting, Remote</p>
         <ul class="tl-bullets">
-          <li>Tested and validated ServiceNow applications for functionality and reliability across releases</li>
-          <li>Wrote and executed test cases for workflows, integrations, and APIs</li>
-          <li>Debugged issues across environments and maintained structured update sets</li>
-          <li>Shipped client projects across multiple teams</li>
+          <li>Built and enhanced ServiceNow applications with App Engine Studio, Flow Designer, and IntegrationHub, including HRSD onboarding workflows that cut manual processing time</li>
+          <li>Maintained structured update sets and validated system data flows across multiple deployment environments</li>
+          <li>Designed and ran QA test cases verifying data accuracy, integration reliability, and API output correctness</li>
+          <li>Collaborated with engineering teams to validate data contracts and resolve integration defects before release, following agile practices</li>
         </ul>
       </div>
 
       <div class="tl-item reveal">
         <div class="tl-dot"></div>
-        <p class="tl-date">SEP 2024 to DEC 2024</p>
-        <h3 class="tl-role">Data Analyst & Quality Control</h3>
-        <p class="tl-company">PAMT Consulting, Remote, Kitchener ON</p>
+        <p class="tl-date">JAN 2022 to MAY 2022</p>
+        <h3 class="tl-role">Lot Associate</h3>
+        <p class="tl-company">The Home Depot, Guelph ON</p>
         <ul class="tl-bullets">
-          <li>Supported QA and integration for ServiceNow client deployments</li>
-          <li>Tested platform configs, scripted workflows, and API integrations</li>
-          <li>Maintained update sets and kept release processes clean</li>
+          <li>Maintained operational standards and customer service in a high-traffic environment</li>
         </ul>
       </div>
 
@@ -776,7 +923,19 @@
         <div>
           <p class="edu-degree">Bachelor of Computer Science (Honors)</p>
           <p class="edu-school">Conestoga College</p>
-          <p class="edu-date">SEP 2021 to SEP 2025</p>
+          <p class="edu-date">SEP 2020 to DEC 2025</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="edu-wrap">
+      <p class="section-label">Certifications</p>
+      <div class="edu-card reveal">
+        <div class="edu-icon">📜</div>
+        <div>
+          <p class="edu-degree">Google Advanced Data Analytics Professional Certificate</p>
+          <p class="edu-school">Google · Coursera</p>
+          <p class="edu-date">2026 · 7-course program: statistics, Python, regression, ML, visualization</p>
         </div>
       </div>
     </div>
@@ -811,7 +970,7 @@
   addEventListener('scroll', () => navbar.classList.toggle('scrolled', scrollY > 40));
 
   // ── Typing animation ──
-  const roles  = ['Data Engineer', 'ML Engineer', 'Python Developer', 'Finance Tech Builder'];
+  const roles  = ['Data Engineer', 'ML Engineer', 'Full-Stack Developer', 'Finance Tech Builder'];
   const el     = document.getElementById('typed-text');
   let ri = 0, ci = 0, del = false;
 
