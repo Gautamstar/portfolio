@@ -3,1069 +3,757 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Gautam Singh — Data & ML Engineer</title>
+  <title>Gautam Singh · Software Engineer</title>
+  <meta name="description" content="Gautam Singh: software engineer and CS grad building data pipelines, ML systems, and full-stack apps. Based in Guelph, Ontario." />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet" />
   <style>
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
     :root {
-      --bg:          #080c14;
-      --surface:     #0d1525;
-      --surface-2:   #111d30;
-      --border:      #1e2d45;
-      --text:        #e2e8f0;
-      --muted:       #64748b;
-      --accent:      #0ea5e9;
-      --accent-dim:  rgba(14,165,233,0.1);
-      --purple:      #8b5cf6;
-      --green:       #10b981;
-      --gradient:    linear-gradient(135deg, #0ea5e9 0%, #8b5cf6 100%);
+      --plane: #080807;
+      --surface: #131211;
+      --raised: #181715;
+      --ink: #e8e8e3;
+      --ink-2: #938f8a;
+      --ink-3: #6b645c;
+      --accent: #146ef5;
+      --accent-soft: #3987e5;
+      --hairline: rgba(232, 232, 227, 0.12);
+      --sans: "Space Grotesk", system-ui, sans-serif;
+      --mono: "IBM Plex Mono", ui-monospace, monospace;
+      --ease: cubic-bezier(0.22, 1, 0.36, 1);
     }
 
-    html { scroll-behavior: smooth; }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    html {
+      color-scheme: dark;
+      scroll-behavior: smooth;
+      scroll-padding-top: 84px;
+    }
 
     body {
-      font-family: 'Inter', system-ui, sans-serif;
-      background: var(--bg);
-      color: var(--text);
-      line-height: 1.6;
-      overflow-x: hidden;
+      background: var(--plane);
+      color: var(--ink);
+      font-family: var(--sans);
+      font-size: 16px;
+      line-height: 1.65;
+      -webkit-font-smoothing: antialiased;
     }
 
-    a { color: var(--accent); text-decoration: none; transition: opacity 0.2s; }
-    a:hover { opacity: 0.75; }
+    /* film grain */
+    body::after {
+      content: "";
+      position: fixed;
+      inset: 0;
+      z-index: 90;
+      pointer-events: none;
+      opacity: 0.05;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='240' height='240'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+    }
 
-    .container { max-width: 1100px; margin: 0 auto; padding: 0 28px; }
+    ::selection { background: var(--accent); color: var(--ink); }
 
-    section { padding: 110px 0; }
+    a { color: inherit; text-decoration: none; }
+    a:focus-visible, button:focus-visible {
+      outline: 1px solid rgba(232, 232, 227, 0.6);
+      outline-offset: 3px;
+    }
+    ul { list-style: none; }
 
-    .section-label {
-      font-family: 'JetBrains Mono', monospace;
-      font-size: 12px;
-      color: var(--accent);
-      letter-spacing: 3px;
+    .wrap { max-width: 1120px; margin: 0 auto; padding: 0 24px; }
+
+    .micro {
+      font-family: var(--mono);
+      font-size: 11px;
+      font-weight: 400;
       text-transform: uppercase;
-      margin-bottom: 12px;
+      letter-spacing: 0.25em;
+      color: var(--ink-2);
+    }
+    .micro-sm {
+      font-family: var(--mono);
+      font-size: 10px;
+      text-transform: uppercase;
+      letter-spacing: 0.2em;
+      color: var(--ink-3);
     }
 
-    .section-title {
-      font-size: clamp(28px, 5vw, 44px);
-      font-weight: 800;
-      margin-bottom: 56px;
-      line-height: 1.15;
+    /* ── reveal motion ── */
+    html.js .reveal {
+      opacity: 0;
+      transform: translateY(14px);
+      transition: opacity 0.55s var(--ease), transform 0.55s var(--ease);
+      transition-delay: var(--d, 0s);
+    }
+    html.js .reveal.visible { opacity: 1; transform: none; }
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto; }
+      html.js .reveal { opacity: 1; transform: none; transition: none; }
     }
 
-    /* ── Navbar ── */
+    /* ── nav ── */
     nav {
       position: fixed;
       top: 0; left: 0; right: 0;
-      z-index: 100;
-      padding: 18px 0;
-      transition: background 0.3s, border-color 0.3s;
+      z-index: 80;
+      border-bottom: 1px solid transparent;
+      transition: border-color 0.3s, background 0.3s;
     }
-
     nav.scrolled {
-      background: rgba(8, 12, 20, 0.88);
-      backdrop-filter: blur(16px);
-      -webkit-backdrop-filter: blur(16px);
-      border-bottom: 1px solid var(--border);
+      background: rgba(8, 8, 7, 0.82);
+      backdrop-filter: blur(12px);
+      border-bottom-color: var(--hairline);
     }
-
-    nav .container { display: flex; align-items: center; justify-content: space-between; }
-
-    .nav-logo {
-      font-family: 'JetBrains Mono', monospace;
-      font-size: 22px;
-      font-weight: 500;
-      background: var(--gradient);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
-    }
-
-    .nav-links { display: flex; gap: 36px; list-style: none; }
-
-    .nav-links a {
-      color: var(--muted);
-      font-size: 14px;
-      font-weight: 500;
-      transition: color 0.2s;
-    }
-    .nav-links a:hover { color: var(--text); opacity: 1; }
-
-    /* ── Hero ── */
-    #hero {
-      position: relative;
-      min-height: 100vh;
+    .nav-inner {
       display: flex;
       align-items: center;
-      overflow: hidden;
-      padding: 0;
+      justify-content: space-between;
+      height: 64px;
     }
+    .nav-mark {
+      font-family: var(--mono);
+      font-size: 13px;
+      font-weight: 500;
+      letter-spacing: 0.1em;
+    }
+    .nav-mark span { color: var(--accent); }
+    .nav-links { display: flex; gap: 28px; }
+    .nav-links a {
+      font-family: var(--mono);
+      font-size: 10px;
+      text-transform: uppercase;
+      letter-spacing: 0.2em;
+      color: var(--ink-2);
+      transition: color 0.25s;
+    }
+    .nav-links a:hover { color: var(--ink); }
 
-    #hero-canvas {
-      position: absolute;
-      inset: 0;
-      opacity: 0.45;
+    /* ── hero ── */
+    header {
+      padding: 176px 0 96px;
+      border-bottom: 1px solid var(--hairline);
     }
-
-    /* Ambient glow orbs */
-    #hero::before, #hero::after {
-      content: '';
-      position: absolute;
-      border-radius: 50%;
-      filter: blur(120px);
-      pointer-events: none;
+    .hero-status {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 14px;
+      margin-bottom: 40px;
     }
-    #hero::before {
-      width: 600px; height: 600px;
-      background: rgba(14, 165, 233, 0.08);
-      top: -100px; left: -100px;
+    .status-dot {
+      width: 6px; height: 6px;
+      background: var(--accent);
+      display: inline-block;
+      animation: pulse 2.4s infinite;
     }
-    #hero::after {
-      width: 400px; height: 400px;
-      background: rgba(139, 92, 246, 0.07);
-      bottom: 0; right: 0;
+    @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.35; } }
+    @media (prefers-reduced-motion: reduce) { .status-dot { animation: none; } }
+    h1 {
+      font-size: clamp(3.2rem, 9vw, 6.8rem);
+      font-weight: 600;
+      line-height: 0.98;
+      letter-spacing: -0.02em;
+      margin-bottom: 28px;
     }
-
-    .hero-content { position: relative; z-index: 1; }
-
-    .hero-badge {
+    h1 .dim { color: var(--ink-3); }
+    .hero-sub {
+      max-width: 560px;
+      font-size: 18px;
+      color: var(--ink-2);
+      margin-bottom: 48px;
+    }
+    .hero-sub strong { color: var(--ink); font-weight: 500; }
+    .hero-links { display: flex; flex-wrap: wrap; gap: 12px; }
+    .lnk {
       display: inline-flex;
       align-items: center;
       gap: 10px;
-      background: var(--accent-dim);
-      border: 1px solid rgba(14,165,233,0.25);
-      border-radius: 100px;
-      padding: 7px 18px;
-      font-size: 13px;
-      color: var(--accent);
-      margin-bottom: 28px;
-      font-family: 'JetBrains Mono', monospace;
-    }
-
-    .hero-badge .dot {
-      width: 8px; height: 8px;
-      background: var(--green);
-      border-radius: 50%;
-      box-shadow: 0 0 8px var(--green);
-      animation: pulse 2s ease-in-out infinite;
-    }
-
-    @keyframes pulse {
-      0%, 100% { opacity: 1; transform: scale(1); }
-      50%       { opacity: 0.5; transform: scale(0.8); }
-    }
-
-    .hero-name {
-      font-size: clamp(50px, 9vw, 92px);
-      font-weight: 800;
-      letter-spacing: -3px;
-      background: linear-gradient(135deg, #f1f5f9 20%, #94a3b8 100%);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
-      margin-bottom: 18px;
-      line-height: 1.0;
-    }
-
-    .hero-role {
-      font-size: clamp(20px, 3vw, 30px);
-      font-weight: 500;
-      color: var(--muted);
-      margin-bottom: 24px;
-      min-height: 44px;
-    }
-
-    #typed-text {
-      color: var(--accent);
-      border-right: 2px solid var(--accent);
-      padding-right: 3px;
-      animation: blink 0.75s step-end infinite;
-    }
-
-    @keyframes blink {
-      0%, 100% { border-color: var(--accent); }
-      50%       { border-color: transparent; }
-    }
-
-    .hero-desc {
-      font-size: 17px;
-      color: var(--muted);
-      max-width: 540px;
-      margin-bottom: 44px;
-      line-height: 1.75;
-    }
-
-    .hero-desc strong { color: var(--text); font-weight: 600; }
-
-    .hero-btns { display: flex; gap: 14px; flex-wrap: wrap; }
-
-    .btn {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      padding: 13px 28px;
-      border-radius: 9px;
-      font-size: 15px;
-      font-weight: 600;
-      cursor: pointer;
-      transition: all 0.2s;
-      border: none;
-      font-family: 'Inter', sans-serif;
-    }
-
-    .btn-primary {
-      background: var(--accent);
-      color: #000;
-    }
-    .btn-primary:hover {
-      background: #38bdf8;
-      opacity: 1;
-      transform: translateY(-2px);
-      box-shadow: 0 10px 28px rgba(14,165,233,0.35);
-    }
-
-    .btn-outline {
-      background: transparent;
-      color: var(--text);
-      border: 1px solid var(--border);
-    }
-    .btn-outline:hover {
-      border-color: var(--accent);
-      color: var(--accent);
-      opacity: 1;
-      transform: translateY(-2px);
-    }
-
-    .scroll-cue {
-      position: absolute;
-      bottom: 40px;
-      left: 50%;
-      transform: translateX(-50%);
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 8px;
-      color: var(--muted);
+      font-family: var(--mono);
       font-size: 11px;
-      letter-spacing: 2px;
       text-transform: uppercase;
-      font-family: 'JetBrains Mono', monospace;
-      animation: bob 2.5s ease-in-out infinite;
+      letter-spacing: 0.18em;
+      padding: 14px 22px;
+      border: 1px solid var(--hairline);
+      color: var(--ink);
+      transition: border-color 0.25s, background 0.25s, color 0.25s;
+    }
+    .lnk:hover { border-color: rgba(232, 232, 227, 0.4); }
+    .lnk.fill {
+      background: var(--accent);
+      border-color: var(--accent);
+      color: #fff;
+    }
+    .lnk.fill:hover { background: var(--accent-soft); border-color: var(--accent-soft); }
+
+    .meta-strip {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1px;
+      background: var(--hairline);
+      border: 1px solid var(--hairline);
+      margin-top: 72px;
+    }
+    .meta-cell {
+      background: var(--plane);
+      padding: 18px 20px;
+      text-align: center;
     }
 
-    .scroll-cue::after {
-      content: '';
-      width: 1px; height: 48px;
-      background: linear-gradient(to bottom, var(--muted), transparent);
+    /* ── sections ── */
+    section { padding: 112px 0; border-bottom: 1px solid var(--hairline); }
+    .sec-head { margin-bottom: 64px; }
+    .sec-head .micro { display: block; margin-bottom: 16px; }
+    .sec-head .micro em { color: var(--accent); font-style: normal; }
+    h2 {
+      font-size: clamp(2rem, 4.5vw, 3.2rem);
+      font-weight: 600;
+      letter-spacing: -0.02em;
+      line-height: 1.05;
     }
 
-    @keyframes bob {
-      0%, 100% { transform: translateX(-50%) translateY(0); }
-      50%       { transform: translateX(-50%) translateY(10px); }
-    }
-
-    /* ── About ── */
-    #about .about-grid {
+    /* ── about ── */
+    .about-grid {
       display: grid;
       grid-template-columns: 1.1fr 0.9fr;
       gap: 72px;
+    }
+    .about-text p { color: var(--ink-2); margin-bottom: 22px; font-size: 17px; }
+    .about-text strong { color: var(--ink); font-weight: 500; }
+    .about-text a { color: var(--ink); border-bottom: 1px solid var(--accent); }
+    .skill-group { border-top: 1px solid var(--hairline); padding: 18px 0; }
+    .skill-group:last-child { border-bottom: 1px solid var(--hairline); }
+    .skill-group h3 {
+      font-family: var(--mono);
+      font-size: 10px;
+      font-weight: 500;
+      text-transform: uppercase;
+      letter-spacing: 0.2em;
+      color: var(--ink-3);
+      margin-bottom: 10px;
+    }
+    .skill-group p { font-size: 15px; color: var(--ink-2); }
+
+    /* ── projects ── */
+    .proj {
+      display: grid;
+      grid-template-columns: 64px 1fr auto;
+      gap: 28px;
+      padding: 44px 0;
+      border-top: 1px solid var(--hairline);
       align-items: start;
     }
-
-    .about-text p {
-      color: var(--muted);
-      font-size: 16px;
-      line-height: 1.85;
-      margin-bottom: 18px;
-    }
-    .about-text p:last-child { margin-bottom: 0; }
-    .about-text strong { color: var(--text); font-weight: 600; }
-
-    .skill-groups { display: flex; flex-direction: column; gap: 26px; }
-
-    .skill-group h4 {
+    .proj:last-child { border-bottom: 1px solid var(--hairline); }
+    .proj-idx {
+      font-family: var(--mono);
       font-size: 11px;
-      font-family: 'JetBrains Mono', monospace;
-      letter-spacing: 2.5px;
-      color: var(--accent);
-      text-transform: uppercase;
-      margin-bottom: 10px;
+      letter-spacing: 0.15em;
+      color: var(--ink-3);
+      padding-top: 8px;
     }
-
-    .tag-row { display: flex; flex-wrap: wrap; gap: 8px; }
-
-    .tag {
-      padding: 5px 13px;
-      border-radius: 6px;
-      font-size: 13px;
-      font-weight: 500;
-      background: var(--surface-2);
-      border: 1px solid var(--border);
-      color: var(--text);
-      transition: all 0.2s;
-      cursor: default;
-    }
-    .tag:hover { border-color: var(--accent); color: var(--accent); }
-
-    /* ── Projects ── */
-    #projects { background: var(--surface); }
-
-    .projects-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(460px, 1fr));
-      gap: 24px;
-    }
-
-    .project-card {
-      background: var(--surface-2);
-      border: 1px solid var(--border);
-      border-radius: 16px;
-      padding: 34px;
-      transition: all 0.3s ease;
-      position: relative;
-      overflow: hidden;
+    .proj-title-row {
       display: flex;
-      flex-direction: column;
-    }
-
-    .project-card::before {
-      content: '';
-      position: absolute;
-      top: 0; left: 0; right: 0;
-      height: 2px;
-      background: var(--gradient);
-      opacity: 0;
-      transition: opacity 0.3s;
-    }
-
-    .project-card:hover {
-      border-color: rgba(14,165,233,0.35);
-      transform: translateY(-5px);
-      box-shadow: 0 24px 48px rgba(0,0,0,0.5), 0 0 0 1px rgba(14,165,233,0.1);
-    }
-    .project-card:hover::before { opacity: 1; }
-
-    .project-header {
-      display: flex;
-      align-items: flex-start;
-      justify-content: space-between;
-      margin-bottom: 20px;
-    }
-
-    .project-icon {
-      width: 46px; height: 46px;
-      border-radius: 12px;
-      background: var(--accent-dim);
-      border: 1px solid rgba(14,165,233,0.2);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 22px;
-    }
-
-    .project-links { display: flex; gap: 14px; }
-
-    .project-links a {
-      color: var(--muted);
-      font-size: 13px;
-      font-weight: 500;
-      transition: color 0.2s;
-    }
-    .project-links a:hover { color: var(--accent); opacity: 1; }
-
-    .project-title {
-      font-size: 21px;
-      font-weight: 700;
-      margin-bottom: 10px;
-      color: var(--text);
-    }
-
-    .project-desc {
-      color: var(--muted);
-      font-size: 14px;
-      line-height: 1.75;
-      margin-bottom: 24px;
-      flex: 1;
-    }
-
-    .project-tags { display: flex; flex-wrap: wrap; gap: 8px; }
-
-    .ptag {
-      padding: 4px 11px;
-      border-radius: 5px;
-      font-size: 12px;
-      font-family: 'JetBrains Mono', monospace;
-      background: var(--accent-dim);
-      color: var(--accent);
-      border: 1px solid rgba(14,165,233,0.18);
-    }
-
-    /* ── Experience ── */
-    .timeline {
-      position: relative;
-      padding-left: 36px;
-    }
-
-    .timeline::before {
-      content: '';
-      position: absolute;
-      left: 5px; top: 8px; bottom: 0;
-      width: 1px;
-      background: linear-gradient(to bottom, var(--accent), var(--purple) 60%, transparent);
-    }
-
-    .tl-item {
-      position: relative;
-      margin-bottom: 52px;
-    }
-    .tl-item:last-child { margin-bottom: 0; }
-
-    .tl-dot {
-      position: absolute;
-      left: -42px;
-      top: 5px;
-      width: 12px; height: 12px;
-      border-radius: 50%;
-      background: var(--accent);
-      box-shadow: 0 0 14px rgba(14,165,233,0.7);
-      border: 2px solid var(--bg);
-    }
-
-    .tl-date {
-      font-family: 'JetBrains Mono', monospace;
-      font-size: 12px;
-      color: var(--accent);
-      letter-spacing: 1px;
-      margin-bottom: 6px;
-    }
-
-    .tl-role {
-      font-size: 19px;
-      font-weight: 700;
-      margin-bottom: 4px;
-    }
-
-    .tl-company {
-      font-size: 14px;
-      color: var(--muted);
+      flex-wrap: wrap;
+      align-items: baseline;
+      gap: 14px;
       margin-bottom: 14px;
     }
+    .proj h3 {
+      font-size: clamp(1.35rem, 2.6vw, 1.9rem);
+      font-weight: 600;
+      letter-spacing: -0.02em;
+      line-height: 1.15;
+    }
+    .chip {
+      font-family: var(--mono);
+      font-size: 9px;
+      text-transform: uppercase;
+      letter-spacing: 0.2em;
+      padding: 4px 8px;
+      border: 1px solid var(--accent);
+      color: var(--accent-soft);
+    }
+    .proj-desc { color: var(--ink-2); max-width: 640px; margin-bottom: 18px; font-size: 15.5px; }
+    .proj-tags {
+      font-family: var(--mono);
+      font-size: 10px;
+      text-transform: uppercase;
+      letter-spacing: 0.14em;
+      color: var(--ink-3);
+    }
+    .proj-links {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      padding-top: 8px;
+    }
+    .proj-links a {
+      font-family: var(--mono);
+      font-size: 10px;
+      text-transform: uppercase;
+      letter-spacing: 0.2em;
+      color: var(--ink-2);
+      white-space: nowrap;
+      transition: color 0.25s;
+    }
+    .proj-links a:hover { color: var(--accent-soft); }
 
-    .tl-bullets { list-style: none; }
-
-    .tl-bullets li {
-      font-size: 14px;
-      color: var(--muted);
-      padding: 4px 0 4px 18px;
+    /* ── experience ── */
+    .xp {
+      display: grid;
+      grid-template-columns: 220px 1fr;
+      gap: 40px;
+      padding: 40px 0;
+      border-top: 1px solid var(--hairline);
+    }
+    .xp:last-of-type { border-bottom: 1px solid var(--hairline); }
+    .xp-when { padding-top: 4px; }
+    .xp h3 { font-size: 1.3rem; font-weight: 600; letter-spacing: -0.02em; margin-bottom: 4px; }
+    .xp-org { color: var(--ink-2); font-size: 15px; margin-bottom: 16px; }
+    .xp ul li {
+      color: var(--ink-2);
+      font-size: 15px;
+      padding-left: 18px;
       position: relative;
-      line-height: 1.65;
+      margin-bottom: 8px;
     }
-
-    .tl-bullets li::before {
-      content: '▸';
+    .xp ul li::before {
+      content: "";
       position: absolute;
-      left: 0;
-      color: var(--accent);
-      font-size: 12px;
-      top: 6px;
+      left: 0; top: 0.62em;
+      width: 6px; height: 1px;
+      background: var(--accent);
     }
-
-    /* ── Education ── */
-    .edu-wrap { margin-top: 72px; }
-
-    .edu-card {
-      background: var(--surface-2);
-      border: 1px solid var(--border);
-      border-radius: 14px;
-      padding: 28px 32px;
-      display: flex;
-      gap: 20px;
-      align-items: center;
-      margin-top: 24px;
-      transition: border-color 0.2s;
+    .edu-row {
+      display: grid;
+      grid-template-columns: 220px 1fr;
+      gap: 40px;
+      padding: 28px 0;
+      border-bottom: 1px solid var(--hairline);
     }
-    .edu-card:hover { border-color: rgba(139,92,246,0.4); }
+    .edu-row h3 { font-size: 1.05rem; font-weight: 500; margin-bottom: 2px; }
+    .edu-row p { color: var(--ink-2); font-size: 14.5px; }
 
-    .edu-icon {
-      width: 50px; height: 50px;
-      border-radius: 12px;
-      background: rgba(139,92,246,0.1);
-      border: 1px solid rgba(139,92,246,0.2);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 24px;
-      flex-shrink: 0;
+    /* ── contact ── */
+    #contact { border-bottom: none; padding-bottom: 140px; }
+    .contact-line {
+      font-size: clamp(1.6rem, 3.6vw, 2.6rem);
+      font-weight: 600;
+      letter-spacing: -0.02em;
+      line-height: 1.2;
+      max-width: 760px;
+      margin-bottom: 44px;
     }
+    .contact-line span { color: var(--ink-3); }
 
-    .edu-degree { font-size: 17px; font-weight: 700; margin-bottom: 4px; }
-    .edu-school { font-size: 15px; color: var(--accent); margin-bottom: 4px; }
-    .edu-date   { font-size: 12px; color: var(--muted); font-family: 'JetBrains Mono', monospace; }
-
-    /* ── Contact ── */
-    #contact { background: var(--surface); text-align: center; }
-
-    .contact-desc {
-      color: var(--muted);
-      font-size: 17px;
-      max-width: 500px;
-      margin: -24px auto 44px;
-      line-height: 1.75;
-    }
-
-    .contact-btns { display: flex; justify-content: center; gap: 16px; flex-wrap: wrap; }
-
-    /* ── Footer ── */
     footer {
-      text-align: center;
-      padding: 28px;
-      color: var(--muted);
-      font-size: 13px;
-      border-top: 1px solid var(--border);
-      font-family: 'JetBrains Mono', monospace;
+      border-top: 1px solid var(--hairline);
+      padding: 28px 0;
+    }
+    .foot-inner {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      gap: 12px;
     }
 
-    /* ── Scroll-reveal ── */
-    .reveal {
-      opacity: 0;
-      transform: translateY(28px);
-      transition: opacity 0.65s ease, transform 0.65s ease;
+    @media (max-width: 860px) {
+      .about-grid { grid-template-columns: 1fr; gap: 48px; }
+      .proj { grid-template-columns: 1fr; gap: 12px; }
+      .proj-idx { padding-top: 0; }
+      .proj-links { flex-direction: row; gap: 22px; padding-top: 4px; }
+      .xp, .edu-row { grid-template-columns: 1fr; gap: 10px; }
+      .meta-strip { grid-template-columns: 1fr; }
+      .nav-links { gap: 18px; }
+      .nav-links a:nth-child(n+4) { display: none; }
     }
-    .reveal.visible {
-      opacity: 1;
-      transform: translateY(0);
-    }
-
-    .reveal-left {
-      opacity: 0;
-      transform: translateX(-28px);
-      transition: opacity 0.65s ease, transform 0.65s ease;
-    }
-    .reveal-left.visible {
-      opacity: 1;
-      transform: translateX(0);
-    }
-
-    /* stagger children */
-    .stagger > * { transition-delay: calc(var(--i, 0) * 90ms); }
-
-    /* ── Responsive ── */
-    @media (max-width: 800px) {
-      #about .about-grid { grid-template-columns: 1fr; gap: 48px; }
-      .projects-grid { grid-template-columns: 1fr; }
-      .nav-links { display: none; }
-      .hero-btns { flex-direction: column; }
-      .btn { width: 100%; justify-content: center; }
+    @media (max-width: 560px) {
+      .nav-mark { font-size: 11px; }
+      .nav-links { gap: 14px; }
+      .nav-links a:nth-child(n+3) { display: none; }
+      header { padding: 140px 0 72px; }
       section { padding: 80px 0; }
     }
   </style>
 </head>
 <body>
 
-<!-- ── Navigation ── -->
-<nav id="navbar">
-  <div class="container">
-    <span class="nav-logo">gs.</span>
-    <ul class="nav-links">
-      <li><a href="#about">About</a></li>
-      <li><a href="#projects">Projects</a></li>
-      <li><a href="#experience">Experience</a></li>
-      <li><a href="#contact">Contact</a></li>
-    </ul>
+<nav id="nav">
+  <div class="wrap nav-inner">
+    <a href="#top" class="nav-mark">GAUTAM<span>·</span>SINGH</a>
+    <div class="nav-links">
+      <a href="#about">About</a>
+      <a href="#projects">Projects</a>
+      <a href="#experience">Experience</a>
+      <a href="#contact">Contact</a>
+      <a href="https://github.com/Gautamstar" target="_blank" rel="noopener">GitHub ↗</a>
+    </div>
   </div>
 </nav>
 
-<!-- ── Hero ── -->
-<section id="hero">
-  <canvas id="hero-canvas"></canvas>
-  <div class="container">
-    <div class="hero-content">
-      <div class="hero-badge">
-        <span class="dot"></span>
-        Guelph, Ontario, Canada
-      </div>
-      <h1 class="hero-name">Gautam Singh</h1>
-      <div class="hero-role"><span id="typed-text"></span></div>
-      <p class="hero-desc">
-        CS grad and full-stack engineer building <strong>data pipelines</strong>,
-        <strong>ML systems</strong>, and <strong>backend APIs</strong> for financial markets.
-      </p>
-      <div class="hero-btns">
-        <a href="#projects" class="btn btn-primary">View My Work ↓</a>
-        <a href="https://github.com/Gautamstar" target="_blank" class="btn btn-outline">GitHub ↗</a>
-        <a href="https://www.linkedin.com/in/gautam-singh-cs/" target="_blank" class="btn btn-outline">LinkedIn ↗</a>
-      </div>
+<header id="top">
+  <div class="wrap">
+    <div class="hero-status reveal">
+      <span class="status-dot" aria-hidden="true"></span>
+      <span class="micro">Open to work</span>
+      <span class="micro" style="color: var(--ink-3);">Guelph · Ontario · Canada</span>
+    </div>
+    <h1 class="reveal" style="--d: 0.07s;">
+      Software engineer<br />
+      <span class="dim">for data-heavy problems.</span>
+    </h1>
+    <p class="hero-sub reveal" style="--d: 0.14s;">
+      Gautam Singh. CS grad who builds <strong>data pipelines</strong>, <strong>ML systems</strong>,
+      and <strong>full-stack apps</strong>, mostly around financial markets.
+      The latest one is live right now.
+    </p>
+    <div class="hero-links reveal" style="--d: 0.21s;">
+      <a class="lnk fill" href="#projects">View work ↓</a>
+      <a class="lnk" href="https://github.com/Gautamstar" target="_blank" rel="noopener">GitHub ↗</a>
+      <a class="lnk" href="https://www.linkedin.com/in/gautam-singh-cs/" target="_blank" rel="noopener">LinkedIn ↗</a>
+      <a class="lnk" href="mailto:gautamsingh2189@gmail.com">Email ↗</a>
+    </div>
+    <div class="meta-strip reveal" style="--d: 0.28s;">
+      <div class="meta-cell micro-sm">1 live app in production</div>
+      <div class="meta-cell micro-sm">8 shipped projects</div>
+      <div class="meta-cell micro-sm">BCS Honors · Conestoga · 2025</div>
     </div>
   </div>
-  <div class="scroll-cue">scroll</div>
-</section>
+</header>
 
-<!-- ── About ── -->
 <section id="about">
-  <div class="container">
-    <p class="section-label">About</p>
-    <h2 class="section-title reveal">Who I Am</h2>
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <span class="micro"><em>01</em> / About</span>
+      <h2>A bit about me.</h2>
+    </div>
     <div class="about-grid">
       <div class="about-text reveal">
         <p>
-          <strong>Computer Science grad from Conestoga College</strong> and full-stack engineer who
-          ships production systems end to end, from backend REST APIs and web frontends to
-          cross-platform mobile clients. Most of my work lives in the finance space: taking raw
-          market data and building reliable pipelines and ML around it.
+          <strong>Computer Science grad from Conestoga College.</strong> I like building the
+          whole thing rather than one slice of it, so my projects tend to cover the API, the
+          frontend, and the data work underneath. Most of them start with raw market data.
         </p>
         <p>
-          At <strong>The Almanac</strong> (capstone), I built the full delivery layer and a
-          three-tier medallion pipeline on Databricks and Azure Data Factory, then trained a PyTorch
-          LSTM forecasting next-day returns at a mean R² of 0.853 across walk-forward validation.
+          My capstone, <strong>The Almanac</strong>, was the biggest one so far. I built a
+          three-tier pipeline on Databricks and Azure Data Factory, trained a PyTorch LSTM that
+          predicts next-day prices at 60-70% accuracy depending on the stock, and put a Django
+          REST API with web and Flutter clients on top.
         </p>
         <p>
-          At <strong>PAMT Consulting</strong>, I worked as a ServiceNow Developer and QA Specialist,
-          building HRSD onboarding workflows in App Engine Studio and Flow Designer, validating data
-          flows across environments, and resolving integration defects before release.
+          More recently I shipped an <strong>EDA web service</strong> that's live today. You
+          upload a CSV and it hands back type inference, quality flags, and charts. Before that
+          I did two co-op terms at <strong>PAMT Consulting</strong> doing ServiceNow development
+          and QA.
         </p>
       </div>
-      <div class="skill-groups reveal stagger">
-        <div class="skill-group" style="--i:0">
-          <h4>Languages</h4>
-          <div class="tag-row">
-            <span class="tag">Python</span>
-            <span class="tag">SQL</span>
-            <span class="tag">Java</span>
-            <span class="tag">JavaScript</span>
-            <span class="tag">C++</span>
-            <span class="tag">C</span>
-          </div>
+      <div>
+        <div class="skill-group reveal">
+          <h3>Languages</h3>
+          <p>Python · SQL · Java · JavaScript · C++ · C · Rust</p>
         </div>
-        <div class="skill-group" style="--i:1">
-          <h4>Data Engineering</h4>
-          <div class="tag-row">
-            <span class="tag">Azure Data Factory</span>
-            <span class="tag">Databricks</span>
-            <span class="tag">PySpark</span>
-            <span class="tag">Apache Spark</span>
-            <span class="tag">Hadoop</span>
-            <span class="tag">dbt</span>
-            <span class="tag">Prefect</span>
-            <span class="tag">ETL / ELT</span>
-          </div>
+        <div class="skill-group reveal" style="--d: 0.05s;">
+          <h3>Data engineering</h3>
+          <p>Azure Data Factory · Databricks · PySpark · Spark · Hadoop · dbt · Prefect · ETL/ELT</p>
         </div>
-        <div class="skill-group" style="--i:2">
-          <h4>ML / AI</h4>
-          <div class="tag-row">
-            <span class="tag">PyTorch</span>
-            <span class="tag">TensorFlow</span>
-            <span class="tag">XGBoost</span>
-            <span class="tag">LightGBM</span>
-            <span class="tag">Scikit-learn</span>
-            <span class="tag">LangChain</span>
-            <span class="tag">FAISS</span>
-            <span class="tag">LSTM</span>
-            <span class="tag">FinBERT</span>
-          </div>
+        <div class="skill-group reveal" style="--d: 0.1s;">
+          <h3>ML / AI</h3>
+          <p>PyTorch · TensorFlow · XGBoost · LightGBM · scikit-learn · LangChain · FAISS · LSTM</p>
         </div>
-        <div class="skill-group" style="--i:3">
-          <h4>Databases</h4>
-          <div class="tag-row">
-            <span class="tag">PostgreSQL</span>
-            <span class="tag">MySQL</span>
-            <span class="tag">MongoDB</span>
-            <span class="tag">Azure SQL</span>
-          </div>
+        <div class="skill-group reveal" style="--d: 0.15s;">
+          <h3>Databases</h3>
+          <p>PostgreSQL · MySQL · MongoDB · Azure SQL · Supabase</p>
         </div>
-        <div class="skill-group" style="--i:4">
-          <h4>Web & Tools</h4>
-          <div class="tag-row">
-            <span class="tag">Django</span>
-            <span class="tag">FastAPI</span>
-            <span class="tag">React</span>
-            <span class="tag">Streamlit</span>
-            <span class="tag">ServiceNow</span>
-            <span class="tag">JMeter</span>
-          </div>
+        <div class="skill-group reveal" style="--d: 0.2s;">
+          <h3>Web &amp; tools</h3>
+          <p>Django · FastAPI · React · Streamlit · ServiceNow · JMeter</p>
         </div>
-        <div class="skill-group" style="--i:5">
-          <h4>Cloud & DevOps</h4>
-          <div class="tag-row">
-            <span class="tag">Azure</span>
-            <span class="tag">AWS</span>
-            <span class="tag">Docker</span>
-            <span class="tag">Git</span>
-            <span class="tag">Grafana</span>
-            <span class="tag">Power BI</span>
-            <span class="tag">Tableau</span>
-          </div>
+        <div class="skill-group reveal" style="--d: 0.25s;">
+          <h3>Cloud &amp; DevOps</h3>
+          <p>Azure · AWS · Docker · Vercel · Render · Git · Grafana · Power BI · Tableau</p>
         </div>
       </div>
     </div>
   </div>
 </section>
 
-<!-- ── Projects ── -->
 <section id="projects">
-  <div class="container">
-    <p class="section-label">Projects</p>
-    <h2 class="section-title reveal">What I've Built</h2>
-    <div class="projects-grid">
-
-      <div class="project-card reveal">
-        <div class="project-header">
-          <div class="project-icon">🤖</div>
-          <div class="project-links">
-            <a href="https://gautamstar.github.io/almanac-predictor" target="_blank">Live ↗</a>
-            <a href="https://github.com/Gautamstar/almanac-predictor" target="_blank">GitHub ↗</a>
-          </div>
-        </div>
-        <h3 class="project-title">The Almanac · Capstone</h3>
-        <p class="project-desc">
-          Cloud data pipeline and forecasting platform. Built a three-tier medallion pipeline on
-          Databricks and Azure Data Factory (Bronze OHLCV ingestion, Silver PySpark indicators,
-          Gold join to Azure SQL), cutting data latency 35%. Trained a 2-layer PyTorch LSTM on
-          11,213 sliding windows of AAPL data predicting next-day price at 60-70% price-level
-          accuracy depending on the stock, validated with 5-fold walk-forward cross-validation. Shipped the full delivery layer: a Django REST API,
-          a Bootstrap web client, and a cross-platform Flutter app, with Grafana and Power BI
-          monitoring.
-        </p>
-        <div class="project-tags">
-          <span class="ptag">PyTorch</span>
-          <span class="ptag">LSTM</span>
-          <span class="ptag">Databricks</span>
-          <span class="ptag">Azure Data Factory</span>
-          <span class="ptag">PySpark</span>
-          <span class="ptag">Azure SQL</span>
-          <span class="ptag">Django REST</span>
-          <span class="ptag">Flutter</span>
-          <span class="ptag">Grafana</span>
-        </div>
-      </div>
-
-      <div class="project-card reveal">
-        <div class="project-header">
-          <div class="project-icon">📊</div>
-          <div class="project-links">
-            <a href="https://eda-proj.vercel.app" target="_blank">Live ↗</a>
-            <a href="https://github.com/Gautamstar/edaProj" target="_blank">GitHub ↗</a>
-          </div>
-        </div>
-        <h3 class="project-title">EDA Web Service · Live</h3>
-        <p class="project-desc">
-          Full-stack exploratory data analysis tool: upload a CSV and get semantic type inference,
-          skewness and data-quality flags, auto-generated insights, and per-column charts in a dark
-          editorial UI. Hardened upload path (CSV-only, 20 MB cap, proper error responses), 5-day
-          report retention with a background cleanup job, and a trimmed Plotly build that cut the
-          chart bundle from 5.1 MB to 1.8 MB. React frontend on Vercel, FastAPI backend on Render,
-          Supabase storage.
-        </p>
-        <div class="project-tags">
-          <span class="ptag">FastAPI</span>
-          <span class="ptag">React</span>
-          <span class="ptag">Supabase</span>
-          <span class="ptag">Plotly</span>
-          <span class="ptag">Vercel</span>
-          <span class="ptag">Render</span>
-        </div>
-      </div>
-
-      <div class="project-card reveal">
-        <div class="project-header">
-          <div class="project-icon">📑</div>
-          <div class="project-links">
-            <a href="https://github.com/Gautamstar/rag-financial-qa" target="_blank">GitHub ↗</a>
-          </div>
-        </div>
-        <h3 class="project-title">Financial Document Q&A · RAG</h3>
-        <p class="project-desc">
-          Local RAG pipeline that answers natural-language questions over real SEC 10-K filings
-          (JPMorgan, Goldman Sachs, MetLife, Prudential, AIG). Hybrid BM25 + FAISS retrieval with
-          reciprocal rank fusion beats single-method search; a locally hosted Gemma model streams
-          answers token by token. FastAPI backend, Streamlit frontend with company filtering and
-          chat history, retrieval quality measured with RAGAS, and the whole thing containerized.
-        </p>
-        <div class="project-tags">
-          <span class="ptag">LangChain</span>
-          <span class="ptag">FAISS</span>
-          <span class="ptag">BM25</span>
-          <span class="ptag">FastAPI</span>
-          <span class="ptag">Streamlit</span>
-          <span class="ptag">RAGAS</span>
-          <span class="ptag">Docker</span>
-        </div>
-      </div>
-
-      <div class="project-card reveal">
-        <div class="project-header">
-          <div class="project-icon">📈</div>
-          <div class="project-links">
-            <a href="https://github.com/Gautamstar/market-data-pipeline" target="_blank">GitHub ↗</a>
-          </div>
-        </div>
-        <h3 class="project-title">Equity Market Data Pipeline</h3>
-        <p class="project-desc">
-          End-to-end pipeline ingesting daily OHLCV data for S&P 500 stocks and sector ETFs into
-          PostgreSQL. dbt models compute staging tables, technical indicators (SMA, Bollinger Bands,
-          RSI), and rolling performance metrics. Prefect orchestrates the daily run at market close,
-          feeding a Streamlit dashboard with candlestick charts and a momentum screener.
-        </p>
-        <div class="project-tags">
-          <span class="ptag">Python</span>
-          <span class="ptag">PostgreSQL</span>
-          <span class="ptag">dbt</span>
-          <span class="ptag">Prefect</span>
-          <span class="ptag">Streamlit</span>
-          <span class="ptag">yfinance</span>
-        </div>
-      </div>
-
-      <div class="project-card reveal">
-        <div class="project-header">
-          <div class="project-icon">📉</div>
-          <div class="project-links">
-            <a href="https://github.com/Gautamstar/rates-funding-risk" target="_blank">GitHub ↗</a>
-          </div>
-        </div>
-        <h3 class="project-title">Rates Funding Risk</h3>
-        <p class="project-desc">
-          Fixed-income interest-rate risk framework. Computes DV01 across the curve (3M, 2Y, 5Y, 10Y,
-          30Y), runs stress scenarios (parallel shifts, bear steepeners, bull flatteners), and
-          attributes PnL by maturity bucket so you can see exactly which tenors drive portfolio
-          moves. Results export to CSV for reporting.
-        </p>
-        <div class="project-tags">
-          <span class="ptag">Python</span>
-          <span class="ptag">Pandas</span>
-          <span class="ptag">NumPy</span>
-          <span class="ptag">Fixed Income</span>
-          <span class="ptag">Risk</span>
-        </div>
-      </div>
-
-      <div class="project-card reveal">
-        <div class="project-header">
-          <div class="project-icon">🔁</div>
-          <div class="project-links"></div>
-        </div>
-        <h3 class="project-title">Customer Churn Prediction</h3>
-        <p class="project-desc">
-          End-to-end ML pipeline covering null imputation, outlier handling, categorical encoding,
-          class-imbalance handling, and feature engineering with Pandas and SQL. Trained and compared
-          XGBoost, LightGBM, and Random Forest, improving recall 15% over a logistic-regression
-          baseline and selecting the best model by ROC-AUC, accuracy, and F1. Ranked feature
-          importance to surface the top churn drivers.
-        </p>
-        <div class="project-tags">
-          <span class="ptag">Python</span>
-          <span class="ptag">XGBoost</span>
-          <span class="ptag">LightGBM</span>
-          <span class="ptag">scikit-learn</span>
-          <span class="ptag">Pandas</span>
-        </div>
-      </div>
-
-      <div class="project-card reveal">
-        <div class="project-header">
-          <div class="project-icon">💹</div>
-          <div class="project-links">
-            <a href="https://github.com/Gautamstar/StockPredictor" target="_blank">GitHub ↗</a>
-          </div>
-        </div>
-        <h3 class="project-title">AMD Stock Predictor</h3>
-        <p class="project-desc">
-          Classifier predicting next-day price direction for AMD. Pulls historical OHLCV from Yahoo
-          Finance, engineers technical indicators (moving averages, RSI, MACD) with the ta library,
-          handles missing data, and trains a HistGradientBoostingClassifier evaluated on a held-out
-          test set.
-        </p>
-        <div class="project-tags">
-          <span class="ptag">Python</span>
-          <span class="ptag">scikit-learn</span>
-          <span class="ptag">Pandas</span>
-          <span class="ptag">NumPy</span>
-          <span class="ptag">ta</span>
-        </div>
-      </div>
-
-      <div class="project-card reveal">
-        <div class="project-header">
-          <div class="project-icon">🧩</div>
-          <div class="project-links">
-            <a href="https://github.com/Gautamstar/data-structs" target="_blank">GitHub ↗</a>
-          </div>
-        </div>
-        <h3 class="project-title">Data Structs</h3>
-        <p class="project-desc">
-          Interactive lessons walking through the data structures and algorithms that come up in
-          coding interviews, built as a hands-on study tool to reinforce the fundamentals with
-          visual, in-browser examples.
-        </p>
-        <div class="project-tags">
-          <span class="ptag">JavaScript</span>
-          <span class="ptag">HTML</span>
-          <span class="ptag">Algorithms</span>
-          <span class="ptag">DSA</span>
-        </div>
-      </div>
-
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <span class="micro"><em>02</em> / Projects</span>
+      <h2>Selected work.</h2>
     </div>
+
+    <article class="proj reveal">
+      <span class="proj-idx">01</span>
+      <div>
+        <div class="proj-title-row">
+          <h3>The Almanac</h3>
+          <span class="micro-sm">Capstone · 2025</span>
+        </div>
+        <p class="proj-desc">
+          Cloud data pipeline and forecasting platform, built as my capstone. A three-tier
+          pipeline on Databricks and Azure Data Factory moves raw OHLCV data through PySpark
+          indicators into Azure SQL, which cut data latency by 35%. A 2-layer PyTorch LSTM
+          trained on 11,213 sliding windows of AAPL data predicts next-day price at 60-70%
+          accuracy depending on the stock, validated with walk-forward cross-validation. Served
+          through a Django REST API with a web client, a Flutter app, and Grafana and Power BI
+          for monitoring.
+        </p>
+        <p class="proj-tags">PyTorch · LSTM · Databricks · Azure Data Factory · PySpark · Azure SQL · Django REST · Flutter · Grafana</p>
+      </div>
+      <div class="proj-links">
+        <a href="https://github.com/Gautamstar/almanac-predictor" target="_blank" rel="noopener">GitHub ↗</a>
+      </div>
+    </article>
+
+    <article class="proj reveal">
+      <span class="proj-idx">02</span>
+      <div>
+        <div class="proj-title-row">
+          <h3>EDA Web Service</h3>
+          <span class="chip">Live</span>
+          <span class="micro-sm">2026</span>
+        </div>
+        <p class="proj-desc">
+          Upload a CSV and get back type inference, skewness and quality flags, auto-generated
+          insights, and a chart for every column. Uploads are locked down to CSVs under 20 MB
+          with proper error responses, reports expire after 5 days through a background cleanup
+          job, and a trimmed Plotly build cut the chart bundle from 5.1 MB to 1.8 MB. React on
+          Vercel, FastAPI on Render, Supabase for storage.
+        </p>
+        <p class="proj-tags">FastAPI · React · Supabase · Plotly · Vercel · Render</p>
+      </div>
+      <div class="proj-links">
+        <a href="https://eda-proj.vercel.app" target="_blank" rel="noopener">Live ↗</a>
+        <a href="https://github.com/Gautamstar/edaProj" target="_blank" rel="noopener">GitHub ↗</a>
+      </div>
+    </article>
+
+    <article class="proj reveal">
+      <span class="proj-idx">03</span>
+      <div>
+        <div class="proj-title-row">
+          <h3>Financial Document Q&amp;A</h3>
+          <span class="micro-sm">RAG · 2026</span>
+        </div>
+        <p class="proj-desc">
+          Answers plain-English questions over real SEC 10-K filings from JPMorgan, Goldman
+          Sachs, MetLife, and others. Retrieval runs BM25 and FAISS together with reciprocal
+          rank fusion, which beat either method alone, and a locally hosted Gemma model streams
+          the answers token by token. FastAPI backend, Streamlit frontend with company filtering
+          and chat history, retrieval quality scored with RAGAS, all of it running in Docker.
+        </p>
+        <p class="proj-tags">LangChain · FAISS · BM25 · FastAPI · Streamlit · RAGAS · Docker</p>
+      </div>
+      <div class="proj-links">
+        <a href="https://github.com/Gautamstar/rag-financial-qa" target="_blank" rel="noopener">GitHub ↗</a>
+      </div>
+    </article>
+
+    <article class="proj reveal">
+      <span class="proj-idx">04</span>
+      <div>
+        <div class="proj-title-row">
+          <h3>Equity Market Data Pipeline</h3>
+          <span class="micro-sm">2026</span>
+        </div>
+        <p class="proj-desc">
+          Daily pipeline that pulls OHLCV data for S&amp;P 500 stocks and sector ETFs into
+          PostgreSQL. dbt builds the staging tables, technical indicators like SMA, Bollinger
+          Bands, and RSI, and rolling performance metrics. Prefect runs the whole thing at
+          market close and feeds a Streamlit dashboard with candlestick charts and a momentum
+          screener.
+        </p>
+        <p class="proj-tags">Python · PostgreSQL · dbt · Prefect · Streamlit · yfinance</p>
+      </div>
+      <div class="proj-links">
+        <a href="https://github.com/Gautamstar/market-data-pipeline" target="_blank" rel="noopener">GitHub ↗</a>
+      </div>
+    </article>
+
+    <article class="proj reveal">
+      <span class="proj-idx">05</span>
+      <div>
+        <div class="proj-title-row">
+          <h3>Rates Funding Risk</h3>
+        </div>
+        <p class="proj-desc">
+          Fixed-income interest-rate risk framework. It computes DV01 across the curve from 3M
+          out to 30Y, runs stress scenarios like parallel shifts, bear steepeners, and bull
+          flatteners, and attributes PnL by maturity bucket so you can see which tenors drive
+          portfolio moves. Results export to CSV.
+        </p>
+        <p class="proj-tags">Python · Pandas · NumPy · Fixed income · Risk</p>
+      </div>
+      <div class="proj-links">
+        <a href="https://github.com/Gautamstar/rates-funding-risk" target="_blank" rel="noopener">GitHub ↗</a>
+      </div>
+    </article>
+
+    <article class="proj reveal">
+      <span class="proj-idx">06</span>
+      <div>
+        <div class="proj-title-row">
+          <h3>Customer Churn Prediction</h3>
+        </div>
+        <p class="proj-desc">
+          Takes messy customer data to a ranked list of churn drivers. The prep pipeline handles
+          null imputation, outliers, encoding, and class imbalance, then XGBoost, LightGBM, and
+          Random Forest go head to head. Recall came out 15% above a logistic-regression
+          baseline, with the final pick made on ROC-AUC, accuracy, and F1.
+        </p>
+        <p class="proj-tags">Python · XGBoost · LightGBM · scikit-learn · Pandas</p>
+      </div>
+      <div class="proj-links"></div>
+    </article>
+
+    <article class="proj reveal">
+      <span class="proj-idx">07</span>
+      <div>
+        <div class="proj-title-row">
+          <h3>AMD Stock Predictor</h3>
+        </div>
+        <p class="proj-desc">
+          Small classifier that predicts next-day price direction for AMD. It pulls history from
+          Yahoo Finance, builds moving averages, RSI, and MACD with the ta library, and trains a
+          HistGradientBoostingClassifier evaluated on a held-out test set.
+        </p>
+        <p class="proj-tags">Python · scikit-learn · Pandas · NumPy · ta</p>
+      </div>
+      <div class="proj-links">
+        <a href="https://github.com/Gautamstar/StockPredictor" target="_blank" rel="noopener">GitHub ↗</a>
+      </div>
+    </article>
+
+    <article class="proj reveal">
+      <span class="proj-idx">08</span>
+      <div>
+        <div class="proj-title-row">
+          <h3>Data Structs</h3>
+        </div>
+        <p class="proj-desc">
+          Interactive lessons on the data structures and algorithms that show up in coding
+          interviews. Built as a study tool for myself, with visual examples that run right in
+          the browser.
+        </p>
+        <p class="proj-tags">JavaScript · HTML · Algorithms · DSA</p>
+      </div>
+      <div class="proj-links">
+        <a href="https://github.com/Gautamstar/data-structs" target="_blank" rel="noopener">GitHub ↗</a>
+      </div>
+    </article>
+
   </div>
 </section>
 
-<!-- ── Experience ── -->
 <section id="experience">
-  <div class="container">
-    <p class="section-label">Experience</p>
-    <h2 class="section-title reveal">Where I've Worked</h2>
-    <div class="timeline">
-
-      <div class="tl-item reveal">
-        <div class="tl-dot"></div>
-        <p class="tl-date">SEP 2024 to DEC 2024 · SEP 2025 to DEC 2025</p>
-        <h3 class="tl-role">ServiceNow Developer & QA Specialist</h3>
-        <p class="tl-company">PAMT Consulting, Remote</p>
-        <ul class="tl-bullets">
-          <li>Built and enhanced ServiceNow applications with App Engine Studio, Flow Designer, and IntegrationHub, including HRSD onboarding workflows that cut manual processing time</li>
-          <li>Maintained structured update sets and validated system data flows across multiple deployment environments</li>
-          <li>Designed and ran QA test cases verifying data accuracy, integration reliability, and API output correctness</li>
-          <li>Collaborated with engineering teams to validate data contracts and resolve integration defects before release, following agile practices</li>
-        </ul>
-      </div>
-
-      <div class="tl-item reveal">
-        <div class="tl-dot"></div>
-        <p class="tl-date">JAN 2022 to MAY 2022</p>
-        <h3 class="tl-role">Lot Associate</h3>
-        <p class="tl-company">The Home Depot, Guelph ON</p>
-        <ul class="tl-bullets">
-          <li>Maintained operational standards and customer service in a high-traffic environment</li>
-        </ul>
-      </div>
-
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <span class="micro"><em>03</em> / Experience</span>
+      <h2>Where I've worked.</h2>
     </div>
 
-    <div class="edu-wrap">
-      <p class="section-label">Education</p>
-      <div class="edu-card reveal">
-        <div class="edu-icon">🎓</div>
+    <div class="xp reveal">
+      <div class="xp-when">
+        <p class="micro-sm">Sep 2024 · Dec 2024</p>
+        <p class="micro-sm">Sep 2025 · Dec 2025</p>
+      </div>
+      <div>
+        <h3>ServiceNow Developer &amp; QA Specialist</h3>
+        <p class="xp-org">PAMT Consulting · Remote</p>
+        <ul>
+          <li>Built and updated ServiceNow apps in App Engine Studio, Flow Designer, and IntegrationHub, including an HRSD onboarding workflow that cut manual ticket handling time by about 30%</li>
+          <li>Maintained update sets and validated data flows across dev, test, and production instances</li>
+          <li>Wrote and ran QA test cases covering data accuracy, integration reliability, and API output</li>
+          <li>Worked with engineering to confirm data contracts and fix integration defects before release</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="xp reveal">
+      <div class="xp-when">
+        <p class="micro-sm">Jan 2022 · May 2022</p>
+      </div>
+      <div>
+        <h3>Lot Associate</h3>
+        <p class="xp-org">The Home Depot · Guelph, ON</p>
+        <ul>
+          <li>Kept the lot stocked and organized and helped customers in a high-traffic store</li>
+        </ul>
+      </div>
+    </div>
+
+    <div style="margin-top: 72px;">
+      <p class="micro reveal" style="margin-bottom: 8px;"><em style="color: var(--accent); font-style: normal;">04</em> / Education</p>
+      <div class="edu-row reveal">
+        <p class="micro-sm" style="padding-top: 6px;">Sep 2020 · Dec 2025</p>
         <div>
-          <p class="edu-degree">Bachelor of Computer Science (Honors)</p>
-          <p class="edu-school">Conestoga College</p>
-          <p class="edu-date">SEP 2020 to DEC 2025</p>
+          <h3>Bachelor of Computer Science (Honors)</h3>
+          <p>Conestoga College · machine learning, data structures and algorithms, database design, cloud computing, software engineering</p>
+        </div>
+      </div>
+      <div class="edu-row reveal">
+        <p class="micro-sm" style="padding-top: 6px;">Jun 2026</p>
+        <div>
+          <h3>Google Advanced Data Analytics Professional Certificate</h3>
+          <p>Google · Coursera · 7-course program: statistics, Python, regression, machine learning, visualization</p>
         </div>
       </div>
     </div>
-
-    <div class="edu-wrap">
-      <p class="section-label">Certifications</p>
-      <div class="edu-card reveal">
-        <div class="edu-icon">📜</div>
-        <div>
-          <p class="edu-degree">Google Advanced Data Analytics Professional Certificate</p>
-          <p class="edu-school">Google · Coursera</p>
-          <p class="edu-date">2026 · 7-course program: statistics, Python, regression, ML, visualization</p>
-        </div>
-      </div>
-    </div>
-
   </div>
 </section>
 
-<!-- ── Contact ── -->
 <section id="contact">
-  <div class="container">
-    <p class="section-label">Contact</p>
-    <h2 class="section-title reveal">Let's Connect</h2>
-    <p class="contact-desc reveal">
-      Actively looking for data engineering and data science roles in finance.
-      Open to opportunities or just talking shop.
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <span class="micro"><em>05</em> / Contact</span>
+      <h2>Let's talk.</h2>
+    </div>
+    <p class="contact-line reveal">
+      Looking for software engineering, data science, and data engineering roles.
+      <span>Guelph, Kitchener-Waterloo, Toronto, or remote.</span>
     </p>
-    <div class="contact-btns reveal">
-      <a href="mailto:gautamsingh2189@gmail.com" class="btn btn-primary">Send an Email ↗</a>
-      <a href="https://github.com/Gautamstar" target="_blank" class="btn btn-outline">GitHub ↗</a>
-      <a href="https://www.linkedin.com/in/gautam-singh-cs/" target="_blank" class="btn btn-outline">LinkedIn ↗</a>
+    <div class="hero-links reveal" style="--d: 0.07s;">
+      <a class="lnk fill" href="mailto:gautamsingh2189@gmail.com">Send an email ↗</a>
+      <a class="lnk" href="https://github.com/Gautamstar" target="_blank" rel="noopener">GitHub ↗</a>
+      <a class="lnk" href="https://www.linkedin.com/in/gautam-singh-cs/" target="_blank" rel="noopener">LinkedIn ↗</a>
     </div>
   </div>
 </section>
 
 <footer>
-  <p>© <span id="year"></span> Gautam Singh</p>
+  <div class="wrap foot-inner">
+    <span class="micro-sm">© <span id="year"></span> Gautam Singh</span>
+    <a href="#top" class="micro-sm" style="color: var(--ink-2);">Back to top ↑</a>
+  </div>
 </footer>
 
 <script>
-  // ── Navbar ──
-  const navbar = document.getElementById('navbar');
-  addEventListener('scroll', () => navbar.classList.toggle('scrolled', scrollY > 40));
+  document.documentElement.classList.add('js');
 
-  // ── Typing animation ──
-  const roles  = ['Data Engineer', 'ML Engineer', 'Full-Stack Developer', 'Finance Tech Builder'];
-  const el     = document.getElementById('typed-text');
-  let ri = 0, ci = 0, del = false;
+  const nav = document.getElementById('nav');
+  addEventListener('scroll', () => nav.classList.toggle('scrolled', scrollY > 24), { passive: true });
 
-  (function tick() {
-    const word = roles[ri];
-    el.textContent = del ? word.slice(0, --ci) : word.slice(0, ++ci);
-    let wait = del ? 45 : 95;
-    if (!del && ci === word.length)        { wait = 1900; del = true; }
-    else if (del && ci === 0)              { del = false; ri = (ri + 1) % roles.length; wait = 320; }
-    setTimeout(tick, wait);
-  })();
-
-  // ── Canvas particle network ──
-  const canvas = document.getElementById('hero-canvas');
-  const ctx    = canvas.getContext('2d');
-
-  function resize() {
-    canvas.width  = innerWidth;
-    canvas.height = innerHeight;
-  }
-  resize();
-  addEventListener('resize', resize);
-
-  const pts = Array.from({ length: 65 }, () => ({
-    x: Math.random() * innerWidth,
-    y: Math.random() * innerHeight,
-    vx: (Math.random() - 0.5) * 0.38,
-    vy: (Math.random() - 0.5) * 0.38,
-    r: Math.random() * 1.8 + 0.8,
-  }));
-
-  (function frame() {
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
-    for (const p of pts) {
-      p.x += p.vx; p.y += p.vy;
-      if (p.x < 0 || p.x > canvas.width)  p.vx *= -1;
-      if (p.y < 0 || p.y > canvas.height) p.vy *= -1;
-      ctx.beginPath();
-      ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
-      ctx.fillStyle = 'rgba(14,165,233,0.8)';
-      ctx.fill();
-    }
-    for (let i = 0; i < pts.length; i++) {
-      for (let j = i + 1; j < pts.length; j++) {
-        const dx = pts[i].x - pts[j].x;
-        const dy = pts[i].y - pts[j].y;
-        const d  = Math.sqrt(dx * dx + dy * dy);
-        if (d < 130) {
-          ctx.beginPath();
-          ctx.moveTo(pts[i].x, pts[i].y);
-          ctx.lineTo(pts[j].x, pts[j].y);
-          ctx.strokeStyle = `rgba(14,165,233,${0.18 * (1 - d / 130)})`;
-          ctx.lineWidth = 0.6;
-          ctx.stroke();
-        }
-      }
-    }
-    requestAnimationFrame(frame);
-  })();
-
-  // ── Scroll reveal ──
+  let pending = Array.from(document.querySelectorAll('.reveal'));
   const io = new IntersectionObserver(
-    entries => entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); }),
-    { threshold: 0.12 }
+    entries => entries.forEach(e => {
+      if (e.isIntersecting) { e.target.classList.add('visible'); io.unobserve(e.target); }
+    }),
+    { threshold: 0.1, rootMargin: '0px 0px -60px 0px' }
   );
-  document.querySelectorAll('.reveal, .reveal-left').forEach(el => io.observe(el));
+  pending.forEach(el => io.observe(el));
 
-  // ── Footer year ──
+  function sweep() {
+    pending = pending.filter(el => !el.classList.contains('visible'));
+    pending.forEach(el => {
+      if (el.getBoundingClientRect().top < innerHeight - 40) el.classList.add('visible');
+    });
+  }
+  setTimeout(sweep, 900);
+  addEventListener('scroll', sweep, { passive: true });
+  addEventListener('load', sweep);
+
   document.getElementById('year').textContent = new Date().getFullYear();
 </script>
 </body>
