@@ -596,7 +596,7 @@
       <div class="hero-btns">
         <a href="#projects" class="btn btn-primary">View My Work ↓</a>
         <a href="https://github.com/Gautamstar" target="_blank" class="btn btn-outline">GitHub ↗</a>
-        <a href="https://www.linkedin.com/in/gautam-singh-4062b015b/" target="_blank" class="btn btn-outline">LinkedIn ↗</a>
+        <a href="https://www.linkedin.com/in/gautam-singh-cs/" target="_blank" class="btn btn-outline">LinkedIn ↗</a>
       </div>
     </div>
   </div>
@@ -723,8 +723,8 @@
           Cloud data pipeline and forecasting platform. Built a three-tier medallion pipeline on
           Databricks and Azure Data Factory (Bronze OHLCV ingestion, Silver PySpark indicators,
           Gold join to Azure SQL), cutting data latency 35%. Trained a 2-layer PyTorch LSTM on
-          11,213 sliding windows of AAPL data predicting next-day returns at a mean R² of 0.853
-          across 5-fold walk-forward validation. Shipped the full delivery layer: a Django REST API,
+          11,213 sliding windows of AAPL data predicting next-day price at 60-70% price-level
+          accuracy depending on the stock, validated with 5-fold walk-forward cross-validation. Shipped the full delivery layer: a Django REST API,
           a Bootstrap web client, and a cross-platform Flutter app, with Grafana and Power BI
           monitoring.
         </p>
@@ -738,6 +738,33 @@
           <span class="ptag">Django REST</span>
           <span class="ptag">Flutter</span>
           <span class="ptag">Grafana</span>
+        </div>
+      </div>
+
+      <div class="project-card reveal">
+        <div class="project-header">
+          <div class="project-icon">📊</div>
+          <div class="project-links">
+            <a href="https://eda-proj.vercel.app" target="_blank">Live ↗</a>
+            <a href="https://github.com/Gautamstar/edaProj" target="_blank">GitHub ↗</a>
+          </div>
+        </div>
+        <h3 class="project-title">EDA Web Service · Live</h3>
+        <p class="project-desc">
+          Full-stack exploratory data analysis tool: upload a CSV and get semantic type inference,
+          skewness and data-quality flags, auto-generated insights, and per-column charts in a dark
+          editorial UI. Hardened upload path (CSV-only, 20 MB cap, proper error responses), 5-day
+          report retention with a background cleanup job, and a trimmed Plotly build that cut the
+          chart bundle from 5.1 MB to 1.8 MB. React frontend on Vercel, FastAPI backend on Render,
+          Supabase storage.
+        </p>
+        <div class="project-tags">
+          <span class="ptag">FastAPI</span>
+          <span class="ptag">React</span>
+          <span class="ptag">Supabase</span>
+          <span class="ptag">Plotly</span>
+          <span class="ptag">Vercel</span>
+          <span class="ptag">Render</span>
         </div>
       </div>
 
@@ -955,7 +982,7 @@
     <div class="contact-btns reveal">
       <a href="mailto:gautamsingh2189@gmail.com" class="btn btn-primary">Send an Email ↗</a>
       <a href="https://github.com/Gautamstar" target="_blank" class="btn btn-outline">GitHub ↗</a>
-      <a href="https://www.linkedin.com/in/gautam-singh-4062b015b/" target="_blank" class="btn btn-outline">LinkedIn ↗</a>
+      <a href="https://www.linkedin.com/in/gautam-singh-cs/" target="_blank" class="btn btn-outline">LinkedIn ↗</a>
     </div>
   </div>
 </section>
