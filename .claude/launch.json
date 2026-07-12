@@ -4,14 +4,37 @@
     {
       "name": "portfolio",
       "runtimeExecutable": "python",
-      "runtimeArgs": ["-m", "http.server", "8788", "--directory", "C:/Users/Gautam/Desktop/portfolio"],
+      "runtimeArgs": [
+        "-m",
+        "http.server",
+        "8788",
+        "--directory",
+        "C:/Users/Gautam/Desktop/portfolio"
+      ],
       "port": 8788
     },
     {
       "name": "eda-frontend",
       "runtimeExecutable": "npm",
-      "runtimeArgs": ["run", "dev", "--prefix", "C:/Users/Gautam/Desktop/edaProj/frontend"],
+      "runtimeArgs": [
+        "run",
+        "dev",
+        "--prefix",
+        "C:/Users/Gautam/Desktop/edaProj/frontend"
+      ],
       "port": 5173
+    },
+    {
+      "name": "data-structs",
+      "runtimeExecutable": "python",
+      "runtimeArgs": [
+        "-m",
+        "http.server",
+        "8791",
+        "--directory",
+        "C:/Users/Gautam/Desktop/Data Structs"
+      ],
+      "port": 8791
     }
   ]
 }
