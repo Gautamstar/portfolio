@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Gautam Singh · Software Engineer</title>
+  <title>Gautam Singh · Software & Data Engineer</title>
   <meta name="description" content="Gautam Singh: software engineer and CS grad building data pipelines, ML systems, and full-stack apps. Based in Guelph, Ontario." />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -399,12 +399,12 @@
       <span class="micro" style="color: var(--ink-3);">Guelph · Ontario · Canada</span>
     </div>
     <h1 class="reveal" style="--d: 0.07s;">
-      Software engineer<br />
+      Software &amp; data engineer<br />
       <span class="dim">for data-heavy problems.</span>
     </h1>
     <p class="hero-sub reveal" style="--d: 0.14s;">
-      Gautam Singh. CS grad who builds <strong>data pipelines</strong>, <strong>ML systems</strong>,
-      and <strong>full-stack apps</strong>, mostly around financial markets.
+      Gautam Singh, a software and data engineer (CS grad). I build <strong>full-stack apps</strong>
+      and the <strong>data pipelines</strong> behind them, mostly around financial markets.
       The latest one is live right now.
     </p>
     <div class="hero-links reveal" style="--d: 0.21s;">
@@ -748,7 +748,9 @@
       if (el.getBoundingClientRect().top < innerHeight - 40) el.classList.add('visible');
     });
   }
-  setTimeout(sweep, 900);
+  // reveal whatever is in the first viewport right away, so a visitor who never
+  // scrolls still sees the hero even if IntersectionObserver is slow to fire
+  requestAnimationFrame(sweep);
   addEventListener('scroll', sweep, { passive: true });
   addEventListener('load', sweep);
 
