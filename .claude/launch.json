@@ -35,6 +35,35 @@
         "C:/Users/Gautam/Desktop/Data Structs"
       ],
       "port": 8791
+    },
+    {
+      "name": "fitpdf-api",
+      "runtimeExecutable": "cmd",
+      "runtimeArgs": [
+        "/c",
+        "cd /d C:\\Users\\Gautam\\Desktop\\fitpdf&& set FITPDF_INLINE=1&& set FITPDF_GS=C:\\Users\\Gautam\\anaconda3\\envs\\gs\\Library\\bin\\gswin64c.exe&& .venv\\Scripts\\python.exe -m uvicorn fitpdf.web.app:create_app --factory --port 8000"
+      ],
+      "port": 8000
+    },
+    {
+      "name": "fitpdf-frontend",
+      "runtimeExecutable": "npm",
+      "runtimeArgs": [
+        "run",
+        "dev",
+        "--prefix",
+        "C:/Users/Gautam/Desktop/fitpdf/frontend"
+      ],
+      "port": 5174
+    },
+    {
+      "name": "distill-review",
+      "runtimeExecutable": "wsl",
+      "runtimeArgs": [
+        "-e", "bash", "-c",
+        "cd /mnt/c/Users/Gautam/Desktop/distill && .venv/bin/python -m uvicorn review.app:app --host 127.0.0.1 --port 8990"
+      ],
+      "port": 8990
     }
   ]
 }
