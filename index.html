@@ -404,8 +404,7 @@
     </h1>
     <p class="hero-sub reveal" style="--d: 0.14s;">
       Gautam Singh, a software and data engineer (CS grad). I build <strong>full-stack apps</strong>
-      and the <strong>data pipelines</strong> behind them, mostly around financial markets.
-      The latest one is live right now.
+      and the <strong>data pipelines</strong> behind them. The latest one is live right now.
     </p>
     <div class="hero-links reveal" style="--d: 0.21s;">
       <a class="lnk fill" href="#projects">View work ↓</a>
@@ -486,6 +485,32 @@
       <span class="proj-idx">01</span>
       <div>
         <div class="proj-title-row">
+          <h3>FitPDF</h3>
+          <span class="chip">Live</span>
+          <span class="micro-sm">2026</span>
+        </div>
+        <p class="proj-desc">
+          Pick a target size and get a file that fits under it. A lossless pass runs first, and
+          when that is not enough a binary search across twelve quality settings finds the
+          gentlest one that still meets the target, so twelve options resolve in at most four
+          attempts. If the size is out of reach it reports the smallest the file can actually go
+          rather than handing back something still too big. PDFs run through Ghostscript and
+          images through Pillow, both behind one strategy interface, so the search is written
+          once and adding a format means four methods. FastAPI with a Redis queue and a
+          background worker on Render, React and TypeScript on Vercel, progress streamed over
+          Server-Sent Events. Uploads delete themselves within ten minutes of finishing.
+        </p>
+        <p class="proj-tags">FastAPI · React · TypeScript · Redis · RQ · Ghostscript · Pillow · Docker · Render · Vercel</p>
+      </div>
+      <div class="proj-links">
+        <a href="https://fitpdf-rose.vercel.app" target="_blank" rel="noopener">Live ↗</a>
+      </div>
+    </article>
+
+    <article class="proj reveal">
+      <span class="proj-idx">02</span>
+      <div>
+        <div class="proj-title-row">
           <h3>The Almanac</h3>
           <span class="micro-sm">Capstone · 2025</span>
         </div>
@@ -506,7 +531,7 @@
     </article>
 
     <article class="proj reveal">
-      <span class="proj-idx">02</span>
+      <span class="proj-idx">03</span>
       <div>
         <div class="proj-title-row">
           <h3>EDA Web Service</h3>
@@ -529,7 +554,7 @@
     </article>
 
     <article class="proj reveal">
-      <span class="proj-idx">03</span>
+      <span class="proj-idx">04</span>
       <div>
         <div class="proj-title-row">
           <h3>Financial Document Q&amp;A</h3>
@@ -550,7 +575,7 @@
     </article>
 
     <article class="proj reveal">
-      <span class="proj-idx">04</span>
+      <span class="proj-idx">05</span>
       <div>
         <div class="proj-title-row">
           <h3>Equity Market Data Pipeline</h3>
@@ -571,7 +596,7 @@
     </article>
 
     <article class="proj reveal">
-      <span class="proj-idx">05</span>
+      <span class="proj-idx">06</span>
       <div>
         <div class="proj-title-row">
           <h3>Rates Funding Risk</h3>
@@ -587,23 +612,6 @@
       <div class="proj-links">
         <a href="https://github.com/Gautamstar/rates-funding-risk" target="_blank" rel="noopener">GitHub ↗</a>
       </div>
-    </article>
-
-    <article class="proj reveal">
-      <span class="proj-idx">06</span>
-      <div>
-        <div class="proj-title-row">
-          <h3>Customer Churn Prediction</h3>
-        </div>
-        <p class="proj-desc">
-          Takes messy customer data to a ranked list of churn drivers. The prep pipeline handles
-          null imputation, outliers, encoding, and class imbalance, then XGBoost, LightGBM, and
-          Random Forest go head to head. Recall came out 15% above a logistic-regression
-          baseline, with the final pick made on ROC-AUC, accuracy, and F1.
-        </p>
-        <p class="proj-tags">Python · XGBoost · LightGBM · scikit-learn · Pandas</p>
-      </div>
-      <div class="proj-links"></div>
     </article>
 
     <article class="proj reveal">
