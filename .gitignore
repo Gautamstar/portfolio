@@ -1,5 +1,7 @@
-# Claude Code local settings
-.claude/settings.local.json
+# Claude Code local config. Machine-specific: absolute paths, local ports, and
+# the names of whatever else happens to be checked out on this machine. None of
+# it is useful to anyone cloning a static site.
+.claude/
 
 # Node tooling. The site itself is a single static index.html and needs none of
 # this at runtime, so nothing here belongs in the repo.
