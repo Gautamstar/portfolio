@@ -1,2 +1,8 @@
 # Claude Code local settings
 .claude/settings.local.json
+
+# Node tooling. The site itself is a single static index.html and needs none of
+# this at runtime, so nothing here belongs in the repo.
+node_modules/
+package.json
+package-lock.json
