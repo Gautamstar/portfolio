@@ -751,13 +751,13 @@
         <span class="chip chip-live"><span class="dot" aria-hidden="true"></span>Live</span>
         <span class="card-year">2026</span>
       </div>
-      <p class="lead">Web analytics that cannot identify anyone. It is running on this page right now.</p>
+      <p class="lead">Self-hosted web analytics. Rust on Lambda, no cookies, no IP addresses stored.</p>
       <ul class="points">
-        <li>The ingest path does <strong>exactly one database write</strong>, with bot filtering, user-agent classification and visitor hashing all pure CPU work. Measured on the deployed stack: <strong>184 ms cold start, 5.1 ms warm</strong>, 30 MB of 128 MB used</li>
-        <li>Visitor IDs are keyed to a salt that <strong>rotates every midnight</strong>, so the same person is unrecognisable the next day. The type that reaches the database has no field for an IP address, which makes that a property of the code rather than a promise</li>
-        <li><strong>647 bytes</strong> of JavaScript, no cookies and no browser storage, so a site can install it without a consent banner</li>
-        <li>Aggregation recomputes whole days rather than incrementing counters, so a repeated or half-failed run needs no cleanup and drifted numbers are impossible</li>
-        <li><strong>Over 40 AWS resources</strong> defined in Terraform, running at <strong>$0/month</strong> inside perpetual free tiers</li>
+        <li>Ingest is <strong>one DynamoDB write per event</strong>. Bot filtering, user-agent classification, URL normalisation and visitor hashing are pure CPU with no I/O. Measured on arm64 at 128 MB: <strong>184 ms cold start, 5.1 ms warm, 30 MB peak</strong></li>
+        <li>Visitor IDs are a keyed BLAKE3 hash over site, address and user agent, under a salt derived from the UTC date, so IDs cannot be correlated across days. The persisted type has <strong>no IP field</strong>, and query strings are stripped before write</li>
+        <li>Tracker is <strong>647 bytes gzipped</strong>, wraps pushState and replaceState for SPA route changes, and writes nothing to the browser</li>
+        <li>The scheduled rollup recomputes whole days from raw rows rather than incrementing counters, so re-runs are idempotent</li>
+        <li><strong>41 resources</strong> in Terraform: CloudFront, API Gateway HTTP API, three Lambdas on provided.al2023, DynamoDB, S3, EventBridge, one IAM role per function. <strong>$0/month</strong> on perpetual free tiers</li>
       </ul>
       <div class="tags">
         <span class="tag">Rust</span><span class="tag">AWS Lambda</span><span class="tag">DynamoDB</span>
