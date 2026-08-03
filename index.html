@@ -3,767 +3,1114 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Gautam Singh · Software & Data Engineer</title>
-  <meta name="description" content="Gautam Singh: software engineer and CS grad building data pipelines, ML systems, and full-stack apps. Based in Guelph, Ontario." />
+  <title>Gautam Singh · Software &amp; Data Engineer</title>
+  <meta name="description" content="Gautam Singh: software and data engineer. Data pipelines, machine learning systems, and the full-stack applications on top of them. Guelph, Ontario." />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500&display=swap" rel="stylesheet" />
   <style>
     :root {
-      --plane: #080807;
-      --surface: #131211;
-      --raised: #181715;
-      --ink: #e8e8e3;
-      --ink-2: #938f8a;
-      --ink-3: #6b645c;
-      --accent: #146ef5;
-      --accent-soft: #3987e5;
-      --hairline: rgba(232, 232, 227, 0.12);
-      --sans: "Space Grotesk", system-ui, sans-serif;
-      --mono: "IBM Plex Mono", ui-monospace, monospace;
+      --paper: #f5f6f2;
+      --ink: #111111;
+      --ink-2: #6d6a64;
+      --ink-3: #a6a29a;
+      --rule: rgba(17, 17, 17, 0.14);
+      --rule-soft: rgba(17, 17, 17, 0.07);
+      --serif: "Times New Roman", Times, serif;
+      --grot: "Space Grotesk", -apple-system, BlinkMacSystemFont, "Helvetica Neue", Arial, sans-serif;
+      --panel-w: 600px;
+      --panel-pad-l: 116px;
+      --panel-pad-r: 88px;
       --ease: cubic-bezier(0.22, 1, 0.36, 1);
     }
 
     * { margin: 0; padding: 0; box-sizing: border-box; }
 
     html {
-      color-scheme: dark;
-      scroll-behavior: smooth;
-      scroll-padding-top: 84px;
+      color-scheme: light;
+      background: var(--paper);
     }
 
     body {
-      background: var(--plane);
+      background: var(--paper);
       color: var(--ink);
-      font-family: var(--sans);
-      font-size: 16px;
-      line-height: 1.65;
+      font-family: var(--serif);
+      font-size: 17px;
+      line-height: 1.45;
       -webkit-font-smoothing: antialiased;
+      text-rendering: optimizeLegibility;
     }
 
-    /* film grain */
-    body::after {
-      content: "";
-      position: fixed;
-      inset: 0;
-      z-index: 90;
-      pointer-events: none;
-      opacity: 0.05;
-      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='240' height='240'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
-    }
-
-    ::selection { background: var(--accent); color: var(--ink); }
+    html.js, html.js body { height: 100%; overflow: hidden; }
 
     a { color: inherit; text-decoration: none; }
-    a:focus-visible, button:focus-visible {
-      outline: 1px solid rgba(232, 232, 227, 0.6);
+    ul, ol { list-style: none; }
+    button { font: inherit; color: inherit; background: none; border: 0; cursor: pointer; }
+
+    :focus-visible {
+      outline: 1px solid var(--ink);
       outline-offset: 3px;
     }
-    ul { list-style: none; }
 
-    .wrap { max-width: 1120px; margin: 0 auto; padding: 0 24px; }
+    ::selection { background: rgba(17, 17, 17, 0.14); }
 
-    .micro {
-      font-family: var(--mono);
-      font-size: 11px;
+    /* ── shared type ───────────────────────────────────────────── */
+
+    .cap {
+      font-family: var(--grot);
+      font-size: 10px;
       font-weight: 400;
+      line-height: 1.4;
       text-transform: uppercase;
-      letter-spacing: 0.25em;
-      color: var(--ink-2);
-    }
-    .micro-sm {
-      font-family: var(--mono);
-      font-size: 10px;
-      text-transform: uppercase;
-      letter-spacing: 0.2em;
-      color: var(--ink-3);
-    }
-
-    /* ── reveal motion ── */
-    html.js .reveal {
-      opacity: 0;
-      transform: translateY(14px);
-      transition: opacity 0.55s var(--ease), transform 0.55s var(--ease);
-      transition-delay: var(--d, 0s);
-    }
-    html.js .reveal.visible { opacity: 1; transform: none; }
-    @media (prefers-reduced-motion: reduce) {
-      html { scroll-behavior: auto; }
-      html.js .reveal { opacity: 1; transform: none; transition: none; }
-    }
-
-    /* ── nav ── */
-    nav {
-      position: fixed;
-      top: 0; left: 0; right: 0;
-      z-index: 80;
-      border-bottom: 1px solid transparent;
-      transition: border-color 0.3s, background 0.3s;
-    }
-    nav.scrolled {
-      background: rgba(8, 8, 7, 0.82);
-      backdrop-filter: blur(12px);
-      border-bottom-color: var(--hairline);
-    }
-    .nav-inner {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      height: 64px;
-    }
-    .nav-mark {
-      font-family: var(--mono);
-      font-size: 13px;
-      font-weight: 500;
-      letter-spacing: 0.1em;
-    }
-    .nav-mark span { color: var(--accent); }
-    .nav-links { display: flex; gap: 28px; }
-    .nav-links a {
-      font-family: var(--mono);
-      font-size: 10px;
-      text-transform: uppercase;
-      letter-spacing: 0.2em;
-      color: var(--ink-2);
-      transition: color 0.25s;
-    }
-    .nav-links a:hover { color: var(--ink); }
-
-    /* ── hero ── */
-    header {
-      padding: 176px 0 96px;
-      border-bottom: 1px solid var(--hairline);
-    }
-    .hero-status {
-      display: flex;
-      flex-wrap: wrap;
-      align-items: center;
-      gap: 14px;
-      margin-bottom: 40px;
-    }
-    .status-dot {
-      width: 6px; height: 6px;
-      background: var(--accent);
-      display: inline-block;
-      animation: pulse 2.4s infinite;
-    }
-    @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.35; } }
-    @media (prefers-reduced-motion: reduce) { .status-dot { animation: none; } }
-    h1 {
-      font-size: clamp(3.2rem, 9vw, 6.8rem);
-      font-weight: 600;
-      line-height: 0.98;
-      letter-spacing: -0.02em;
-      margin-bottom: 28px;
-    }
-    h1 .dim { color: var(--ink-3); }
-    .hero-sub {
-      max-width: 560px;
-      font-size: 18px;
-      color: var(--ink-2);
-      margin-bottom: 48px;
-    }
-    .hero-sub strong { color: var(--ink); font-weight: 500; }
-    .hero-links { display: flex; flex-wrap: wrap; gap: 12px; }
-    .lnk {
-      display: inline-flex;
-      align-items: center;
-      gap: 10px;
-      font-family: var(--mono);
-      font-size: 11px;
-      text-transform: uppercase;
-      letter-spacing: 0.18em;
-      padding: 14px 22px;
-      border: 1px solid var(--hairline);
-      color: var(--ink);
-      transition: border-color 0.25s, background 0.25s, color 0.25s;
-    }
-    .lnk:hover { border-color: rgba(232, 232, 227, 0.4); }
-    .lnk.fill {
-      background: var(--accent);
-      border-color: var(--accent);
-      color: #fff;
-    }
-    .lnk.fill:hover { background: var(--accent-soft); border-color: var(--accent-soft); }
-
-    .meta-strip {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 1px;
-      background: var(--hairline);
-      border: 1px solid var(--hairline);
-      margin-top: 72px;
-    }
-    .meta-cell {
-      background: var(--plane);
-      padding: 18px 20px;
-      text-align: center;
-    }
-
-    /* ── sections ── */
-    section { padding: 112px 0; border-bottom: 1px solid var(--hairline); }
-    .sec-head { margin-bottom: 64px; }
-    .sec-head .micro { display: block; margin-bottom: 16px; }
-    .sec-head .micro em { color: var(--accent); font-style: normal; }
-    h2 {
-      font-size: clamp(2rem, 4.5vw, 3.2rem);
-      font-weight: 600;
-      letter-spacing: -0.02em;
-      line-height: 1.05;
-    }
-
-    /* ── about ── */
-    .about-grid {
-      display: grid;
-      grid-template-columns: 1.1fr 0.9fr;
-      gap: 72px;
-    }
-    .about-text p { color: var(--ink-2); margin-bottom: 22px; font-size: 17px; }
-    .about-text strong { color: var(--ink); font-weight: 500; }
-    .about-text a { color: var(--ink); border-bottom: 1px solid var(--accent); }
-    .skill-group { border-top: 1px solid var(--hairline); padding: 18px 0; }
-    .skill-group:last-child { border-bottom: 1px solid var(--hairline); }
-    .skill-group h3 {
-      font-family: var(--mono);
-      font-size: 10px;
-      font-weight: 500;
-      text-transform: uppercase;
-      letter-spacing: 0.2em;
-      color: var(--ink-3);
-      margin-bottom: 10px;
-    }
-    .skill-group p { font-size: 15px; color: var(--ink-2); }
-
-    /* ── projects ── */
-    .proj {
-      display: grid;
-      grid-template-columns: 64px 1fr auto;
-      gap: 28px;
-      padding: 44px 0;
-      border-top: 1px solid var(--hairline);
-      align-items: start;
-    }
-    .proj:last-child { border-bottom: 1px solid var(--hairline); }
-    .proj-idx {
-      font-family: var(--mono);
-      font-size: 11px;
       letter-spacing: 0.15em;
-      color: var(--ink-3);
-      padding-top: 8px;
+      color: var(--ink-2);
     }
-    .proj-title-row {
+    .cap-dim { color: var(--ink-3); }
+
+    .underline {
+      background-image: linear-gradient(var(--ink), var(--ink));
+      background-size: 100% 1px;
+      background-repeat: no-repeat;
+      background-position: 0 100%;
+      transition: background-size 0.3s var(--ease);
+    }
+    .underline:hover { background-size: 0% 1px; background-position: 100% 100%; }
+
+    /* ── site header ───────────────────────────────────────────── */
+
+    .site-head {
+      position: fixed;
+      top: 38px;
+      left: 46px;
+      z-index: 40;
+    }
+    /* The map pans underneath, so a node label can end up behind the name.
+       A soft paper wash keeps the header legible without hard-edged occlusion. */
+    .site-head::before {
+      content: "";
+      position: absolute;
+      left: -30px; top: -26px; right: -46px; bottom: -28px;
+      z-index: -1;
+      background: radial-gradient(
+        118% 118% at 28% 42%,
+        var(--paper) 42%,
+        rgba(245, 246, 242, 0) 100%
+      );
+    }
+    .site-head h1 {
+      font-family: var(--serif);
+      font-size: 19px;
+      font-weight: 400;
+      letter-spacing: 0.005em;
+    }
+    .site-head p { margin-top: 3px; }
+
+    /* ── map ───────────────────────────────────────────────────── */
+
+    .map {
+      position: fixed;
+      inset: 0 var(--panel-w) 0 0;
+      overflow: hidden;
+      z-index: 10;
+    }
+    html:not(.js) .map { display: none; }
+
+    .map-inner {
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: 1400px;
+      height: 1300px;
+      transition: transform 0.9s var(--ease);
+      will-change: transform;
+    }
+
+    .map-links {
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: 1400px;
+      height: 1300px;
+      overflow: visible;
+    }
+
+    .link {
+      fill: none;
+      stroke: var(--ink);
+      stroke-width: 0.75;
+      opacity: 0;
+      transition: opacity 0.5s var(--ease), stroke-dashoffset 0.9s var(--ease);
+    }
+    .link.is-on { opacity: 0.4; stroke-dashoffset: 0 !important; }
+    .link.is-dim { opacity: 0.13; stroke-dashoffset: 0 !important; }
+
+    .node {
+      position: absolute;
+      width: 180px;
+      margin-left: -90px;
+      margin-top: -17px;
       display: flex;
-      flex-wrap: wrap;
-      align-items: baseline;
-      gap: 14px;
-      margin-bottom: 14px;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.55s var(--ease);
+      transition-delay: var(--delay, 0s);
     }
-    .proj h3 {
-      font-size: clamp(1.35rem, 2.6vw, 1.9rem);
-      font-weight: 600;
-      letter-spacing: -0.02em;
-      line-height: 1.15;
+    .node.is-on { opacity: 1; pointer-events: auto; }
+    .node.is-dim { opacity: 0.3; pointer-events: auto; }
+    .node.is-dim:hover { opacity: 0.75; }
+
+    .node-dot-wrap {
+      height: 34px;
+      display: grid;
+      place-items: center;
     }
-    .chip {
-      font-family: var(--mono);
+    .node-dot {
+      position: relative;
+      display: grid;
+      place-items: center;
+      width: 20px;
+      height: 20px;
+      border: 1px solid var(--ink);
+      border-radius: 50%;
+      background: var(--paper);
+      transition: transform 0.4s var(--ease), background 0.4s var(--ease);
+    }
+    .node:hover .node-dot { transform: scale(1.16); }
+
+    .node--root .node-dot { width: 15px; height: 15px; background: var(--ink); }
+    .node--area .node-dot { width: 27px; height: 27px; }
+    .node--project .node-dot { width: 12px; height: 12px; background: var(--ink); border-color: var(--ink); }
+    .node--work .node-dot { width: 10px; height: 10px; border-color: var(--ink-2); }
+    .node--information .node-dot { width: 19px; height: 19px; border-style: dashed; }
+
+    .node.is-current .node-dot { box-shadow: 0 0 0 4px var(--paper), 0 0 0 5px var(--ink); }
+    .node.is-current .node-title { text-decoration: underline; text-underline-offset: 3px; }
+
+    .node-num {
+      font-family: var(--grot);
+      font-size: 11px;
+      letter-spacing: 0;
+      color: var(--ink);
+      line-height: 1;
+    }
+
+    .node-label { display: block; margin-top: 8px; }
+    .node-title {
+      display: block;
+      font-family: var(--serif);
+      font-size: 15px;
+      line-height: 1.2;
+    }
+    .node-cap {
+      display: block;
+      margin-top: 3px;
+      font-family: var(--grot);
       font-size: 9px;
-      text-transform: uppercase;
-      letter-spacing: 0.2em;
-      padding: 4px 8px;
-      border: 1px solid var(--accent);
-      color: var(--accent-soft);
-    }
-    .proj-desc { color: var(--ink-2); max-width: 640px; margin-bottom: 18px; font-size: 15.5px; }
-    .proj-tags {
-      font-family: var(--mono);
-      font-size: 10px;
       text-transform: uppercase;
       letter-spacing: 0.14em;
       color: var(--ink-3);
     }
-    .proj-links {
+    .node--work .node-title, .node--project .node-title { font-size: 14px; }
+
+    /* ── panel ─────────────────────────────────────────────────── */
+
+    .panel {
+      position: fixed;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      width: var(--panel-w);
+      z-index: 30;
       display: flex;
       flex-direction: column;
-      gap: 10px;
-      padding-top: 8px;
+      padding: 38px var(--panel-pad-r) 34px var(--panel-pad-l);
+      background: linear-gradient(
+        to right,
+        rgba(245, 246, 242, 0) 0,
+        rgba(245, 246, 242, 0.92) 70px,
+        var(--paper) 130px
+      );
     }
-    .proj-links a {
-      font-family: var(--mono);
-      font-size: 10px;
-      text-transform: uppercase;
-      letter-spacing: 0.2em;
-      color: var(--ink-2);
-      white-space: nowrap;
-      transition: color 0.25s;
-    }
-    .proj-links a:hover { color: var(--accent-soft); }
 
-    /* ── experience ── */
-    .xp {
-      display: grid;
-      grid-template-columns: 220px 1fr;
-      gap: 40px;
-      padding: 40px 0;
-      border-top: 1px solid var(--hairline);
+    .panel-top {
+      flex: none;
+      padding-bottom: 16px;
     }
-    .xp:last-of-type { border-bottom: 1px solid var(--hairline); }
-    .xp-when { padding-top: 4px; }
-    .xp h3 { font-size: 1.3rem; font-weight: 600; letter-spacing: -0.02em; margin-bottom: 4px; }
-    .xp-org { color: var(--ink-2); font-size: 15px; margin-bottom: 16px; }
-    .xp ul li {
-      color: var(--ink-2);
-      font-size: 15px;
-      padding-left: 18px;
-      position: relative;
-      margin-bottom: 8px;
-    }
-    .xp ul li::before {
-      content: "";
-      position: absolute;
-      left: 0; top: 0.62em;
-      width: 6px; height: 1px;
-      background: var(--accent);
-    }
-    .edu-row {
-      display: grid;
-      grid-template-columns: 220px 1fr;
-      gap: 40px;
-      padding: 28px 0;
-      border-bottom: 1px solid var(--hairline);
-    }
-    .edu-row h3 { font-size: 1.05rem; font-weight: 500; margin-bottom: 2px; }
-    .edu-row p { color: var(--ink-2); font-size: 14.5px; }
 
-    /* ── contact ── */
-    #contact { border-bottom: none; padding-bottom: 140px; }
-    .contact-line {
-      font-size: clamp(1.6rem, 3.6vw, 2.6rem);
-      font-weight: 600;
-      letter-spacing: -0.02em;
-      line-height: 1.2;
-      max-width: 760px;
-      margin-bottom: 44px;
+    .panel-body {
+      flex: 1 1 auto;
+      min-height: 0;
+      overflow-y: auto;
+      overscroll-behavior: contain;
+      scrollbar-width: thin;
+      scrollbar-color: var(--ink-3) transparent;
+      padding-right: 4px;
     }
-    .contact-line span { color: var(--ink-3); }
+    .panel-body::-webkit-scrollbar { width: 3px; }
+    .panel-body::-webkit-scrollbar-thumb { background: var(--rule); }
 
-    footer {
-      border-top: 1px solid var(--hairline);
-      padding: 28px 0;
-    }
-    .foot-inner {
+    .panel-tabs {
+      flex: none;
       display: flex;
       flex-wrap: wrap;
-      justify-content: space-between;
-      gap: 12px;
+      gap: 22px;
+      padding-top: 18px;
+      margin-top: 18px;
+      border-top: 1px solid var(--rule);
+    }
+    .tab {
+      font-family: var(--grot);
+      font-size: 10px;
+      text-transform: uppercase;
+      letter-spacing: 0.15em;
+      color: var(--ink-3);
+      transition: color 0.25s;
+    }
+    .tab:hover { color: var(--ink); }
+    .tab[aria-selected="true"] { color: var(--ink); }
+
+    /* ── panel: index state ────────────────────────────────────── */
+
+    .lede {
+      font-size: 17px;
+      line-height: 1.5;
+      margin-bottom: 30px;
+    }
+    .lede a { text-decoration: underline; text-underline-offset: 2px; }
+
+    .rows { display: block; }
+    .row {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 10px 16px;
+      align-items: baseline;
+      padding: 13px 0;
+      border-bottom: 1px solid var(--rule-soft);
+    }
+    .row:first-child { border-top: 1px solid var(--rule-soft); }
+    .row:hover .row-title { text-decoration: underline; text-underline-offset: 3px; }
+    .row-title {
+      font-size: 17px;
+      line-height: 1.25;
+    }
+    .row-cap {
+      grid-column: 1;
+      margin-top: 3px;
+      font-family: var(--grot);
+      font-size: 9px;
+      text-transform: uppercase;
+      letter-spacing: 0.14em;
+      color: var(--ink-2);
+    }
+    .row-year {
+      grid-row: 1;
+      grid-column: 2;
+      font-family: var(--grot);
+      font-size: 9px;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      color: var(--ink-3);
+      white-space: nowrap;
     }
 
-    @media (max-width: 860px) {
-      .about-grid { grid-template-columns: 1fr; gap: 48px; }
-      .proj { grid-template-columns: 1fr; gap: 12px; }
-      .proj-idx { padding-top: 0; }
-      .proj-links { flex-direction: row; gap: 22px; padding-top: 4px; }
-      .xp, .edu-row { grid-template-columns: 1fr; gap: 10px; }
-      .meta-strip { grid-template-columns: 1fr; }
-      .nav-links { gap: 18px; }
-      .nav-links a:nth-child(n+4) { display: none; }
+    /* ── panel: node state ─────────────────────────────────────── */
+
+    .doc-head { margin-bottom: 26px; }
+    .doc-head h2 {
+      margin-top: 10px;
+      font-family: var(--serif);
+      font-size: 30px;
+      font-weight: 400;
+      line-height: 1.1;
+      letter-spacing: -0.005em;
     }
-    @media (max-width: 560px) {
-      .nav-mark { font-size: 11px; }
-      .nav-links { gap: 14px; }
-      .nav-links a:nth-child(n+3) { display: none; }
-      header { padding: 140px 0 72px; }
-      section { padding: 80px 0; }
+    .doc-head .doc-sub {
+      margin-top: 5px;
+      font-size: 17px;
+      color: var(--ink-2);
+    }
+    .doc-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px 20px;
+      margin-top: 16px;
+    }
+
+    .prose p { margin-bottom: 15px; }
+    .prose p:last-child { margin-bottom: 0; }
+    .prose strong { font-weight: 400; font-style: italic; }
+    .prose h3 {
+      font-family: var(--grot);
+      font-size: 10px;
+      font-weight: 400;
+      text-transform: uppercase;
+      letter-spacing: 0.15em;
+      color: var(--ink-2);
+      margin: 26px 0 8px;
+    }
+    .prose h3:first-child { margin-top: 0; }
+    .prose ul { margin-bottom: 15px; }
+    .prose li {
+      position: relative;
+      padding-left: 20px;
+      margin-bottom: 7px;
+    }
+    .prose li::before {
+      content: "";
+      position: absolute;
+      left: 2px;
+      top: 11px;
+      width: 7px;
+      height: 1px;
+      background: var(--ink-3);
+    }
+
+    .doc-links {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 18px;
+      margin-top: 26px;
+      padding-top: 18px;
+      border-top: 1px solid var(--rule-soft);
+    }
+    .doc-links a {
+      font-family: var(--grot);
+      font-size: 10px;
+      text-transform: uppercase;
+      letter-spacing: 0.14em;
+    }
+
+    .stack-list li {
+      padding: 9px 0;
+      border-bottom: 1px solid var(--rule-soft);
+      font-size: 16px;
+    }
+    .stack-list li:first-child { border-top: 1px solid var(--rule-soft); }
+
+    .back {
+      font-family: var(--grot);
+      font-size: 10px;
+      text-transform: uppercase;
+      letter-spacing: 0.15em;
+    }
+
+    /* ── no-js / crawler content ───────────────────────────────── */
+
+    html.js #content { display: none; }
+    #content {
+      max-width: 720px;
+      margin: 0 auto;
+      padding: 56px 24px 96px;
+    }
+    #content .doc { margin-bottom: 52px; }
+    #content .doc h2 { font-size: 26px; font-weight: 400; margin-bottom: 4px; }
+    #content .doc-stack, #content .doc-links { margin-top: 12px; }
+    #content .doc-links a { text-decoration: underline; margin-right: 16px; }
+
+    /* ── reduced motion ────────────────────────────────────────── */
+
+    @media (prefers-reduced-motion: reduce) {
+      .map-inner, .link, .node, .node-dot { transition: none !important; }
+      .link { stroke-dashoffset: 0 !important; }
+    }
+
+    /* ── narrow ────────────────────────────────────────────────── */
+
+    /* The panel gives room back to the map as the viewport tightens, so the
+       graph never gets squeezed into a strip too narrow to read labels in. */
+    @media (max-width: 1240px) {
+      :root { --panel-w: 522px; --panel-pad-l: 88px; --panel-pad-r: 56px; }
+    }
+    @media (max-width: 1100px) {
+      :root { --panel-w: 462px; --panel-pad-l: 66px; --panel-pad-r: 40px; }
+      .site-head { top: 30px; left: 34px; }
+    }
+
+    @media (max-width: 980px) {
+      html.js, html.js body { height: auto; overflow: visible; }
+      .map { display: none; }
+      .site-head {
+        position: static;
+        padding: 32px 24px 0;
+      }
+      .panel {
+        position: static;
+        width: auto;
+        min-height: 0;
+        padding: 26px 24px 40px;
+        background: none;
+      }
+      .panel-body { overflow: visible; }
+      .panel-tabs {
+        position: sticky;
+        bottom: 0;
+        background: var(--paper);
+        padding-bottom: 14px;
+        gap: 18px;
+      }
+      .doc-head h2 { font-size: 26px; }
     }
   </style>
 </head>
 <body>
 
-<nav id="nav">
-  <div class="wrap nav-inner">
-    <a href="#top" class="nav-mark">GAUTAM<span>·</span>SINGH</a>
-    <div class="nav-links">
-      <a href="#about">About</a>
-      <a href="#projects">Projects</a>
-      <a href="#experience">Experience</a>
-      <a href="#contact">Contact</a>
-      <a href="https://github.com/Gautamstar" target="_blank" rel="noopener">GitHub ↗</a>
-    </div>
+<header class="site-head">
+  <h1><a href="#/">Gautam Singh</a></h1>
+  <p class="cap">Software &amp; Data Engineer</p>
+</header>
+
+<!--
+  The panel is before the map in source order so that keyboard users reach the
+  content first rather than tabbing through eighteen map nodes to get to it. Both
+  are fixed and z-indexed, so source order does not affect the visual layout.
+-->
+<main class="panel" id="panel">
+  <div class="panel-top" id="panelTop"></div>
+  <div class="panel-body" id="panelBody" aria-live="polite"></div>
+  <nav class="panel-tabs" id="panelTabs" aria-label="Section"></nav>
+</main>
+
+<nav class="map" aria-label="Site map">
+  <div class="map-inner" id="mapInner">
+    <svg class="map-links" id="mapLinks" viewBox="0 0 1400 1300" preserveAspectRatio="none" focusable="false"></svg>
   </div>
 </nav>
 
-<header id="top">
-  <div class="wrap">
-    <div class="hero-status reveal">
-      <span class="status-dot" aria-hidden="true"></span>
-      <span class="micro">Open to work</span>
-      <span class="micro" style="color: var(--ink-3);">Guelph · Ontario · Canada</span>
+<!--
+  Source of truth for every node. The script reads these articles out of the DOM,
+  builds the map from the coordinates, and moves the markup into the panel on
+  selection. Without JavaScript this stays a plain, readable document.
+-->
+<div id="content">
+
+  <article class="doc" id="d-root" data-type="root" data-cat="none" data-x="320" data-y="600"
+           data-title="Gautam Singh" data-sub="Software &amp; Data Engineer" data-year=""
+           data-caption="" data-edges="information data-engineering machine-learning markets-risk applied-systems fundamentals">
+    <h2>Gautam Singh</h2>
+    <div class="prose">
+      <p>Software and data engineer based in Guelph, Ontario. I build data pipelines, machine learning systems, and the full-stack applications on top of them.</p>
     </div>
-    <h1 class="reveal" style="--d: 0.07s;">
-      Software &amp; data engineer<br />
-      <span class="dim">for data-heavy problems.</span>
-    </h1>
-    <p class="hero-sub reveal" style="--d: 0.14s;">
-      Gautam Singh, a software and data engineer (CS grad). I build <strong>full-stack apps</strong>
-      and the <strong>data pipelines</strong> behind them. The latest one is live right now.
-    </p>
-    <div class="hero-links reveal" style="--d: 0.21s;">
-      <a class="lnk fill" href="#projects">View work ↓</a>
-      <a class="lnk" href="https://github.com/Gautamstar" target="_blank" rel="noopener">GitHub ↗</a>
-      <a class="lnk" href="https://www.linkedin.com/in/gautam-singh-cs/" target="_blank" rel="noopener">LinkedIn ↗</a>
-      <a class="lnk" href="mailto:gautamsingh2189@gmail.com">Email ↗</a>
+  </article>
+
+  <article class="doc" id="d-information" data-type="information" data-cat="none" data-x="150" data-y="400"
+           data-title="Information" data-sub="About &amp; Contact" data-year="Currently"
+           data-caption="About &amp; Contact" data-edges="">
+    <h2>Information</h2>
+    <div class="prose">
+      <p><strong>Computer Science grad from Conestoga College.</strong> Focused on building data driven systems and machine learning applications. Experienced in developing end to end solutions including data pipelines, predictive models, and API based systems. Strong background in Python, cloud platforms, and backend development, with hands on experience deploying machine learning models into real world applications.</p>
+      <p>In my capstone, <strong>The Almanac</strong>, I built a three-tier pipeline on Databricks and Azure Data Factory, trained a PyTorch LSTM that predicts next-day prices at 60-70% accuracy depending on the stock, and put a Django REST API with web and Flutter clients on top.</p>
+      <p>More recently I shipped an <strong>EDA web service</strong> that is live today. You upload a CSV and it hands back type inference, quality flags, and charts. Before that I did two co-op terms at <strong>PAMT Consulting</strong> doing ServiceNow development and QA.</p>
+
+      <h3>Currently</h3>
+      <p>Open to software engineering, data science, and data engineering roles. Guelph, Kitchener-Waterloo, Toronto, or remote.</p>
+
+      <h3>Languages</h3>
+      <p>Python · SQL · Java · JavaScript · C++ · C · Rust</p>
+      <h3>Data Engineering</h3>
+      <p>Azure Data Factory · Databricks · PySpark · Spark · Hadoop · dbt · Prefect · ETL/ELT</p>
+      <h3>Machine Learning &amp; AI</h3>
+      <p>PyTorch · TensorFlow · XGBoost · LightGBM · scikit-learn · LangChain · FAISS · LSTM</p>
+      <h3>Databases</h3>
+      <p>PostgreSQL · MySQL · MongoDB · Azure SQL · Supabase</p>
+      <h3>Web &amp; Tools</h3>
+      <p>Django · FastAPI · React · Streamlit · ServiceNow · JMeter</p>
+      <h3>Cloud &amp; DevOps</h3>
+      <p>Azure · AWS · Docker · Vercel · Render · Git · Grafana · Power BI · Tableau</p>
     </div>
-    <div class="meta-strip reveal" style="--d: 0.28s;">
-      <div class="meta-cell micro-sm">1 live app in production</div>
-      <div class="meta-cell micro-sm">8 shipped projects</div>
-      <div class="meta-cell micro-sm">BCS Honors · Conestoga · 2025</div>
+    <div class="doc-links">
+      <a href="mailto:gautamsingh2189@gmail.com">Email ↗</a>
+      <a href="https://github.com/Gautamstar" target="_blank" rel="noopener">GitHub ↗</a>
+      <a href="https://www.linkedin.com/in/gautam-singh-cs/" target="_blank" rel="noopener">LinkedIn ↗</a>
     </div>
-  </div>
-</header>
+  </article>
 
-<section id="about">
-  <div class="wrap">
-    <div class="sec-head reveal">
-      <span class="micro"><em>01</em> / About</span>
-      <h2>Professional Summary:</h2>
+  <!-- ── areas ─────────────────────────────────────────────── -->
+
+  <article class="doc" id="d-data-engineering" data-type="area" data-cat="areas" data-x="457" data-y="224"
+           data-title="Data Engineering" data-sub="Area of Practice" data-year="Currently"
+           data-caption="Area of Practice" data-num="1"
+           data-edges="market-pipeline almanac eda">
+    <h2>Data Engineering</h2>
+    <div class="prose">
+      <p>Moving data from wherever it lands to wherever it is useful, on a schedule, without anyone having to watch it. Ingestion, transformation, orchestration, and the storage layer underneath.</p>
+      <p>In practice this has meant a three-tier medallion pipeline on Databricks and Azure Data Factory for my capstone, and a dbt and Prefect stack over PostgreSQL for daily equity data. The interesting part is rarely the transform itself. It is deciding what runs when, what happens when a source is late or malformed, and how far back a correction has to reach.</p>
     </div>
-    <div class="about-grid">
-      <div class="about-text reveal">
-        <p>
-          <strong>Computer Science grad from Conestoga College.</strong> Focused on building data driven systems and machine learning applications. Experienced in developing end to end solutions including data pipelines, predictive models, and API based systems. Strong background in Python, cloud platforms, and backend development, with hands on experience deploying machine learning models into real world applications.
-        </p>
-        <p>
-          In my capstone, <strong>The Almanac</strong>. I built a
-          three-tier pipeline on Databricks and Azure Data Factory, trained a PyTorch LSTM that
-          predicts next-day prices at 60-70% accuracy depending on the stock, and put a Django
-          REST API with web and Flutter clients on top.
-        </p>
-        <p>
-          More recently I shipped an <strong>EDA web service</strong> that's live today. You
-          upload a CSV and it hands back type inference, quality flags, and charts. Before that
-          I did two co-op terms at <strong>PAMT Consulting</strong> doing ServiceNow development
-          and QA.
-        </p>
-      </div>
-      <div>
-        <div class="skill-group reveal">
-          <h3>Languages</h3>
-          <p>Python · SQL · Java · JavaScript · C++ · C · Rust</p>
-        </div>
-        <div class="skill-group reveal" style="--d: 0.05s;">
-          <h3>Data engineering</h3>
-          <p>Azure Data Factory · Databricks · PySpark · Spark · Hadoop · dbt · Prefect · ETL/ELT</p>
-        </div>
-        <div class="skill-group reveal" style="--d: 0.1s;">
-          <h3>ML / AI</h3>
-          <p>PyTorch · TensorFlow · XGBoost · LightGBM · scikit-learn · LangChain · FAISS · LSTM</p>
-        </div>
-        <div class="skill-group reveal" style="--d: 0.15s;">
-          <h3>Databases</h3>
-          <p>PostgreSQL · MySQL · MongoDB · Azure SQL · Supabase</p>
-        </div>
-        <div class="skill-group reveal" style="--d: 0.2s;">
-          <h3>Web &amp; tools</h3>
-          <p>Django · FastAPI · React · Streamlit · ServiceNow · JMeter</p>
-        </div>
-        <div class="skill-group reveal" style="--d: 0.25s;">
-          <h3>Cloud &amp; DevOps</h3>
-          <p>Azure · AWS · Docker · Vercel · Render · Git · Grafana · Power BI · Tableau</p>
-        </div>
-      </div>
+  </article>
+
+  <article class="doc" id="d-machine-learning" data-type="area" data-cat="areas" data-x="648" data-y="371"
+           data-title="Machine Learning" data-sub="Area of Practice" data-year="Currently"
+           data-caption="Area of Practice" data-num="2"
+           data-edges="almanac amd rag-finance google-cert">
+    <h2>Machine Learning</h2>
+    <div class="prose">
+      <p>Training models and, more to the point, getting them past the notebook and into something a person can actually use.</p>
+      <p>Sequence models for price forecasting, gradient boosting for direction classification, and retrieval-augmented generation over document sets. Walk-forward validation rather than a random split, because time series punish you for the shortcut. Retrieval quality scored with RAGAS rather than assumed.</p>
     </div>
-  </div>
-</section>
+  </article>
 
-<section id="projects">
-  <div class="wrap">
-    <div class="sec-head reveal">
-      <span class="micro"><em>02</em> / Projects</span>
-      <h2>Selected work.</h2>
+  <article class="doc" id="d-markets-risk" data-type="area" data-cat="areas" data-x="720" data-y="600"
+           data-title="Markets &amp; Risk" data-sub="Area of Interest" data-year="Currently"
+           data-caption="Area of Interest" data-num="3"
+           data-edges="almanac amd rag-finance rates-risk market-pipeline">
+    <h2>Markets &amp; Risk</h2>
+    <div class="prose">
+      <p>The domain most of my projects keep returning to. Equities, fixed income, and the filings and time series that describe them.</p>
+      <p>It is a good forcing function for engineering. The data is messy and revised after the fact, the evaluation is adversarial, and a model that looks excellent on a random split is usually just reading the future. Working here taught me more about validation than any tutorial did.</p>
     </div>
+  </article>
 
-    <article class="proj reveal">
-      <span class="proj-idx">01</span>
-      <div>
-        <div class="proj-title-row">
-          <h3>Fitmit</h3>
-          <span class="chip">Live</span>
-          <span class="micro-sm">2026</span>
-        </div>
-        <p class="proj-desc">
-          Pick a target size and get a file that fits under it. A lossless pass runs first, and
-          when that is not enough a binary search across twelve quality settings finds the
-          gentlest one that still meets the target, so twelve options resolve in at most four
-          attempts. If the size is out of reach it reports the smallest the file can actually go
-          rather than handing back something still too big. PDFs run through Ghostscript and
-          images through Pillow, both behind one strategy interface, so the search is written
-          once and adding a format means four methods. FastAPI with a Redis queue and a
-          background worker on Render, React and TypeScript on Vercel, progress streamed over
-          Server-Sent Events. Uploads delete themselves within ten minutes of finishing.
-        </p>
-        <p class="proj-tags">FastAPI · React · TypeScript · Redis · RQ · Ghostscript · Pillow · Docker · Render · Vercel</p>
-      </div>
-      <div class="proj-links">
-        <a href="https://fitpdf-rose.vercel.app" target="_blank" rel="noopener">Live ↗</a>
-        <a href="https://github.com/Gautamstar/fitpdf" target="_blank" rel="noopener">GitHub ↗</a>
-      </div>
-    </article>
-
-    <article class="proj reveal">
-      <span class="proj-idx">02</span>
-      <div>
-        <div class="proj-title-row">
-          <h3>The Almanac</h3>
-          <span class="micro-sm">Capstone · 2025</span>
-        </div>
-        <p class="proj-desc">
-          Cloud data pipeline and forecasting platform, built as my capstone. A three-tier
-          pipeline on Databricks and Azure Data Factory moves raw OHLCV data through PySpark
-          indicators into Azure SQL, which cut data latency by 35%. A 2-layer PyTorch LSTM
-          trained on 11,213 sliding windows of AAPL data predicts next-day price at 60-70%
-          accuracy depending on the stock, validated with walk-forward cross-validation. Served
-          through a Django REST API with a web client, a Flutter app, and Grafana and Power BI
-          for monitoring.
-        </p>
-        <p class="proj-tags">PyTorch · LSTM · Databricks · Azure Data Factory · PySpark · Azure SQL · Django REST · Flutter · Grafana</p>
-      </div>
-      <div class="proj-links">
-        <a href="https://github.com/Gautamstar/almanac-predictor" target="_blank" rel="noopener">GitHub ↗</a>
-      </div>
-    </article>
-
-    <article class="proj reveal">
-      <span class="proj-idx">03</span>
-      <div>
-        <div class="proj-title-row">
-          <h3>EDA Web Service</h3>
-          <span class="chip">Live</span>
-          <span class="micro-sm">2026</span>
-        </div>
-        <p class="proj-desc">
-          Upload a CSV and get back type inference, skewness and quality flags, auto-generated
-          insights, and a chart for every column. Uploads are locked down to CSVs under 20 MB
-          with proper error responses, reports expire after 5 days through a background cleanup
-          job, and a trimmed Plotly build cut the chart bundle from 5.1 MB to 1.8 MB. React on
-          Vercel, FastAPI on Render, Supabase for storage.
-        </p>
-        <p class="proj-tags">FastAPI · React · Supabase · Plotly · Vercel · Render</p>
-      </div>
-      <div class="proj-links">
-        <a href="https://eda-proj.vercel.app" target="_blank" rel="noopener">Live ↗</a>
-        <a href="https://github.com/Gautamstar/edaProj" target="_blank" rel="noopener">GitHub ↗</a>
-      </div>
-    </article>
-
-    <article class="proj reveal">
-      <span class="proj-idx">04</span>
-      <div>
-        <div class="proj-title-row">
-          <h3>Financial Document Q&amp;A</h3>
-          <span class="micro-sm">RAG · 2026</span>
-        </div>
-        <p class="proj-desc">
-          Answers plain-English questions over real SEC 10-K filings from JPMorgan, Goldman
-          Sachs, MetLife, and others. Retrieval runs BM25 and FAISS together with reciprocal
-          rank fusion, which beat either method alone, and a locally hosted Gemma model streams
-          the answers token by token. FastAPI backend, Streamlit frontend with company filtering
-          and chat history, retrieval quality scored with RAGAS, all of it running in Docker.
-        </p>
-        <p class="proj-tags">LangChain · FAISS · BM25 · FastAPI · Streamlit · RAGAS · Docker</p>
-      </div>
-      <div class="proj-links">
-        <a href="https://github.com/Gautamstar/rag-financial-qa" target="_blank" rel="noopener">GitHub ↗</a>
-      </div>
-    </article>
-
-    <article class="proj reveal">
-      <span class="proj-idx">05</span>
-      <div>
-        <div class="proj-title-row">
-          <h3>Equity Market Data Pipeline</h3>
-          <span class="micro-sm">2026</span>
-        </div>
-        <p class="proj-desc">
-          Daily pipeline that pulls OHLCV data for S&amp;P 500 stocks and sector ETFs into
-          PostgreSQL. dbt builds the staging tables, technical indicators like SMA, Bollinger
-          Bands, and RSI, and rolling performance metrics. Prefect runs the whole thing at
-          market close and feeds a Streamlit dashboard with candlestick charts and a momentum
-          screener.
-        </p>
-        <p class="proj-tags">Python · PostgreSQL · dbt · Prefect · Streamlit · yfinance</p>
-      </div>
-      <div class="proj-links">
-        <a href="https://github.com/Gautamstar/market-data-pipeline" target="_blank" rel="noopener">GitHub ↗</a>
-      </div>
-    </article>
-
-    <article class="proj reveal">
-      <span class="proj-idx">06</span>
-      <div>
-        <div class="proj-title-row">
-          <h3>Rates Funding Risk</h3>
-        </div>
-        <p class="proj-desc">
-          Fixed-income interest-rate risk framework. It computes DV01 across the curve from 3M
-          out to 30Y, runs stress scenarios like parallel shifts, bear steepeners, and bull
-          flatteners, and attributes PnL by maturity bucket so you can see which tenors drive
-          portfolio moves. Results export to CSV.
-        </p>
-        <p class="proj-tags">Python · Pandas · NumPy · Fixed income · Risk</p>
-      </div>
-      <div class="proj-links">
-        <a href="https://github.com/Gautamstar/rates-funding-risk" target="_blank" rel="noopener">GitHub ↗</a>
-      </div>
-    </article>
-
-    <article class="proj reveal">
-      <span class="proj-idx">07</span>
-      <div>
-        <div class="proj-title-row">
-          <h3>AMD Stock Predictor</h3>
-        </div>
-        <p class="proj-desc">
-          Small classifier that predicts next-day price direction for AMD. It pulls history from
-          Yahoo Finance, builds moving averages, RSI, and MACD with the ta library, and trains a
-          HistGradientBoostingClassifier evaluated on a held-out test set.
-        </p>
-        <p class="proj-tags">Python · scikit-learn · Pandas · NumPy · ta</p>
-      </div>
-      <div class="proj-links">
-        <a href="https://github.com/Gautamstar/StockPredictor" target="_blank" rel="noopener">GitHub ↗</a>
-      </div>
-    </article>
-
-    <article class="proj reveal">
-      <span class="proj-idx">08</span>
-      <div>
-        <div class="proj-title-row">
-          <h3>Data Structs</h3>
-        </div>
-        <p class="proj-desc">
-          Interactive lessons on the data structures and algorithms that show up in coding
-          interviews. Built as a study tool for myself, with visual examples that run right in
-          the browser.
-        </p>
-        <p class="proj-tags">JavaScript · HTML · Algorithms · DSA</p>
-      </div>
-      <div class="proj-links">
-        <a href="https://github.com/Gautamstar/data-structs" target="_blank" rel="noopener">GitHub ↗</a>
-      </div>
-    </article>
-
-  </div>
-</section>
-
-<section id="experience">
-  <div class="wrap">
-    <div class="sec-head reveal">
-      <span class="micro"><em>03</em> / Experience</span>
-      <h2>Where I've worked.</h2>
+  <article class="doc" id="d-applied-systems" data-type="area" data-cat="areas" data-x="648" data-y="829"
+           data-title="Applied Systems" data-sub="Area of Practice" data-year="Currently"
+           data-caption="Area of Practice" data-num="4"
+           data-edges="fitmit eda pamt">
+    <h2>Applied Systems</h2>
+    <div class="prose">
+      <p>Things that are deployed, have users, and break in public. Backends, queues, background workers, and the frontends in front of them.</p>
+      <p>Two of these are live right now. The recurring lesson is that the hard part is almost never the feature. It is the upload limit, the job that dies halfway, the file that never gets cleaned up, and the error message that has to say something true when all of that happens.</p>
     </div>
+  </article>
 
-    <div class="xp reveal">
-      <div class="xp-when">
-        <p class="micro-sm">Sep 2024 · Dec 2024</p>
-        <p class="micro-sm">Sep 2025 · Dec 2025</p>
-      </div>
-      <div>
-        <h3>ServiceNow Developer &amp; QA Specialist</h3>
-        <p class="xp-org">PAMT Consulting · Remote</p>
-        <ul>
-          <li>Built and updated ServiceNow apps in App Engine Studio, Flow Designer, and IntegrationHub, including an HRSD onboarding workflow that cut manual ticket handling time by about 30%</li>
-          <li>Maintained update sets and validated data flows across dev, test, and production instances</li>
-          <li>Wrote and ran QA test cases covering data accuracy, integration reliability, and API output</li>
-          <li>Worked with engineering to confirm data contracts and fix integration defects before release</li>
-        </ul>
-      </div>
+  <article class="doc" id="d-fundamentals" data-type="area" data-cat="areas" data-x="457" data-y="976"
+           data-title="Fundamentals" data-sub="Area of Study" data-year="Currently"
+           data-caption="Area of Study" data-num="5"
+           data-edges="data-structs conestoga google-cert">
+    <h2>Fundamentals</h2>
+    <div class="prose">
+      <p>The formal grounding: data structures, algorithms, database design, cloud computing, and software engineering, plus the statistics side picked up afterward.</p>
+      <p>Kept as its own area because it is ongoing rather than finished. Data Structs started as a study tool I built for myself and stayed useful.</p>
     </div>
+  </article>
 
-    <div class="xp reveal">
-      <div class="xp-when">
-        <p class="micro-sm">Jan 2022 · May 2022</p>
-      </div>
-      <div>
-        <h3>Lot Associate</h3>
-        <p class="xp-org">The Home Depot · Guelph, ON</p>
-        <ul>
-          <li>Kept the lot stocked and organized and helped customers in a high-traffic store</li>
-        </ul>
-      </div>
-    </div>
+  <!-- ── projects ──────────────────────────────────────────── -->
 
-    <div style="margin-top: 72px;">
-      <p class="micro reveal" style="margin-bottom: 8px;"><em style="color: var(--accent); font-style: normal;">04</em> / Education</p>
-      <div class="edu-row reveal">
-        <p class="micro-sm" style="padding-top: 6px;">Sep 2020 · Dec 2025</p>
-        <div>
-          <h3>Bachelor of Computer Science (Honors)</h3>
-          <p>Conestoga College · machine learning, data structures and algorithms, database design, cloud computing, software engineering</p>
-        </div>
-      </div>
-      <div class="edu-row reveal">
-        <p class="micro-sm" style="padding-top: 6px;">Jun 2026</p>
-        <div>
-          <h3>Google Advanced Data Analytics Professional Certificate</h3>
-          <p>Google · Coursera · 7-course program: statistics, Python, regression, machine learning, visualization</p>
-        </div>
-      </div>
+  <article class="doc" id="d-fitmit" data-type="project" data-cat="projects" data-x="905" data-y="990"
+           data-title="Fitmit" data-sub="Target-Size File Compressor" data-year="2026"
+           data-caption="Target-Size File Compressor" data-meta="Live · Design, Engineering"
+           data-edges="applied-systems">
+    <h2>Fitmit</h2>
+    <div class="prose">
+      <p>Pick a target size and get a file that fits under it. A lossless pass runs first, and when that is not enough a binary search across twelve quality settings finds the gentlest one that still meets the target, so twelve options resolve in at most four attempts. If the size is out of reach it reports the smallest the file can actually go rather than handing back something still too big.</p>
+      <p>PDFs run through Ghostscript and images through Pillow, both behind one strategy interface, so the search is written once and adding a format means four methods. FastAPI with a Redis queue and a background worker on Render, React and TypeScript on Vercel, progress streamed over Server-Sent Events. Uploads delete themselves within ten minutes of finishing.</p>
     </div>
-  </div>
-</section>
+    <div class="doc-stack">FastAPI · React · TypeScript · Redis · RQ · Ghostscript · Pillow · Docker · Render · Vercel</div>
+    <div class="doc-links">
+      <a href="https://fitpdf-rose.vercel.app" target="_blank" rel="noopener">Live ↗</a>
+      <a href="https://github.com/Gautamstar/fitpdf" target="_blank" rel="noopener">GitHub ↗</a>
+    </div>
+  </article>
 
-<section id="contact">
-  <div class="wrap">
-    <div class="sec-head reveal">
-      <span class="micro"><em>05</em> / Contact</span>
-      <h2>Let's talk.</h2>
+  <article class="doc" id="d-almanac" data-type="project" data-cat="projects" data-x="960" data-y="265"
+           data-title="The Almanac" data-sub="Cloud Pipeline &amp; Forecasting Platform" data-year="2025"
+           data-caption="Cloud Pipeline &amp; Forecasting Platform" data-meta="Capstone · Data Engineering, Machine Learning"
+           data-edges="data-engineering machine-learning markets-risk">
+    <h2>The Almanac</h2>
+    <div class="prose">
+      <p>Cloud data pipeline and forecasting platform, built as my capstone. A three-tier pipeline on Databricks and Azure Data Factory moves raw OHLCV data through PySpark indicators into Azure SQL, which cut data latency by 35%.</p>
+      <p>A 2-layer PyTorch LSTM trained on 11,213 sliding windows of AAPL data predicts next-day price at 60-70% accuracy depending on the stock, validated with walk-forward cross-validation. Served through a Django REST API with a web client, a Flutter app, and Grafana and Power BI for monitoring.</p>
     </div>
-    <p class="contact-line reveal">
-      Looking for software engineering, data science, and data engineering roles.
-      <span>Guelph, Kitchener-Waterloo, Toronto, or remote.</span>
-    </p>
-    <div class="hero-links reveal" style="--d: 0.07s;">
-      <a class="lnk fill" href="mailto:gautamsingh2189@gmail.com">Send an email ↗</a>
-      <a class="lnk" href="https://github.com/Gautamstar" target="_blank" rel="noopener">GitHub ↗</a>
-      <a class="lnk" href="https://www.linkedin.com/in/gautam-singh-cs/" target="_blank" rel="noopener">LinkedIn ↗</a>
+    <div class="doc-stack">PyTorch · LSTM · Databricks · Azure Data Factory · PySpark · Azure SQL · Django REST · Flutter · Grafana</div>
+    <div class="doc-links">
+      <a href="https://github.com/Gautamstar/almanac-predictor" target="_blank" rel="noopener">GitHub ↗</a>
     </div>
-  </div>
-</section>
+  </article>
 
-<footer>
-  <div class="wrap foot-inner">
-    <span class="micro-sm">© <span id="year"></span> Gautam Singh</span>
-    <a href="#top" class="micro-sm" style="color: var(--ink-2);">Back to top ↑</a>
-  </div>
-</footer>
+  <article class="doc" id="d-eda" data-type="project" data-cat="projects" data-x="975" data-y="835"
+           data-title="EDA Web Service" data-sub="Automated Dataset Profiling" data-year="2026"
+           data-caption="Automated Dataset Profiling" data-meta="Live · Design, Engineering"
+           data-edges="applied-systems data-engineering">
+    <h2>EDA Web Service</h2>
+    <div class="prose">
+      <p>Upload a CSV and get back type inference, skewness and quality flags, auto-generated insights, and a chart for every column.</p>
+      <p>Uploads are locked down to CSVs under 20 MB with proper error responses, reports expire after 5 days through a background cleanup job, and a trimmed Plotly build cut the chart bundle from 5.1 MB to 1.8 MB. React on Vercel, FastAPI on Render, Supabase for storage.</p>
+    </div>
+    <div class="doc-stack">FastAPI · React · Supabase · Plotly · Vercel · Render</div>
+    <div class="doc-links">
+      <a href="https://eda-proj.vercel.app" target="_blank" rel="noopener">Live ↗</a>
+      <a href="https://github.com/Gautamstar/edaProj" target="_blank" rel="noopener">GitHub ↗</a>
+    </div>
+  </article>
+
+  <article class="doc" id="d-rag-finance" data-type="project" data-cat="projects" data-x="1120" data-y="545"
+           data-title="Financial Document Q&amp;A" data-sub="Retrieval-Augmented Generation over 10-Ks" data-year="2026"
+           data-caption="Retrieval-Augmented Generation" data-meta="Research, Engineering"
+           data-edges="machine-learning markets-risk">
+    <h2>Financial Document Q&amp;A</h2>
+    <div class="prose">
+      <p>Answers plain-English questions over real SEC 10-K filings from JPMorgan, Goldman Sachs, MetLife, and others.</p>
+      <p>Retrieval runs BM25 and FAISS together with reciprocal rank fusion, which beat either method alone, and a locally hosted Gemma model streams the answers token by token. FastAPI backend, Streamlit frontend with company filtering and chat history, retrieval quality scored with RAGAS, all of it running in Docker.</p>
+    </div>
+    <div class="doc-stack">LangChain · FAISS · BM25 · FastAPI · Streamlit · RAGAS · Docker</div>
+    <div class="doc-links">
+      <a href="https://github.com/Gautamstar/rag-financial-qa" target="_blank" rel="noopener">GitHub ↗</a>
+    </div>
+  </article>
+
+  <article class="doc" id="d-market-pipeline" data-type="project" data-cat="projects" data-x="800" data-y="95"
+           data-title="Equity Market Data Pipeline" data-sub="Daily Ingestion &amp; Indicators" data-year="2026"
+           data-caption="Daily Ingestion &amp; Indicators" data-meta="Data Engineering"
+           data-edges="data-engineering markets-risk">
+    <h2>Equity Market Data Pipeline</h2>
+    <div class="prose">
+      <p>Daily pipeline that pulls OHLCV data for S&amp;P 500 stocks and sector ETFs into PostgreSQL. dbt builds the staging tables, technical indicators like SMA, Bollinger Bands, and RSI, and rolling performance metrics.</p>
+      <p>Prefect runs the whole thing at market close and feeds a Streamlit dashboard with candlestick charts and a momentum screener.</p>
+    </div>
+    <div class="doc-stack">Python · PostgreSQL · dbt · Prefect · Streamlit · yfinance</div>
+    <div class="doc-links">
+      <a href="https://github.com/Gautamstar/market-data-pipeline" target="_blank" rel="noopener">GitHub ↗</a>
+    </div>
+  </article>
+
+  <article class="doc" id="d-rates-risk" data-type="project" data-cat="projects" data-x="1080" data-y="700"
+           data-title="Rates Funding Risk" data-sub="Fixed-Income Rate Risk Framework" data-year="2026"
+           data-caption="Fixed-Income Risk Framework" data-meta="Research"
+           data-edges="markets-risk">
+    <h2>Rates Funding Risk</h2>
+    <div class="prose">
+      <p>Fixed-income interest-rate risk framework. It computes DV01 across the curve from 3M out to 30Y, runs stress scenarios like parallel shifts, bear steepeners, and bull flatteners, and attributes PnL by maturity bucket so you can see which tenors drive portfolio moves. Results export to CSV.</p>
+    </div>
+    <div class="doc-stack">Python · Pandas · NumPy · Fixed income · Risk</div>
+    <div class="doc-links">
+      <a href="https://github.com/Gautamstar/rates-funding-risk" target="_blank" rel="noopener">GitHub ↗</a>
+    </div>
+  </article>
+
+  <article class="doc" id="d-amd" data-type="project" data-cat="projects" data-x="1035" data-y="400"
+           data-title="AMD Stock Predictor" data-sub="Next-Day Direction Classifier" data-year="2026"
+           data-caption="Next-Day Direction Classifier" data-meta="Machine Learning"
+           data-edges="machine-learning markets-risk">
+    <h2>AMD Stock Predictor</h2>
+    <div class="prose">
+      <p>Small classifier that predicts next-day price direction for AMD. It pulls history from Yahoo Finance, builds moving averages, RSI, and MACD with the ta library, and trains a HistGradientBoostingClassifier evaluated on a held-out test set.</p>
+    </div>
+    <div class="doc-stack">Python · scikit-learn · Pandas · NumPy · ta</div>
+    <div class="doc-links">
+      <a href="https://github.com/Gautamstar/StockPredictor" target="_blank" rel="noopener">GitHub ↗</a>
+    </div>
+  </article>
+
+  <article class="doc" id="d-data-structs" data-type="project" data-cat="projects" data-x="690" data-y="1105"
+           data-title="Data Structs" data-sub="Interactive DSA Lessons" data-year="2026"
+           data-caption="Interactive DSA Lessons" data-meta="Design, Engineering"
+           data-edges="fundamentals">
+    <h2>Data Structs</h2>
+    <div class="prose">
+      <p>Interactive lessons on the data structures and algorithms that show up in coding interviews. Built as a study tool for myself, with visual examples that run right in the browser.</p>
+    </div>
+    <div class="doc-stack">JavaScript · HTML · Algorithms · DSA</div>
+    <div class="doc-links">
+      <a href="https://github.com/Gautamstar/data-structs" target="_blank" rel="noopener">GitHub ↗</a>
+    </div>
+  </article>
+
+  <!-- ── work ──────────────────────────────────────────────── -->
+
+  <article class="doc" id="d-pamt" data-type="work" data-cat="work" data-x="330" data-y="880"
+           data-title="PAMT Consulting" data-sub="ServiceNow Developer &amp; QA Specialist" data-year="2024, 2025"
+           data-caption="ServiceNow Developer &amp; QA" data-meta="Remote · Two co-op terms"
+           data-edges="applied-systems home-depot">
+    <h2>PAMT Consulting</h2>
+    <div class="prose">
+      <p>Two co-op terms, September to December 2024 and September to December 2025, remote.</p>
+      <ul>
+        <li>Built and updated ServiceNow apps in App Engine Studio, Flow Designer, and IntegrationHub, including an HRSD onboarding workflow that cut manual ticket handling time by about 30%</li>
+        <li>Maintained update sets and validated data flows across dev, test, and production instances</li>
+        <li>Wrote and ran QA test cases covering data accuracy, integration reliability, and API output</li>
+        <li>Worked with engineering to confirm data contracts and fix integration defects before release</li>
+      </ul>
+    </div>
+    <div class="doc-stack">ServiceNow · App Engine Studio · Flow Designer · IntegrationHub · JMeter</div>
+  </article>
+
+  <article class="doc" id="d-home-depot" data-type="work" data-cat="work" data-x="155" data-y="1000"
+           data-title="The Home Depot" data-sub="Lot Associate" data-year="2022"
+           data-caption="Lot Associate" data-meta="Guelph, Ontario"
+           data-edges="">
+    <h2>The Home Depot</h2>
+    <div class="prose">
+      <p>January to May 2022, Guelph, Ontario.</p>
+      <ul>
+        <li>Kept the lot stocked and organized and helped customers in a high-traffic store</li>
+      </ul>
+    </div>
+  </article>
+
+  <!-- ── education ─────────────────────────────────────────── -->
+
+  <article class="doc" id="d-conestoga" data-type="work" data-cat="education" data-x="270" data-y="1120"
+           data-title="Bachelor of Computer Science" data-sub="Conestoga College, Honors" data-year="2020 - 2025"
+           data-caption="Conestoga College, Honors" data-meta="Kitchener, Ontario"
+           data-edges="fundamentals">
+    <h2>Bachelor of Computer Science (Honors)</h2>
+    <div class="prose">
+      <p>Conestoga College, September 2020 to December 2025.</p>
+      <p>Machine learning, data structures and algorithms, database design, cloud computing, and software engineering. The capstone was The Almanac.</p>
+    </div>
+  </article>
+
+  <article class="doc" id="d-google-cert" data-type="work" data-cat="education" data-x="530" data-y="1145"
+           data-title="Google Advanced Data Analytics" data-sub="Professional Certificate" data-year="2026"
+           data-caption="Professional Certificate" data-meta="Coursera"
+           data-edges="fundamentals machine-learning">
+    <h2>Google Advanced Data Analytics</h2>
+    <div class="prose">
+      <p>Professional Certificate, Google on Coursera, completed June 2026.</p>
+      <p>A seven-course program covering statistics, Python, regression analysis, machine learning, and visualization.</p>
+    </div>
+  </article>
+
+</div>
 
 <script>
-  document.documentElement.classList.add('js');
+(function () {
+  "use strict";
 
-  const nav = document.getElementById('nav');
-  addEventListener('scroll', () => nav.classList.toggle('scrolled', scrollY > 24), { passive: true });
+  var root = document.documentElement;
+  root.className += " js";
 
-  let pending = Array.from(document.querySelectorAll('.reveal'));
-  const io = new IntersectionObserver(
-    entries => entries.forEach(e => {
-      if (e.isIntersecting) { e.target.classList.add('visible'); io.unobserve(e.target); }
-    }),
-    { threshold: 0.1, rootMargin: '0px 0px -60px 0px' }
-  );
-  pending.forEach(el => io.observe(el));
+  var MAP_W = 1400, MAP_H = 1300;
+  var FOCUS_X = 0.42, FOCUS_Y = 0.5;
 
-  function sweep() {
-    pending = pending.filter(el => !el.classList.contains('visible'));
-    pending.forEach(el => {
-      if (el.getBoundingClientRect().top < innerHeight - 40) el.classList.add('visible');
+  var TYPE_LABEL = {
+    root: "Index",
+    area: "Area",
+    project: "Project",
+    work: "Record",
+    information: "Information"
+  };
+
+  var CAT_LABEL = { projects: "Projects", work: "Work", education: "Education", areas: "Areas" };
+  var CAT_ORDER = ["projects", "work", "education", "areas"];
+
+  // ── read the graph out of the document ──────────────────────
+
+  var nodes = {};
+  var order = [];
+
+  Array.prototype.forEach.call(document.querySelectorAll("#content .doc"), function (el) {
+    var id = el.id.replace(/^d-/, "");
+    nodes[id] = {
+      id: id,
+      el: el,
+      type: el.dataset.type,
+      cat: el.dataset.cat,
+      x: +el.dataset.x,
+      y: +el.dataset.y,
+      title: el.dataset.title,
+      sub: el.dataset.sub || "",
+      year: el.dataset.year || "",
+      caption: el.dataset.caption || "",
+      meta: el.dataset.meta || "",
+      num: el.dataset.num || "",
+      adj: {},
+      body: el.querySelector(".prose"),
+      stack: el.querySelector(".doc-stack"),
+      links: el.querySelector(".doc-links")
+    };
+    order.push(id);
+  });
+
+  // Edges are declared once per pair but the graph is undirected, so mirror them.
+  var edges = [];
+  var seen = {};
+  order.forEach(function (id) {
+    var raw = (nodes[id].el.dataset.edges || "").trim();
+    if (!raw) return;
+    raw.split(/\s+/).forEach(function (other) {
+      if (!nodes[other]) return;
+      var key = id < other ? id + "|" + other : other + "|" + id;
+      if (seen[key]) return;
+      seen[key] = 1;
+      edges.push([id, other]);
+      nodes[id].adj[other] = 1;
+      nodes[other].adj[id] = 1;
+    });
+  });
+
+  // ── build the map ───────────────────────────────────────────
+
+  var mapInner = document.getElementById("mapInner");
+  var mapLinks = document.getElementById("mapLinks");
+  var SVG_NS = "http://www.w3.org/2000/svg";
+
+  edges.forEach(function (e) {
+    var a = nodes[e[0]], b = nodes[e[1]];
+    var dx = b.x - a.x, dy = b.y - a.y;
+    var len = Math.sqrt(dx * dx + dy * dy) || 1;
+    var off = len * 0.07;
+    var cx = (a.x + b.x) / 2 - (dy / len) * off;
+    var cy = (a.y + b.y) / 2 + (dx / len) * off;
+
+    var p = document.createElementNS(SVG_NS, "path");
+    p.setAttribute("class", "link");
+    p.setAttribute("d", "M" + a.x + "," + a.y + " Q" + cx + "," + cy + " " + b.x + "," + b.y);
+    mapLinks.appendChild(p);
+
+    var total = p.getTotalLength ? p.getTotalLength() : 0;
+    if (total) {
+      p.style.strokeDasharray = total;
+      p.style.strokeDashoffset = total;
+    }
+    e.path = p;
+  });
+
+  order.forEach(function (id) {
+    var n = nodes[id];
+    var a = document.createElement("a");
+    a.className = "node node--" + n.type;
+    a.href = "#/" + id;
+    a.style.left = n.x + "px";
+    a.style.top = n.y + "px";
+    a.setAttribute("tabindex", "-1");
+
+    var wrap = document.createElement("span");
+    wrap.className = "node-dot-wrap";
+    var dot = document.createElement("span");
+    dot.className = "node-dot";
+    if (n.num) {
+      var num = document.createElement("span");
+      num.className = "node-num";
+      num.textContent = n.num;
+      dot.appendChild(num);
+    }
+    wrap.appendChild(dot);
+
+    var label = document.createElement("span");
+    label.className = "node-label";
+    label.innerHTML =
+      '<span class="node-title"></span>' +
+      (n.caption ? '<span class="node-cap"></span>' : "");
+    label.querySelector(".node-title").textContent = n.title;
+    if (n.caption) label.querySelector(".node-cap").textContent = n.caption;
+
+    a.appendChild(wrap);
+    a.appendChild(label);
+    mapInner.appendChild(a);
+    n.node = a;
+  });
+
+  // ── selection ───────────────────────────────────────────────
+
+  var mapEl = document.querySelector(".map");
+  var current = null;
+  var firstCamera = true;
+
+  // The Google Fonts stylesheet is render-blocking, so during initial parse the
+  // map can still measure 0x0. Bail out in that case and let settle() re-run once
+  // layout exists. The first successful placement is instant, not animated, so the
+  // map does not slide in from the corner on load.
+  function applyCamera(n) {
+    var w = mapEl.clientWidth, h = mapEl.clientHeight;
+    if (!w || !h) return;
+
+    var t = "translate(" + (w * FOCUS_X - n.x) + "px," + (h * FOCUS_Y - n.y) + "px)";
+    if (firstCamera) {
+      firstCamera = false;
+      mapInner.style.transition = "none";
+      mapInner.style.transform = t;
+      mapInner.getBoundingClientRect();
+      mapInner.style.transition = "";
+      return;
+    }
+    mapInner.style.transform = t;
+  }
+
+  function select(id) {
+    var n = nodes[id] || nodes.root;
+    current = n.id;
+
+    applyCamera(n);
+
+    var near = { }, far = { };
+    near[n.id] = 1;
+    Object.keys(n.adj).forEach(function (k) { near[k] = 1; });
+    Object.keys(n.adj).forEach(function (k) {
+      Object.keys(nodes[k].adj).forEach(function (k2) { if (!near[k2]) far[k2] = 1; });
+    });
+
+    var i = 0;
+    order.forEach(function (nid) {
+      var el = nodes[nid].node;
+      var on = !!near[nid], dim = !on && !!far[nid];
+      el.className = "node node--" + nodes[nid].type +
+        (on ? " is-on" : dim ? " is-dim" : "") +
+        (nid === n.id ? " is-current" : "");
+      el.setAttribute("tabindex", on || dim ? "0" : "-1");
+      el.style.setProperty("--delay", (on || dim) ? (i++ * 0.028) + "s" : "0s");
+    });
+
+    // An edge is only drawn when both of its endpoints are on screen: solid when
+    // both are in the focused neighbourhood, faint when either is a second hop.
+    edges.forEach(function (e) {
+      var va = near[e[0]] || far[e[0]], vb = near[e[1]] || far[e[1]];
+      var on = near[e[0]] && near[e[1]];
+      e.path.setAttribute("class", "link" + (on ? " is-on" : (va && vb) ? " is-dim" : ""));
+    });
+
+    renderPanel(n);
+  }
+
+  // ── panel ───────────────────────────────────────────────────
+
+  var panelTop = document.getElementById("panelTop");
+  var panelBody = document.getElementById("panelBody");
+  var panelTabs = document.getElementById("panelTabs");
+  var tabState = { index: "projects", node: "details" };
+
+  function el(tag, cls, text) {
+    var e = document.createElement(tag);
+    if (cls) e.className = cls;
+    if (text != null) e.textContent = text;
+    return e;
+  }
+
+  function renderPanel(n) {
+    panelTop.innerHTML = "";
+    panelBody.innerHTML = "";
+    panelTabs.innerHTML = "";
+    panelBody.scrollTop = 0;
+
+    if (n.id === "root") renderIndex();
+    else renderNode(n);
+  }
+
+  function renderIndex() {
+    panelTop.appendChild(el("p", "cap", "Index"));
+
+    var lede = el("p", "lede");
+    lede.innerHTML =
+      "Gautam Singh is a software and data engineer based in Guelph, Ontario. " +
+      "He builds data pipelines, machine learning systems, and the full-stack " +
+      'applications on top of them, <a href="#/information">more information</a>.';
+    panelBody.appendChild(lede);
+
+    var list = el("div", "rows");
+    renderRows(list, tabState.index);
+    panelBody.appendChild(list);
+
+    CAT_ORDER.forEach(function (cat) {
+      var b = el("a", "tab", CAT_LABEL[cat]);
+      b.href = "#/";
+      b.setAttribute("role", "tab");
+      b.setAttribute("aria-selected", cat === tabState.index ? "true" : "false");
+      b.addEventListener("click", function (ev) {
+        ev.preventDefault();
+        tabState.index = cat;
+        renderPanel(nodes.root);
+      });
+      panelTabs.appendChild(b);
     });
   }
-  // reveal whatever is in the first viewport right away, so a visitor who never
-  // scrolls still sees the hero even if IntersectionObserver is slow to fire
-  requestAnimationFrame(sweep);
-  addEventListener('scroll', sweep, { passive: true });
-  addEventListener('load', sweep);
 
-  document.getElementById('year').textContent = new Date().getFullYear();
+  function renderRows(list, cat) {
+    order
+      .filter(function (id) { return nodes[id].cat === cat; })
+      .sort(function (a, b) {
+        if (cat === "areas") return (+nodes[a].num) - (+nodes[b].num);
+        return (nodes[b].year || "").localeCompare(nodes[a].year || "");
+      })
+      .forEach(function (id) {
+        var n = nodes[id];
+        var a = el("a", "row");
+        a.href = "#/" + id;
+        a.appendChild(el("span", "row-title", n.title));
+        a.appendChild(el("span", "row-year", n.year));
+        if (n.caption) a.appendChild(el("span", "row-cap", n.caption));
+        list.appendChild(a);
+      });
+  }
+
+  function renderNode(n) {
+    var back = el("a", "back underline", "Index");
+    back.href = "#/";
+    panelTop.appendChild(back);
+
+    var head = el("div", "doc-head");
+    head.appendChild(el("p", "cap", TYPE_LABEL[n.type] || ""));
+    head.appendChild(el("h2", null, n.title));
+    if (n.sub) head.appendChild(el("p", "doc-sub", n.sub));
+
+    var meta = el("div", "doc-meta");
+    if (n.meta) meta.appendChild(el("span", "cap", n.meta));
+    if (n.year) meta.appendChild(el("span", "cap cap-dim", n.year));
+    if (meta.children.length) head.appendChild(meta);
+    panelBody.appendChild(head);
+
+    var tabs = [["details", "Details"]];
+    if (n.stack) tabs.push(["stack", "Stack"]);
+    if (Object.keys(n.adj).length) tabs.push(["connections", "Connections"]);
+
+    var active = tabState.node;
+    if (!tabs.some(function (t) { return t[0] === active; })) active = "details";
+
+    if (active === "details") {
+      var prose = el("div", "prose");
+      prose.innerHTML = n.body ? n.body.innerHTML : "";
+      panelBody.appendChild(prose);
+      if (n.links) {
+        var lk = el("div", "doc-links");
+        lk.innerHTML = n.links.innerHTML;
+        panelBody.appendChild(lk);
+      }
+    } else if (active === "stack") {
+      var ul = el("ul", "stack-list");
+      n.stack.textContent.split("·").forEach(function (s) {
+        s = s.trim();
+        if (s) ul.appendChild(el("li", null, s));
+      });
+      panelBody.appendChild(ul);
+    } else {
+      var rows = el("div", "rows");
+      Object.keys(n.adj).forEach(function (id) {
+        var m = nodes[id];
+        var a = el("a", "row");
+        a.href = "#/" + id;
+        a.appendChild(el("span", "row-title", m.title));
+        a.appendChild(el("span", "row-year", m.year));
+        if (m.caption) a.appendChild(el("span", "row-cap", m.caption));
+        rows.appendChild(a);
+      });
+      panelBody.appendChild(rows);
+    }
+
+    tabs.forEach(function (t) {
+      var b = el("a", "tab", t[1]);
+      b.href = "#/" + n.id;
+      b.setAttribute("role", "tab");
+      b.setAttribute("aria-selected", t[0] === active ? "true" : "false");
+      b.addEventListener("click", function (ev) {
+        ev.preventDefault();
+        tabState.node = t[0];
+        renderPanel(n);
+      });
+      panelTabs.appendChild(b);
+    });
+  }
+
+  // ── routing ─────────────────────────────────────────────────
+
+  function idFromHash() {
+    var h = location.hash.replace(/^#\/?/, "");
+    return nodes[h] ? h : "root";
+  }
+
+  function route() {
+    var id = idFromHash();
+    if (id !== current) tabState.node = "details";
+    select(id);
+  }
+
+  function settle() { if (current) applyCamera(nodes[current]); }
+
+  window.addEventListener("hashchange", route);
+  window.addEventListener("resize", settle);
+  window.addEventListener("load", settle);
+  requestAnimationFrame(settle);
+
+  route();
+})();
 </script>
 </body>
 </html>
