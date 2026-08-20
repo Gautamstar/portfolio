@@ -120,100 +120,153 @@
     @keyframes grow { to { transform: scaleX(1); } }
   }
 
-  /* ── animated sky ──────────────────────────────────────── */
+  /* ── night sky ─────────────────────────────────────── */
 
-  /* Drifting cloud banks and a starfield, built from layered radial gradients
-     rather than a photograph, so the whole effect costs zero network requests.
-     Each layer is 200% wide with its pattern tiled at 50%, so translating by
-     exactly -50% lands on an identical frame and the loop is seamless. Only
-     transform is animated, which the compositor handles without repainting. */
+  /* An astrophotography sky assembled from noise and gradients, with no image
+     file anywhere. Three things stack up: faint nebulosity, a Milky Way band
+     with dark dust lanes cutting across its glow, and three star layers that
+     drift at different speeds so the field has depth.
+
+     Stars come from fractalNoise pushed through a steep gamma curve on the alpha
+     channel. That crushes everything except the brightest peaks of the noise,
+     which leaves sparse points scattered at random rather than a visible grid.
+     One octave is enough and keeps it cheap to rasterise. */
   .sky {
     position: absolute;
     inset: 0;
     overflow: hidden;
     z-index: -1;
     background:
-      radial-gradient(130% 100% at 50% -18%, #2c3d68 0%, #1d2a4a 38%, #141d34 72%, #0f1729 100%);
+      radial-gradient(115% 75% at 50% 108%, rgba(30, 62, 96, 0.5) 0%, transparent 58%),
+      linear-gradient(180deg, #04070f 0%, #060b16 38%, #09101f 68%, #0f1729 100%);
   }
-  .sky-layer {
+
+  /* Faint colour, the way a long exposure picks up nebulosity the eye misses. */
+  .nebula {
     position: absolute;
-    top: -8%;
+    inset: 0;
+    background:
+      radial-gradient(48% 40% at 74% 16%, rgba(56, 160, 205, 0.16), transparent 68%),
+      radial-gradient(40% 34% at 22% 30%, rgba(120, 96, 200, 0.13), transparent 70%),
+      radial-gradient(34% 30% at 52% 62%, rgba(210, 120, 150, 0.08), transparent 72%),
+      radial-gradient(60% 44% at 8% 78%, rgba(40, 130, 170, 0.10), transparent 70%);
+  }
+
+  /* The band is masked to a horizontal strip, then the whole wrapper is rotated,
+     which is what turns it into a diagonal sweep across the frame. */
+  .mw {
+    position: absolute;
+    left: -34%;
+    right: -34%;
+    top: -24%;
+    height: 162%;
+    transform: rotate(-22deg);
+    opacity: 1;
+  }
+  .mw-glow {
+    position: absolute;
+    inset: 0;
+    background:
+      linear-gradient(180deg,
+        transparent 0%,
+        rgba(150, 176, 214, 0.16) 30%,
+        rgba(226, 214, 196, 0.38) 47%,
+        rgba(238, 226, 202, 0.42) 52%,
+        rgba(150, 176, 214, 0.16) 70%,
+        transparent 100%),
+      radial-gradient(38% 60% at 30% 50%, rgba(255, 210, 150, 0.32), transparent 70%),
+      radial-gradient(30% 52% at 76% 50%, rgba(170, 200, 240, 0.2), transparent 72%);
+  }
+  /* Dark noise laid over the glow, which is what actually reads as dust lanes. */
+  .mw-dust {
+    position: absolute;
+    top: 0;
     left: 0;
     width: 200%;
-    height: 108%;
+    height: 100%;
     background-repeat: repeat-x;
-    background-size: 50% 100%;
+    background-size: 900px 100%;
+    -webkit-mask-image: linear-gradient(to bottom, transparent 0%, rgba(0,0,0,.65) 26%, #000 44%, #000 56%, rgba(0,0,0,.65) 74%, transparent 100%);
+    mask-image: linear-gradient(to bottom, transparent 0%, rgba(0,0,0,.65) 26%, #000 44%, #000 56%, rgba(0,0,0,.65) 74%, transparent 100%);
+    animation: drift-dust 420s linear infinite;
+    will-change: transform;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='900' height='500'%3E%3Cfilter id='d' x='0' y='0' width='100%25' height='100%25'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.0055 0.016' numOctaves='2' seed='17' stitchTiles='stitch'/%3E%3CfeColorMatrix type='matrix' values='0 0 0 0 0.012 0 0 0 0 0.02 0 0 0 0 0.043 1 0 0 0 -0.12'/%3E%3C/filter%3E%3Crect width='900' height='500' filter='url(%23d)'/%3E%3C/svg%3E");
+  }
+
+  .sky-layer {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 200%;
+    height: 100%;
+    background-repeat: repeat;
     will-change: transform;
   }
-  @keyframes drift {
+
+  @keyframes drift-dust {
     from { transform: translate3d(0, 0, 0); }
-    to   { transform: translate3d(-50%, 0, 0); }
+    to   { transform: translate3d(-900px, 0, 0); }
   }
-  /* Cloud layers loop on a fixed tile width instead of half the element. The
-     browser then rasterises one tile of that width and repeats it, rather than
-     filtering a ~1450px slab, which is what actually costs main-thread time.
-     Translating by exactly one tile width keeps the loop seamless. */
-  @keyframes drift-far {
+  @keyframes drift-460 {
     from { transform: translate3d(0, 0, 0); }
-    to   { transform: translate3d(-940px, 0, 0); }
+    to   { transform: translate3d(-460px, 0, 0); }
   }
-  @keyframes drift-near {
+  @keyframes drift-700 {
     from { transform: translate3d(0, 0, 0); }
-    to   { transform: translate3d(-680px, 0, 0); }
+    to   { transform: translate3d(-700px, 0, 0); }
   }
   @keyframes twinkle {
-    from { opacity: 0.55; }
+    from { opacity: 0.62; }
     to   { opacity: 1; }
   }
 
-  .stars {
-    animation: drift 260s linear infinite, twinkle 7s ease-in-out infinite alternate;
+  /* Dense faint field. Highest gamma, so only the very tips of the noise survive
+     and the stars stay pinpoint rather than turning into grey mush. */
+  .stars-dust {
+    background-size: 460px 460px;
+    opacity: 1;
+    animation: drift-460 300s linear infinite;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='460' height='460'%3E%3Cfilter id='s1' x='0' y='0' width='100%25' height='100%25'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='1' seed='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='matrix' values='0 0 0 0 0.86 0 0 0 0 0.90 0 0 0 0 1 1 0 0 0 0'/%3E%3CfeComponentTransfer%3E%3CfeFuncA type='gamma' exponent='7' amplitude='5'/%3E%3C/feComponentTransfer%3E%3C/filter%3E%3Crect width='460' height='460' filter='url(%23s1)'/%3E%3C/svg%3E");
+  }
+
+  /* Sparser and slightly larger, drifting faster to separate it in depth. */
+  .stars-mid {
+    background-size: 700px 700px;
+    opacity: 0.95;
+    animation: drift-700 210s linear infinite;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='700' height='700'%3E%3Cfilter id='s2' x='0' y='0' width='100%25' height='100%25'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.42' numOctaves='1' seed='23' stitchTiles='stitch'/%3E%3CfeColorMatrix type='matrix' values='0 0 0 0 1 0 0 0 0 0.98 0 0 0 0 0.94 1 0 0 0 0'/%3E%3CfeComponentTransfer%3E%3CfeFuncA type='gamma' exponent='9' amplitude='5.5'/%3E%3C/feComponentTransfer%3E%3C/filter%3E%3Crect width='700' height='700' filter='url(%23s2)'/%3E%3C/svg%3E");
+  }
+
+  /* The named stars: a bright core with a halo around it, placed by hand so the
+     eye has something to land on, and twinkling slightly. */
+  .stars-bright {
+    background-repeat: repeat;
+    background-size: 700px 700px;
+    animation: drift-700 210s linear infinite, twinkle 6.5s ease-in-out infinite alternate;
     background-image:
-      radial-gradient(1.5px 1.5px at 4% 14%, rgba(255,255,255,.95), transparent 60%),
-      radial-gradient(1.2px 1.2px at 11% 41%, rgba(255,255,255,.7), transparent 60%),
-      radial-gradient(1px 1px at 17% 8%, rgba(255,255,255,.6), transparent 60%),
-      radial-gradient(1.6px 1.6px at 23% 63%, rgba(220,232,255,.9), transparent 60%),
-      radial-gradient(1px 1px at 29% 27%, rgba(255,255,255,.55), transparent 60%),
-      radial-gradient(1.3px 1.3px at 36% 78%, rgba(255,255,255,.8), transparent 60%),
-      radial-gradient(1px 1px at 41% 19%, rgba(255,255,255,.5), transparent 60%),
-      radial-gradient(1.5px 1.5px at 47% 52%, rgba(210,226,255,.85), transparent 60%),
-      radial-gradient(1.1px 1.1px at 54% 9%, rgba(255,255,255,.65), transparent 60%),
-      radial-gradient(1px 1px at 61% 71%, rgba(255,255,255,.5), transparent 60%),
-      radial-gradient(1.6px 1.6px at 67% 33%, rgba(255,255,255,.9), transparent 60%),
-      radial-gradient(1.2px 1.2px at 73% 58%, rgba(225,236,255,.7), transparent 60%),
-      radial-gradient(1px 1px at 79% 16%, rgba(255,255,255,.55), transparent 60%),
-      radial-gradient(1.4px 1.4px at 86% 44%, rgba(255,255,255,.85), transparent 60%),
-      radial-gradient(1.1px 1.1px at 92% 69%, rgba(255,255,255,.6), transparent 60%),
-      radial-gradient(1.3px 1.3px at 97% 25%, rgba(235,243,255,.75), transparent 60%);
+      radial-gradient(2.6px 2.6px at 12% 18%, rgba(255,255,255,1), transparent 62%),
+      radial-gradient(9px 9px at 12% 18%, rgba(180,214,255,.30), transparent 68%),
+      radial-gradient(2.2px 2.2px at 63% 9%, rgba(255,246,232,1), transparent 62%),
+      radial-gradient(8px 8px at 63% 9%, rgba(255,214,170,.26), transparent 68%),
+      radial-gradient(2.4px 2.4px at 84% 41%, rgba(255,255,255,1), transparent 62%),
+      radial-gradient(9px 9px at 84% 41%, rgba(190,220,255,.26), transparent 68%),
+      radial-gradient(2px 2px at 33% 57%, rgba(235,245,255,1), transparent 62%),
+      radial-gradient(7px 7px at 33% 57%, rgba(170,205,255,.22), transparent 68%),
+      radial-gradient(2.5px 2.5px at 52% 78%, rgba(255,250,240,1), transparent 62%),
+      radial-gradient(8px 8px at 52% 78%, rgba(255,222,180,.22), transparent 68%),
+      radial-gradient(1.9px 1.9px at 74% 68%, rgba(255,255,255,.95), transparent 62%),
+      radial-gradient(2.1px 2.1px at 22% 86%, rgba(226,240,255,.95), transparent 62%),
+      radial-gradient(2.3px 2.3px at 92% 76%, rgba(255,255,255,.9), transparent 62%),
+      radial-gradient(1.8px 1.8px at 44% 28%, rgba(255,255,255,.85), transparent 62%),
+      radial-gradient(2px 2px at 6% 62%, rgba(240,248,255,.9), transparent 62%);
   }
 
-  /* Confined to the upper sky and masked out at the bottom. Rasterising
-     feTurbulence is the expensive part, so covering less area is what keeps the
-     main thread free; the mask hides the resulting hard edge. */
-  .clouds-far, .clouds-near {
-    -webkit-mask-image: linear-gradient(to bottom, #000 8%, rgba(0,0,0,.85) 46%, transparent 96%);
-    mask-image: linear-gradient(to bottom, #000 8%, rgba(0,0,0,.85) 46%, transparent 96%);
-  }
-
-  /* Real cloud structure comes from fractal noise, not soft gradients, which only
-     ever produce smudges. feTurbulence generates it procedurally inside a data
-     URI, so there is still no network request. baseFrequency is stretched wide
-     and short so features come out horizontal and wispy the way cloud banks are,
-     and stitchTiles keeps the tile edges invisible when it repeats. */
-  .clouds-far {
-    height: 96%;
-    opacity: 0.8;
-    background-size: 940px 100%;
-    animation: drift-far 96s linear infinite;
-    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='940' height='620'%3E%3Cfilter id='f' x='0' y='0' width='100%25' height='100%25'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.0026 0.009' numOctaves='3' seed='11' stitchTiles='stitch'/%3E%3CfeColorMatrix type='matrix' values='0 0 0 0 0.78 0 0 0 0 0.84 0 0 0 0 0.97 1 0 0 0 -0.52'/%3E%3C/filter%3E%3Crect width='940' height='620' filter='url(%23f)'/%3E%3C/svg%3E");
-  }
-
-  .clouds-near {
-    height: 88%;
-    opacity: 0.55;
-    background-size: 680px 100%;
-    animation: drift-near 58s linear infinite;
-    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='680' height='500'%3E%3Cfilter id='n' x='0' y='0' width='100%25' height='100%25'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.0055 0.016' numOctaves='3' seed='5' stitchTiles='stitch'/%3E%3CfeColorMatrix type='matrix' values='0 0 0 0 0.9 0 0 0 0 0.94 0 0 0 0 1 1 0 0 0 -0.66'/%3E%3C/filter%3E%3Crect width='680' height='500' filter='url(%23n)'/%3E%3C/svg%3E");
+  .scrim {
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(46% 44% at 50% 42%, rgba(4, 7, 15, 0.62) 0%, rgba(4, 7, 15, 0.3) 52%, transparent 80%),
+      linear-gradient(180deg, rgba(4, 7, 15, 0.42) 0%, transparent 20%);
   }
 
   /* Fades the sky into the page so the hero has no hard bottom edge. */
@@ -221,9 +274,10 @@
     content: "";
     position: absolute;
     left: 0; right: 0; bottom: 0;
-    height: 46%;
-    background: linear-gradient(to bottom, rgba(15,23,41,0), var(--bg) 92%);
+    height: 32%;
+    background: linear-gradient(to bottom, rgba(15,23,41,0), var(--bg) 96%);
   }
+
 
   /* ── nav ───────────────────────────────────────────────── */
 
@@ -709,7 +763,7 @@
 
   @media (prefers-reduced-motion: reduce) {
     html { scroll-behavior: auto; }
-    .sky-layer { animation: none !important; }
+    .sky-layer, .mw-dust { animation: none !important; }
     * {
       animation-duration: 0.01ms !important;
       animation-iteration-count: 1 !important;
@@ -724,6 +778,25 @@
      is still reachable by scrolling, and the hero repeats all the links. */
   @media (max-width: 660px) {
     .nav-links a:not(.btn) { display: none; }
+  }
+
+  /* Mobile emulation throttles the CPU roughly fourfold, and rasterising an SVG
+     filter is the single most expensive thing on this page. Phones therefore get
+     one noise layer instead of three: the dense star field stays, the Milky Way
+     keeps its glow but loses its noise-drawn dust lanes, and the hand-placed
+     bright stars are pure gradients so they cost nothing either way. */
+  @media (max-width: 780px) {
+    .mw, .stars-mid { display: none; }
+    /* A masked, rotated band has to be composited offscreen before it can be
+       drawn, which costs more on a throttled phone than the band is worth. The
+       same diagonal sweep painted as a plain gradient costs nothing. */
+    .nebula {
+      background:
+        linear-gradient(154deg, transparent 26%, rgba(226, 214, 196, 0.16) 44%, rgba(255, 214, 170, 0.13) 52%, transparent 70%),
+        radial-gradient(52% 42% at 78% 18%, rgba(56, 160, 205, 0.16), transparent 68%),
+        radial-gradient(44% 36% at 20% 32%, rgba(120, 96, 200, 0.13), transparent 70%),
+        radial-gradient(60% 44% at 8% 78%, rgba(40, 130, 170, 0.10), transparent 70%);
+    }
   }
 
   @media (max-width: 780px) {
@@ -770,9 +843,12 @@
 
 <div class="hero-band">
   <div class="sky" aria-hidden="true">
-    <div class="sky-layer stars"></div>
-    <div class="sky-layer clouds-far"></div>
-    <div class="sky-layer clouds-near"></div>
+    <div class="nebula"></div>
+    <div class="mw"><div class="mw-glow"></div><div class="mw-dust"></div></div>
+    <div class="sky-layer stars-dust"></div>
+    <div class="sky-layer stars-mid"></div>
+    <div class="sky-layer stars-bright"></div>
+    <div class="scrim"></div>
   </div>
 
   <div id="top" class="wrap hero">
