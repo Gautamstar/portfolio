@@ -207,9 +207,9 @@
     from { transform: translate3d(0, 0, 0); }
     to   { transform: translate3d(-900px, 0, 0); }
   }
-  @keyframes drift-460 {
+  @keyframes drift-900 {
     from { transform: translate3d(0, 0, 0); }
-    to   { transform: translate3d(-460px, 0, 0); }
+    to   { transform: translate3d(-900px, 0, 0); }
   }
   @keyframes drift-700 {
     from { transform: translate3d(0, 0, 0); }
@@ -220,53 +220,27 @@
     to   { opacity: 1; }
   }
 
-  /* Dense faint field. Highest gamma, so only the very tips of the noise survive
-     and the stars stay pinpoint rather than turning into grey mush. */
-  .stars-dust {
-    background-size: 460px 460px;
-    opacity: 1;
-    animation: drift-460 300s linear infinite;
-    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='460' height='460'%3E%3Cfilter id='s1' x='0' y='0' width='100%25' height='100%25'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='1' seed='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='matrix' values='0 0 0 0 0.86 0 0 0 0 0.90 0 0 0 0 1 1 0 0 0 0'/%3E%3CfeComponentTransfer%3E%3CfeFuncA type='gamma' exponent='7' amplitude='5'/%3E%3C/feComponentTransfer%3E%3C/filter%3E%3Crect width='460' height='460' filter='url(%23s1)'/%3E%3C/svg%3E");
-  }
+  /* Stars are placed individually rather than derived from noise, which fires
+     in every cell and at any useful density reads as film grain. Brightness is
+     weighted heavily toward faint, a handful are bright enough to earn a halo,
+     and they cluster along the band's diagonal so density varies the way a real
+     field does.
 
-  /* Sparser and slightly larger, drifting faster to separate it in depth. */
-  .stars-mid {
-    background-size: 700px 700px;
+     They ship as circles inside an SVG rather than as a list of CSS gradients.
+     Every gradient in a background-image list is a separate paint over the whole
+     element, so 179 of them cost 630ms of main-thread time; one SVG rasterises
+     once and then just tiles. */
+  .stars-far {
+    background-size: 900px 900px;
     opacity: 0.95;
-    animation: drift-700 210s linear infinite;
-    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='700' height='700'%3E%3Cfilter id='s2' x='0' y='0' width='100%25' height='100%25'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.42' numOctaves='1' seed='23' stitchTiles='stitch'/%3E%3CfeColorMatrix type='matrix' values='0 0 0 0 1 0 0 0 0 0.98 0 0 0 0 0.94 1 0 0 0 0'/%3E%3CfeComponentTransfer%3E%3CfeFuncA type='gamma' exponent='9' amplitude='5.5'/%3E%3C/feComponentTransfer%3E%3C/filter%3E%3Crect width='700' height='700' filter='url(%23s2)'/%3E%3C/svg%3E");
+    animation: drift-900 320s linear infinite;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='900' height='900'%3E%3Cdefs%3E%3CradialGradient id='hw'%3E%3Cstop offset='0' stop-color='%23ffffff' stop-opacity='.55'/%3E%3Cstop offset='1' stop-color='%23ffffff' stop-opacity='0'/%3E%3C/radialGradient%3E%3CradialGradient id='hb'%3E%3Cstop offset='0' stop-color='%23cfe2ff' stop-opacity='.55'/%3E%3Cstop offset='1' stop-color='%23cfe2ff' stop-opacity='0'/%3E%3C/radialGradient%3E%3CradialGradient id='ha'%3E%3Cstop offset='0' stop-color='%23ffdcb0' stop-opacity='.55'/%3E%3Cstop offset='1' stop-color='%23ffdcb0' stop-opacity='0'/%3E%3C/radialGradient%3E%3C/defs%3E%3Ccircle cx='440.3' cy='545.6' r='5.6' fill='url(%23hw)'/%3E%3Ccircle cx='515.4' cy='525.2' r='5.3' fill='url(%23hb)'/%3E%3Ccircle cx='841.8' cy='462.7' r='6.4' fill='url(%23hw)'/%3E%3Ccircle cx='386.1' cy='511.1' r='5.5' fill='url(%23hw)'/%3E%3Ccircle cx='217.0' cy='567.8' r='0.6' fill='%23ffecd2' opacity='0.46'/%3E%3Ccircle cx='418.4' cy='372.9' r='0.56' fill='%23ffffff' opacity='0.43'/%3E%3Ccircle cx='440.3' cy='545.6' r='1.19' fill='%23ffffff' opacity='0.97'/%3E%3Ccircle cx='515.4' cy='525.2' r='1.14' fill='%23d6e6ff' opacity='0.93'/%3E%3Ccircle cx='877.5' cy='829.1' r='0.5' fill='%23ffffff' opacity='0.36'/%3E%3Ccircle cx='619.2' cy='97.9' r='0.57' fill='%23ffffff' opacity='0.45'/%3E%3Ccircle cx='478.9' cy='818.4' r='0.46' fill='%23ffffff' opacity='0.32'/%3E%3Ccircle cx='564.9' cy='65.7' r='0.47' fill='%23ffd6b0' opacity='0.44'/%3E%3Ccircle cx='877.5' cy='389.6' r='0.49' fill='%23ffffff' opacity='0.48'/%3E%3Ccircle cx='597.6' cy='146.8' r='0.6' fill='%23ffd6b0' opacity='0.38'/%3E%3Ccircle cx='530.7' cy='55.2' r='0.58' fill='%23ffffff' opacity='0.42'/%3E%3Ccircle cx='611.5' cy='811.3' r='0.5' fill='%23ffd6b0' opacity='0.44'/%3E%3Ccircle cx='294.6' cy='818.5' r='0.51' fill='%23ffffff' opacity='0.37'/%3E%3Ccircle cx='590.6' cy='330.5' r='0.89' fill='%23ffd6b0' opacity='0.85'/%3E%3Ccircle cx='698.6' cy='877.5' r='0.51' fill='%23d6e6ff' opacity='0.45'/%3E%3Ccircle cx='68.6' cy='264.9' r='0.46' fill='%23ffecd2' opacity='0.33'/%3E%3Ccircle cx='149.6' cy='877.5' r='0.62' fill='%23ffffff' opacity='0.44'/%3E%3Ccircle cx='231.4' cy='603.2' r='0.82' fill='%23ffffff' opacity='0.49'/%3E%3Ccircle cx='289.7' cy='504.7' r='0.64' fill='%23ffecd2' opacity='0.46'/%3E%3Ccircle cx='868.6' cy='442.8' r='0.63' fill='%23ffffff' opacity='0.34'/%3E%3Ccircle cx='202.2' cy='697.5' r='0.57' fill='%23ffffff' opacity='0.42'/%3E%3Ccircle cx='184.8' cy='491.1' r='0.45' fill='%23ffffff' opacity='0.45'/%3E%3Ccircle cx='76.4' cy='324.7' r='0.64' fill='%23bcd4ff' opacity='0.43'/%3E%3Ccircle cx='591.7' cy='225.9' r='0.88' fill='%23ffecd2' opacity='0.86'/%3E%3Ccircle cx='143.5' cy='216.9' r='0.52' fill='%23ffffff' opacity='0.5'/%3E%3Ccircle cx='649.4' cy='222.6' r='0.61' fill='%23ffffff' opacity='0.32'/%3E%3Ccircle cx='877.5' cy='497.6' r='0.59' fill='%23ffd6b0' opacity='0.5'/%3E%3Ccircle cx='877.5' cy='593.7' r='0.54' fill='%23d6e6ff' opacity='0.37'/%3E%3Ccircle cx='295.1' cy='636.3' r='0.57' fill='%23bcd4ff' opacity='0.32'/%3E%3Ccircle cx='452.1' cy='446.1' r='0.69' fill='%23d6e6ff' opacity='0.65'/%3E%3Ccircle cx='877.5' cy='22.5' r='0.47' fill='%23ffd6b0' opacity='0.41'/%3E%3Ccircle cx='772.3' cy='55.6' r='0.63' fill='%23d6e6ff' opacity='0.37'/%3E%3Ccircle cx='437.5' cy='528.6' r='0.82' fill='%23ffffff' opacity='0.56'/%3E%3Ccircle cx='315.4' cy='774.9' r='0.5' fill='%23bcd4ff' opacity='0.4'/%3E%3Ccircle cx='525.8' cy='225.8' r='0.74' fill='%23ffffff' opacity='0.65'/%3E%3Ccircle cx='727.2' cy='122.0' r='0.55' fill='%23ffffff' opacity='0.45'/%3E%3Ccircle cx='776.9' cy='36.7' r='0.53' fill='%23ffffff' opacity='0.49'/%3E%3Ccircle cx='206.8' cy='772.9' r='0.57' fill='%23d6e6ff' opacity='0.49'/%3E%3Ccircle cx='549.3' cy='731.9' r='0.61' fill='%23d6e6ff' opacity='0.51'/%3E%3Ccircle cx='61.8' cy='92.5' r='0.65' fill='%23ffecd2' opacity='0.38'/%3E%3Ccircle cx='709.5' cy='108.1' r='0.8' fill='%23ffffff' opacity='0.48'/%3E%3Ccircle cx='841.8' cy='462.7' r='1.32' fill='%23ffffff' opacity='0.92'/%3E%3Ccircle cx='679.4' cy='187.7' r='0.99' fill='%23ffd6b0' opacity='0.79'/%3E%3Ccircle cx='654.9' cy='22.5' r='0.52' fill='%23ffffff' opacity='0.35'/%3E%3Ccircle cx='78.5' cy='766.2' r='0.55' fill='%23ffd6b0' opacity='0.39'/%3E%3Ccircle cx='22.5' cy='521.2' r='0.65' fill='%23bcd4ff' opacity='0.44'/%3E%3Ccircle cx='493.5' cy='196.9' r='0.62' fill='%23ffffff' opacity='0.45'/%3E%3Ccircle cx='633.6' cy='757.8' r='0.56' fill='%23ffffff' opacity='0.52'/%3E%3Ccircle cx='556.9' cy='367.3' r='0.49' fill='%23d6e6ff' opacity='0.47'/%3E%3Ccircle cx='22.5' cy='537.9' r='0.92' fill='%23d6e6ff' opacity='0.73'/%3E%3Ccircle cx='378.9' cy='774.3' r='0.78' fill='%23ffffff' opacity='0.49'/%3E%3Ccircle cx='809.5' cy='28.8' r='1.0' fill='%23ffecd2' opacity='0.7'/%3E%3Ccircle cx='490.8' cy='319.0' r='0.47' fill='%23ffecd2' opacity='0.36'/%3E%3Ccircle cx='226.1' cy='877.5' r='0.65' fill='%23ffd6b0' opacity='0.43'/%3E%3Ccircle cx='311.4' cy='558.5' r='0.65' fill='%23ffffff' opacity='0.37'/%3E%3Ccircle cx='783.8' cy='158.9' r='0.67' fill='%23ffffff' opacity='0.51'/%3E%3Ccircle cx='59.6' cy='95.8' r='0.7' fill='%23ffffff' opacity='0.67'/%3E%3Ccircle cx='22.5' cy='166.6' r='0.52' fill='%23ffecd2' opacity='0.5'/%3E%3Ccircle cx='553.8' cy='503.3' r='0.59' fill='%23ffffff' opacity='0.51'/%3E%3Ccircle cx='751.5' cy='877.5' r='0.54' fill='%23d6e6ff' opacity='0.3'/%3E%3Ccircle cx='709.8' cy='598.5' r='0.69' fill='%23d6e6ff' opacity='0.69'/%3E%3Ccircle cx='560.1' cy='164.4' r='0.69' fill='%23ffffff' opacity='0.55'/%3E%3Ccircle cx='103.7' cy='605.2' r='0.52' fill='%23ffecd2' opacity='0.51'/%3E%3Ccircle cx='287.4' cy='477.8' r='0.61' fill='%23ffffff' opacity='0.41'/%3E%3Ccircle cx='871.1' cy='392.7' r='0.51' fill='%23ffecd2' opacity='0.44'/%3E%3Ccircle cx='339.9' cy='596.9' r='0.95' fill='%23d6e6ff' opacity='0.72'/%3E%3Ccircle cx='463.3' cy='617.6' r='0.49' fill='%23ffecd2' opacity='0.38'/%3E%3Ccircle cx='378.9' cy='57.5' r='0.49' fill='%23ffecd2' opacity='0.41'/%3E%3Ccircle cx='710.7' cy='647.1' r='0.46' fill='%23ffd6b0' opacity='0.37'/%3E%3Ccircle cx='510.3' cy='227.0' r='0.5' fill='%23ffffff' opacity='0.35'/%3E%3Ccircle cx='22.5' cy='877.5' r='0.95' fill='%23ffffff' opacity='0.86'/%3E%3Ccircle cx='813.9' cy='591.3' r='0.62' fill='%23ffffff' opacity='0.36'/%3E%3Ccircle cx='824.9' cy='22.5' r='0.97' fill='%23ffffff' opacity='0.85'/%3E%3Ccircle cx='67.8' cy='877.5' r='0.64' fill='%23ffffff' opacity='0.39'/%3E%3Ccircle cx='447.3' cy='616.0' r='0.59' fill='%23ffffff' opacity='0.41'/%3E%3Ccircle cx='762.0' cy='140.2' r='0.48' fill='%23bcd4ff' opacity='0.46'/%3E%3Ccircle cx='447.6' cy='597.3' r='0.64' fill='%23ffffff' opacity='0.32'/%3E%3Ccircle cx='535.1' cy='725.3' r='1.04' fill='%23ffffff' opacity='0.75'/%3E%3Ccircle cx='679.8' cy='22.5' r='0.56' fill='%23d6e6ff' opacity='0.36'/%3E%3Ccircle cx='52.1' cy='316.2' r='0.64' fill='%23ffecd2' opacity='0.34'/%3E%3Ccircle cx='475.9' cy='419.6' r='0.59' fill='%23ffffff' opacity='0.5'/%3E%3Ccircle cx='529.5' cy='326.9' r='0.49' fill='%23ffffff' opacity='0.47'/%3E%3Ccircle cx='612.0' cy='323.1' r='0.75' fill='%23ffffff' opacity='0.51'/%3E%3Ccircle cx='853.3' cy='26.2' r='0.67' fill='%23ffffff' opacity='0.69'/%3E%3Ccircle cx='211.2' cy='781.3' r='0.5' fill='%23bcd4ff' opacity='0.43'/%3E%3Ccircle cx='295.5' cy='714.7' r='0.75' fill='%23d6e6ff' opacity='0.67'/%3E%3Ccircle cx='256.4' cy='294.2' r='0.79' fill='%23ffecd2' opacity='0.63'/%3E%3Ccircle cx='542.4' cy='333.4' r='0.69' fill='%23ffffff' opacity='0.55'/%3E%3Ccircle cx='524.7' cy='574.9' r='0.5' fill='%23ffffff' opacity='0.39'/%3E%3Ccircle cx='311.2' cy='550.9' r='0.48' fill='%23d6e6ff' opacity='0.41'/%3E%3Ccircle cx='716.9' cy='171.7' r='0.63' fill='%23ffffff' opacity='0.32'/%3E%3Ccircle cx='780.5' cy='418.9' r='0.62' fill='%23ffecd2' opacity='0.34'/%3E%3Ccircle cx='386.1' cy='511.1' r='1.25' fill='%23ffffff' opacity='0.94'/%3E%3Ccircle cx='156.1' cy='486.0' r='0.51' fill='%23d6e6ff' opacity='0.43'/%3E%3Ccircle cx='710.5' cy='219.1' r='0.56' fill='%23ffffff' opacity='0.48'/%3E%3Ccircle cx='270.2' cy='563.4' r='0.63' fill='%23ffecd2' opacity='0.43'/%3E%3Ccircle cx='188.1' cy='647.8' r='0.67' fill='%23ffffff' opacity='0.51'/%3E%3Ccircle cx='161.0' cy='572.2' r='0.63' fill='%23ffffff' opacity='0.51'/%3E%3Ccircle cx='135.6' cy='877.5' r='0.68' fill='%23ffd6b0' opacity='0.64'/%3E%3Ccircle cx='646.8' cy='486.4' r='0.47' fill='%23ffffff' opacity='0.32'/%3E%3Ccircle cx='747.2' cy='44.5' r='0.61' fill='%23ffecd2' opacity='0.46'/%3E%3Ccircle cx='573.1' cy='68.1' r='0.64' fill='%23ffffff' opacity='0.33'/%3E%3Ccircle cx='47.8' cy='22.5' r='0.59' fill='%23ffd6b0' opacity='0.42'/%3E%3Ccircle cx='565.8' cy='529.7' r='0.79' fill='%23ffffff' opacity='0.7'/%3E%3Ccircle cx='598.9' cy='240.1' r='1.03' fill='%23ffffff' opacity='0.81'/%3E%3Ccircle cx='366.1' cy='680.7' r='0.96' fill='%23ffffff' opacity='0.73'/%3E%3Ccircle cx='22.5' cy='541.5' r='0.65' fill='%23d6e6ff' opacity='0.39'/%3E%3Ccircle cx='821.5' cy='270.8' r='0.64' fill='%23ffffff' opacity='0.44'/%3E%3Ccircle cx='535.9' cy='483.2' r='0.52' fill='%23ffffff' opacity='0.36'/%3E%3Ccircle cx='292.8' cy='877.5' r='0.6' fill='%23d6e6ff' opacity='0.37'/%3E%3Ccircle cx='331.4' cy='615.4' r='0.48' fill='%23ffd6b0' opacity='0.37'/%3E%3Ccircle cx='197.0' cy='668.2' r='0.74' fill='%23ffffff' opacity='0.52'/%3E%3Ccircle cx='156.6' cy='554.3' r='0.93' fill='%23bcd4ff' opacity='0.77'/%3E%3Ccircle cx='623.0' cy='418.9' r='0.76' fill='%23ffffff' opacity='0.58'/%3E%3Ccircle cx='645.1' cy='321.7' r='0.71' fill='%23ffd6b0' opacity='0.56'/%3E%3Ccircle cx='877.5' cy='483.7' r='0.46' fill='%23ffffff' opacity='0.44'/%3E%3Ccircle cx='696.9' cy='522.0' r='0.5' fill='%23ffffff' opacity='0.46'/%3E%3Ccircle cx='71.7' cy='157.6' r='0.61' fill='%23ffffff' opacity='0.44'/%3E%3C/svg%3E");
   }
 
-  /* The named stars: a bright core with a halo around it, placed by hand so the
-     eye has something to land on, and twinkling slightly. */
-  .stars-bright {
-    background-repeat: repeat;
+  .stars-near {
     background-size: 700px 700px;
     animation: drift-700 210s linear infinite, twinkle 6.5s ease-in-out infinite alternate;
-    background-image:
-      radial-gradient(2.6px 2.6px at 12% 18%, rgba(255,255,255,1), transparent 62%),
-      radial-gradient(9px 9px at 12% 18%, rgba(180,214,255,.30), transparent 68%),
-      radial-gradient(2.2px 2.2px at 63% 9%, rgba(255,246,232,1), transparent 62%),
-      radial-gradient(8px 8px at 63% 9%, rgba(255,214,170,.26), transparent 68%),
-      radial-gradient(2.4px 2.4px at 84% 41%, rgba(255,255,255,1), transparent 62%),
-      radial-gradient(9px 9px at 84% 41%, rgba(190,220,255,.26), transparent 68%),
-      radial-gradient(2px 2px at 33% 57%, rgba(235,245,255,1), transparent 62%),
-      radial-gradient(7px 7px at 33% 57%, rgba(170,205,255,.22), transparent 68%),
-      radial-gradient(2.5px 2.5px at 52% 78%, rgba(255,250,240,1), transparent 62%),
-      radial-gradient(8px 8px at 52% 78%, rgba(255,222,180,.22), transparent 68%),
-      radial-gradient(1.9px 1.9px at 74% 68%, rgba(255,255,255,.95), transparent 62%),
-      radial-gradient(2.1px 2.1px at 22% 86%, rgba(226,240,255,.95), transparent 62%),
-      radial-gradient(2.3px 2.3px at 92% 76%, rgba(255,255,255,.9), transparent 62%),
-      radial-gradient(1.8px 1.8px at 44% 28%, rgba(255,255,255,.85), transparent 62%),
-      radial-gradient(2px 2px at 6% 62%, rgba(240,248,255,.9), transparent 62%);
-  }
-
-  .scrim {
-    position: absolute;
-    inset: 0;
-    background:
-      radial-gradient(46% 44% at 50% 42%, rgba(4, 7, 15, 0.62) 0%, rgba(4, 7, 15, 0.3) 52%, transparent 80%),
-      linear-gradient(180deg, rgba(4, 7, 15, 0.42) 0%, transparent 20%);
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='700' height='700'%3E%3Cdefs%3E%3CradialGradient id='hw'%3E%3Cstop offset='0' stop-color='%23ffffff' stop-opacity='.55'/%3E%3Cstop offset='1' stop-color='%23ffffff' stop-opacity='0'/%3E%3C/radialGradient%3E%3CradialGradient id='hb'%3E%3Cstop offset='0' stop-color='%23cfe2ff' stop-opacity='.55'/%3E%3Cstop offset='1' stop-color='%23cfe2ff' stop-opacity='0'/%3E%3C/radialGradient%3E%3CradialGradient id='ha'%3E%3Cstop offset='0' stop-color='%23ffdcb0' stop-opacity='.55'/%3E%3Cstop offset='1' stop-color='%23ffdcb0' stop-opacity='0'/%3E%3C/radialGradient%3E%3C/defs%3E%3Ccircle cx='397.3' cy='83.7' r='11.0' fill='url(%23hb)'/%3E%3Ccircle cx='293.5' cy='118.4' r='9.4' fill='url(%23ha)'/%3E%3Ccircle cx='682.1' cy='615.8' r='7.3' fill='url(%23hw)'/%3E%3Ccircle cx='273.6' cy='205.9' r='6.9' fill='url(%23hb)'/%3E%3Ccircle cx='103.3' cy='558.8' r='6.6' fill='url(%23hw)'/%3E%3Ccircle cx='379.0' cy='681.1' r='6.6' fill='url(%23ha)'/%3E%3Ccircle cx='422.6' cy='682.5' r='7.1' fill='url(%23hw)'/%3E%3Ccircle cx='571.0' cy='637.1' r='8.8' fill='url(%23hb)'/%3E%3Ccircle cx='370.6' cy='533.2' r='7.7' fill='url(%23hw)'/%3E%3Ccircle cx='451.1' cy='256.3' r='8.0' fill='url(%23hw)'/%3E%3Ccircle cx='682.5' cy='231.0' r='7.4' fill='url(%23hw)'/%3E%3Ccircle cx='658.5' cy='275.9' r='7.4' fill='url(%23hb)'/%3E%3Ccircle cx='598.3' cy='143.4' r='7.2' fill='url(%23ha)'/%3E%3Ccircle cx='375.9' cy='432.4' r='7.6' fill='url(%23hw)'/%3E%3Ccircle cx='190.6' cy='643.1' r='7.7' fill='url(%23hw)'/%3E%3Ccircle cx='394.6' cy='239.5' r='0.72' fill='%23d6e6ff' opacity='0.57'/%3E%3Ccircle cx='623.8' cy='536.0' r='0.99' fill='%23ffffff' opacity='0.86'/%3E%3Ccircle cx='397.3' cy='83.7' r='1.83' fill='%23d6e6ff' opacity='1.0'/%3E%3Ccircle cx='364.9' cy='138.3' r='0.71' fill='%23ffd6b0' opacity='0.7'/%3E%3Ccircle cx='293.5' cy='118.4' r='1.86' fill='%23ffecd2' opacity='1.0'/%3E%3Ccircle cx='417.5' cy='110.5' r='1.14' fill='%23ffffff' opacity='0.86'/%3E%3Ccircle cx='346.5' cy='335.1' r='0.91' fill='%23ffffff' opacity='0.8'/%3E%3Ccircle cx='682.1' cy='615.8' r='1.39' fill='%23ffffff' opacity='0.99'/%3E%3Ccircle cx='273.6' cy='205.9' r='1.41' fill='%23d6e6ff' opacity='0.97'/%3E%3Ccircle cx='180.1' cy='682.5' r='0.72' fill='%23ffffff' opacity='0.59'/%3E%3Ccircle cx='103.3' cy='558.8' r='1.32' fill='%23ffffff' opacity='0.97'/%3E%3Ccircle cx='237.2' cy='523.7' r='0.68' fill='%23ffecd2' opacity='0.56'/%3E%3Ccircle cx='379.0' cy='681.1' r='1.46' fill='%23ffd6b0' opacity='0.97'/%3E%3Ccircle cx='107.2' cy='243.0' r='0.65' fill='%23ffffff' opacity='0.69'/%3E%3Ccircle cx='422.6' cy='682.5' r='1.48' fill='%23ffffff' opacity='0.97'/%3E%3Ccircle cx='546.9' cy='336.5' r='0.75' fill='%23bcd4ff' opacity='0.61'/%3E%3Ccircle cx='135.0' cy='340.0' r='0.94' fill='%23ffffff' opacity='0.9'/%3E%3Ccircle cx='313.9' cy='443.0' r='0.98' fill='%23ffffff' opacity='0.81'/%3E%3Ccircle cx='571.0' cy='637.1' r='1.84' fill='%23bcd4ff' opacity='1.0'/%3E%3Ccircle cx='612.0' cy='17.5' r='0.8' fill='%23d6e6ff' opacity='0.59'/%3E%3Ccircle cx='101.2' cy='588.7' r='0.68' fill='%23bcd4ff' opacity='0.71'/%3E%3Ccircle cx='262.3' cy='682.5' r='0.66' fill='%23ffffff' opacity='0.55'/%3E%3Ccircle cx='224.5' cy='293.8' r='0.75' fill='%23d6e6ff' opacity='0.68'/%3E%3Ccircle cx='370.6' cy='533.2' r='1.34' fill='%23ffffff' opacity='0.98'/%3E%3Ccircle cx='651.8' cy='439.8' r='0.66' fill='%23d6e6ff' opacity='0.67'/%3E%3Ccircle cx='260.2' cy='99.6' r='0.77' fill='%23ffffff' opacity='0.66'/%3E%3Ccircle cx='255.8' cy='76.5' r='0.74' fill='%23ffecd2' opacity='0.61'/%3E%3Ccircle cx='451.1' cy='256.3' r='1.85' fill='%23ffffff' opacity='1.0'/%3E%3Ccircle cx='152.0' cy='682.5' r='0.77' fill='%23d6e6ff' opacity='0.56'/%3E%3Ccircle cx='353.6' cy='452.0' r='0.78' fill='%23ffffff' opacity='0.7'/%3E%3Ccircle cx='682.5' cy='231.0' r='1.26' fill='%23ffffff' opacity='0.99'/%3E%3Ccircle cx='682.5' cy='100.9' r='0.77' fill='%23bcd4ff' opacity='0.62'/%3E%3Ccircle cx='682.5' cy='17.5' r='1.01' fill='%23d6e6ff' opacity='0.84'/%3E%3Ccircle cx='658.5' cy='275.9' r='1.26' fill='%23d6e6ff' opacity='0.97'/%3E%3Ccircle cx='499.8' cy='158.6' r='0.83' fill='%23ffffff' opacity='0.71'/%3E%3Ccircle cx='605.2' cy='276.8' r='0.83' fill='%23ffffff' opacity='0.6'/%3E%3Ccircle cx='17.5' cy='682.5' r='0.69' fill='%23ffffff' opacity='0.61'/%3E%3Ccircle cx='598.3' cy='143.4' r='1.43' fill='%23ffd6b0' opacity='0.96'/%3E%3Ccircle cx='145.4' cy='355.8' r='0.98' fill='%23ffffff' opacity='0.84'/%3E%3Ccircle cx='144.1' cy='242.6' r='0.99' fill='%23ffffff' opacity='0.8'/%3E%3Ccircle cx='500.3' cy='140.2' r='1.01' fill='%23ffffff' opacity='0.87'/%3E%3Ccircle cx='17.5' cy='17.5' r='1.01' fill='%23ffffff' opacity='0.79'/%3E%3Ccircle cx='375.9' cy='432.4' r='1.34' fill='%23ffffff' opacity='0.97'/%3E%3Ccircle cx='264.1' cy='334.0' r='1.03' fill='%23ffffff' opacity='0.79'/%3E%3Ccircle cx='405.8' cy='532.7' r='0.78' fill='%23d6e6ff' opacity='0.7'/%3E%3Ccircle cx='190.6' cy='643.1' r='1.46' fill='%23ffffff' opacity='0.96'/%3E%3C/svg%3E");
   }
 
   /* Fades the sky into the page so the hero has no hard bottom edge. */
@@ -780,23 +754,12 @@
     .nav-links a:not(.btn) { display: none; }
   }
 
-  /* Mobile emulation throttles the CPU roughly fourfold, and rasterising an SVG
-     filter is the single most expensive thing on this page. Phones therefore get
-     one noise layer instead of three: the dense star field stays, the Milky Way
-     keeps its glow but loses its noise-drawn dust lanes, and the hand-placed
-     bright stars are pure gradients so they cost nothing either way. */
+  /* Phones keep the band but not its dust lanes. The lanes are the one remaining
+     SVG filter on the page, and rasterising a filter is still several times more
+     expensive under mobile CPU throttling than everything else here combined. */
   @media (max-width: 780px) {
-    .mw, .stars-mid { display: none; }
-    /* A masked, rotated band has to be composited offscreen before it can be
-       drawn, which costs more on a throttled phone than the band is worth. The
-       same diagonal sweep painted as a plain gradient costs nothing. */
-    .nebula {
-      background:
-        linear-gradient(154deg, transparent 26%, rgba(226, 214, 196, 0.16) 44%, rgba(255, 214, 170, 0.13) 52%, transparent 70%),
-        radial-gradient(52% 42% at 78% 18%, rgba(56, 160, 205, 0.16), transparent 68%),
-        radial-gradient(44% 36% at 20% 32%, rgba(120, 96, 200, 0.13), transparent 70%),
-        radial-gradient(60% 44% at 8% 78%, rgba(40, 130, 170, 0.10), transparent 70%);
-    }
+    .mw-dust { display: none; }
+    .mw { opacity: 0.75; }
   }
 
   @media (max-width: 780px) {
@@ -845,9 +808,8 @@
   <div class="sky" aria-hidden="true">
     <div class="nebula"></div>
     <div class="mw"><div class="mw-glow"></div><div class="mw-dust"></div></div>
-    <div class="sky-layer stars-dust"></div>
-    <div class="sky-layer stars-mid"></div>
-    <div class="sky-layer stars-bright"></div>
+    <div class="sky-layer stars-far"></div>
+    <div class="sky-layer stars-near"></div>
     <div class="scrim"></div>
   </div>
 
