@@ -14,9 +14,32 @@
 <meta property="og:description" content="Computer Science honours grad building data pipelines, machine learning systems, and full-stack applications. Two apps live in production. Open to work." />
 <meta name="twitter:card" content="summary" />
 
+<link rel="preload" href="plus-jakarta-sans.woff2" as="font" type="font/woff2" crossorigin />
+<link rel="preload" href="dm-mono.woff2" as="font" type="font/woff2" crossorigin />
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' y1='0' x2='1' y2='1'%3E%3Cstop offset='0' stop-color='%235b8cff'/%3E%3Cstop offset='1' stop-color='%233b6fe0'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='32' height='32' rx='9' fill='url(%23g)'/%3E%3Ctext x='16' y='22' font-family='system-ui,sans-serif' font-size='16' font-weight='700' fill='%23fff' text-anchor='middle'%3EGS%3C/text%3E%3C/svg%3E" />
 
 <style>
+  /* Plus Jakarta Sans, self-hosted as a single variable woff2 covering 400-800.
+     Same origin, so no third-party connection to set up, and one file instead of
+     a weight per face. swap means text paints immediately in the fallback rather
+     than sitting invisible while the font loads. */
+  @font-face {
+    font-family: "Plus Jakarta Sans";
+    src: url("plus-jakarta-sans.woff2") format("woff2");
+    font-weight: 400 800;
+    font-style: normal;
+    font-display: swap;
+  }
+  /* One DM Mono weight covers every label on the page. Declaring a range on a
+     single static face tells the browser this file serves 400-600, so it uses it
+     across that span instead of smearing on a synthetic bold. */
+  @font-face {
+    font-family: "DM Mono";
+    src: url("dm-mono.woff2") format("woff2");
+    font-weight: 400 600;
+    font-style: normal;
+    font-display: swap;
+  }
   /* System fonts only. Nothing blocks the first paint and nothing shifts when a
      font swaps in, which is most of why this page scores what it does. */
   :root {
@@ -35,8 +58,8 @@
     --ok: #4ade80;
     --ok-soft: rgba(74, 222, 128, 0.12);
     --ok-line: rgba(74, 222, 128, 0.28);
-    --sans: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
-    --mono: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, monospace;
+    --sans: "Plus Jakarta Sans", system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    --mono: "DM Mono", ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, monospace;
     --wrap: 1120px;
     --radius: 16px;
   }

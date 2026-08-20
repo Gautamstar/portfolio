@@ -6,19 +6,19 @@ A single-page site for anyone screening me. It opens with what I do and whether 
 
 ## How it's built
 
-One `index.html`, around 41 KB, with every style in a single `<style>` block. No framework, no bundler, no build step, and no dependencies. GitHub Pages serves it straight off `main`, so pushing is deploying.
+One `index.html`, around 46 KB, with every style in a single `<style>` block, plus two self-hosted font files and the resume PDF. No framework, no bundler, no build step, and no dependencies. GitHub Pages serves it straight off `main`, so pushing is deploying.
 
-It stays a static file on purpose. The page has no state to manage and no data to fetch, so it renders from one request and keeps working without maintenance or version churn.
+It stays a static file on purpose. The page has no state to manage and no data to fetch, so it keeps working without maintenance or version churn.
 
 ## Performance
 
-100 on all four Lighthouse categories, on both the desktop and mobile presets. What keeps it there:
+100 across the board on the desktop preset. On the throttled mobile preset it is 100 for accessibility, best practices, and SEO, and 99 for performance: the animated sky costs a little main-thread time rasterising its noise, and that point is the price of the effect. What keeps the rest where it is:
 
-- A system font stack instead of webfonts, so nothing blocks the first paint or shifts layout.
-- All CSS inline in one `<style>` block, so the page renders from a single request.
+- Two self-hosted fonts, Plus Jakarta Sans (variable, 400-800) and DM Mono, both latin-subset woff2 and both preloaded. Same origin, so there is no third-party connection to negotiate, and the preload lands them before first paint, which is what keeps layout shift at zero.
+- All CSS inline in one `<style>` block, so no stylesheet request stands between the document and the first paint.
 - One line of JavaScript, for the footer year. Everything else is HTML and CSS.
 - An inline SVG favicon as a data URI, so there is no icon round trip.
-- No images. Every decorative surface is a CSS gradient.
+- No image files. The drifting clouds in the hero are `feTurbulence` fractal noise in an SVG data URI, and every other decorative surface is a CSS gradient.
 - JSON-LD Person data, an explicit `lang`, and a meta description.
 
 Re-check after any change:
