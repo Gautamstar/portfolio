@@ -18,7 +18,7 @@ It stays a static file on purpose. The page has no state to manage and no data t
 - All CSS inline in one `<style>` block, so no stylesheet request stands between the document and the first paint.
 - One line of JavaScript, for the footer year. Everything else is HTML and CSS.
 - An inline SVG favicon as a data URI, so there is no icon round trip.
-- No image files. The hero sky is drawn from SVG data URIs and CSS gradients: the stars are circles inside one tiled SVG per layer, and the Milky Way is a masked band with noise-drawn dust lanes over its glow.
+- No image files. The whole theme is SVG data URIs and CSS gradients: stars are circles inside one tiled SVG per layer, the Milky Way is a masked band with noise-drawn dust lanes over its glow, and the field continues behind every section as one fixed layer that never repaints on scroll. A single four-point sparkle, defined once as a custom property, serves the list bullets, timeline markers and skill headings.
 - JSON-LD Person data, an explicit `lang`, and a meta description.
 
 Re-check after any change:
