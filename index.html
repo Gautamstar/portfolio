@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Gautam Singh · Software &amp; Data Engineer</title>
+<title>Gautam Singh · Software Engineer</title>
 <meta name="description" content="Gautam Singh, software and data engineer in Guelph, Ontario. Computer Science honours grad building data pipelines, machine learning systems, and full-stack applications. Two apps live in production. Open to work." />
 <meta name="author" content="Gautam Singh" />
 <meta name="robots" content="index, follow" />
@@ -772,7 +772,7 @@
     <p class="status"><span class="dot" aria-hidden="true"></span> Open to work · Available now</p>
 
     <h1>Gautam Singh</h1>
-    <p class="role">Software &amp; Data Engineer</p>
+    <p class="role">Software Engineer &mdash; backend, data, and ML systems</p>
     <p class="place">
       <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
         <path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0116 0z"/><circle cx="12" cy="10" r="3"/>
@@ -823,6 +823,30 @@
   </div>
 
   <div class="cards">
+
+    <article class="card reveal">
+      <div class="card-top">
+        <h3><a href="https://github.com/Gautamstar/distill" target="_blank" rel="noopener">Distill</a></h3>
+        <span class="card-year">2026</span>
+      </div>
+      <p class="lead">Invoices and receipts into structured data, with per-field confidence and a human review queue. Runs locally.</p>
+      <ul class="points">
+        <li>The model alone is <strong>0.804 field F1</strong>. The system delivers <strong>96.7%</strong> by auto-accepting only what it trusts and routing the rest to a person</li>
+        <li>Confidence is self-consistency agreement across k samples, capped when arithmetic or format validation fails. Trusted fields run <strong>94.4%</strong> accurate against <strong>54.1%</strong> for flagged ones, a <strong>40-point separation</strong> that makes auto-accept safe</li>
+        <li>A subtotal equal to the total with no tax printed is arithmetically incoherent, so it goes to a human instead of into the books. The model does not have to be right, it has to know when it might be wrong</li>
+        <li><strong>175 tests</strong>, most written from real failures found in error analysis. CI re-scores frozen predictions on every push, so a change that silently moves a published number <strong>fails the build</strong></li>
+        <li>Calibration measured rather than assumed: <strong>ECE 0.115</strong> with a reliability table, and the accuracy-versus-coverage tradeoff shipped as an explicit dial with its exchange rate priced</li>
+        <li>Local inference on one consumer GPU at <strong>$0.00 per document</strong>, against roughly $0.004 on a hosted vision API</li>
+      </ul>
+      <div class="tags">
+        <span class="tag">Python</span><span class="tag">PyTorch</span><span class="tag">Qwen2.5-VL</span>
+        <span class="tag">FastAPI</span><span class="tag">Pydantic</span><span class="tag">GitHub Actions</span>
+        <span class="tag">Docker</span>
+      </div>
+      <div class="card-links">
+        <a class="btn btn-sm" href="https://github.com/Gautamstar/distill" target="_blank" rel="noopener">GitHub</a>
+      </div>
+    </article>
 
     <article class="card reveal">
       <div class="card-top">
@@ -1120,7 +1144,7 @@
   <div class="contact reveal">
     <h2>Let's talk</h2>
     <p>
-      Looking for software engineering, data science, and data engineering roles in
+      Looking for software engineering roles across backend, data, and ML systems in
       Guelph, Kitchener-Waterloo, Toronto, or remote. The fastest way to reach me is email,
       and I answer every message.
     </p>
