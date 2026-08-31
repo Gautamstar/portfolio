@@ -65,6 +65,16 @@ if (site.includes("github.io")) {
   ]);
 } else ok.push(`Canonical base is ${site}`);
 
+/* ---- the homepage must agree with the generated pages about where it lives ---- */
+const homeCanon = /<link rel="canonical" href="([^"]*)"/.exec(read("index.html"))?.[1] ?? "";
+if (!homeCanon.startsWith(site)) {
+  blockers.push([
+    "Homepage canonical disagrees with the rest of the site",
+    `index.html claims its canonical home is ${homeCanon || "(missing)"}, but every generated page says ${site}. If that first URL is a domain you do not own, you are telling Google your content belongs to someone else.`,
+    `Set the canonical and og:url in index.html to ${site}/ — or if you have moved domains, change SITE in tools/build-pages.mjs and rebuild.`
+  ]);
+} else ok.push("Homepage canonical agrees with the generated pages");
+
 /* ---- generated output in step with its sources ---- */
 const pages = fs.readdirSync(ROOT).filter((f) => f.endsWith("-statement-to-csv.html"));
 const bankCount = JSON.parse(read("tools/banks.json")).banks.length;

@@ -28,6 +28,7 @@ cannot lose money while it waits to find customers.
 | `thanks.html` | Where a buyer lands after paying. Point Stripe at it. |
 | `tools/build-pages.mjs` | Regenerates the landing pages from `tools/banks.json`. |
 | `tools/README-seo.md` | **Read before publishing the landing pages.** |
+| `tools/README-domain.md` | Buying a domain, and the GitHub Pages catch that comes with it. |
 
 The landing pages are generated, not hand-written:
 
@@ -123,10 +124,16 @@ already serves this repository:
 https://gautamstar.github.io/portfolio/statement-to-csv/
 ```
 
-That is fine for launch. Before spending on traffic, move it to its own domain —
-a tool living under `/portfolio/` reads as a side project, and a side project is
-hard to charge $29 for. Buy a domain, point it at Pages, and update the
-`canonical` and `og:` tags in `index.html`.
+That is fine for launch, and you can take money from that URL today.
+
+Before spending on traffic, move it to its own domain — a tool living under
+`/portfolio/` reads as a side project, and a side project is hard to charge $29
+for. **There is a catch worth knowing before you buy:** a GitHub Pages custom
+domain attaches to a whole repository and serves that repository's root, so
+pointing one at `portfolio` would put your portfolio at the domain root and this
+product in a subdirectory. The product needs its own repository first.
+`tools/README-domain.md` covers the move, the DNS records, and what to change
+afterwards.
 
 To run it locally:
 
