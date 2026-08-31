@@ -251,6 +251,55 @@ ${DIALOG}
 `;
 }
 
+
+/* ---------- the page a buyer lands on after paying ---------- */
+function thanks() {
+  return `<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Thank you — your licence key is on its way</title>
+<meta name="robots" content="noindex">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' fill='%2317376A'/%3E%3Cpath d='M8 7h9l7 7v11H8z' fill='none' stroke='%23fff' stroke-width='1.6'/%3E%3Cpath d='M11 18h10M11 21.5h6' stroke='%23fff' stroke-width='1.6'/%3E%3C/svg%3E">
+<link rel="stylesheet" href="assets/app.css">
+</head>
+<body>
+${MASTHEAD}
+<main>
+<div class="intro">
+  <div class="wrap" style="max-width:660px">
+    <p class="eyebrow">Payment received</p>
+    <h1>Thank you. Your licence key is on its way.</h1>
+    <p class="lede">Keys are issued by hand, so this is not instant — expect it within a few hours, to the email address you gave at checkout. If it has not arrived by tomorrow, it has gone astray rather than been forgotten, and one message sorts it out.</p>
+    <div class="doc" style="margin:32px 0">
+      <div class="doc-head"><h2>What happens next</h2></div>
+      <div class="panel">
+        <div class="panel-label"><span class="step">1</span><h3>The key arrives by email</h3></div>
+        <p class="stat" style="margin:0">It looks like <code style="font-family:var(--mono);background:var(--paper-sunk);border:1px solid var(--rule);padding:2px 6px">SIQ-XXXXX-XXXXX-XXXXX</code>. Keep the email — it is the only copy.</p>
+      </div>
+      <div class="panel">
+        <div class="panel-label"><span class="step">2</span><h3>Enter it once per browser</h3></div>
+        <p class="stat" style="margin:0">Open the converter, choose <strong>Enter licence</strong> in the top right, and paste it in. It is stored in that browser only, so enter it again on any other machine you use. There is no limit on how many.</p>
+      </div>
+      <div class="panel">
+        <div class="panel-label"><span class="step">3</span><h3>Every limit comes off</h3></div>
+        <p class="stat" style="margin:0">Unlimited rows and pages, several statements in one pass, and every later version — with no renewal.</p>
+      </div>
+    </div>
+    <p class="lede">Something wrong, or changed your mind inside 30 days? Write to <a data-support data-support-text href="#">support</a> and it is refunded, no explanation needed.</p>
+    <p style="margin-top:26px"><a class="btn primary" href="index.html">Go to the converter</a></p>
+  </div>
+</div>
+</main>
+${FOOTER}
+${DIALOG}
+<script src="assets/app.js"></script>
+</body>
+</html>
+`;
+}
+
 /* ---------- the hub ---------- */
 function hub() {
   const groups = {};
@@ -294,6 +343,8 @@ ${Object.entries(groups).map(([region, list]) => `
 </main>
 ${DISCLOSURES}
 ${FOOTER}
+${DIALOG}
+<script src="assets/app.js"></script>
 </body>
 </html>
 `;
@@ -308,6 +359,8 @@ for (const b of banks) {
 }
 fs.writeFileSync(path.join(ROOT, "banks.html"), hub());
 written.push("banks.html");
+fs.writeFileSync(path.join(ROOT, "thanks.html"), thanks());
+written.push("thanks.html");
 
 const urls = ["index.html", "banks.html", ...banks.map((b) => `${b.slug}-statement-to-csv.html`)];
 const today = new Date().toISOString().slice(0, 10);

@@ -24,6 +24,8 @@ cannot lose money while it waits to find customers.
 | `vendor/` | pdf.js 3.11.174, self-hosted (Apache-2.0, licence included). |
 | `fonts/` | Source Serif 4, Public Sans and IBM Plex Mono, latin subset (OFL). |
 | `tools/genkey.mjs` | Issues and verifies licence keys. This is how you fulfil a sale. |
+| `tools/preflight.mjs` | Tells you what still blocks a payment. Run it before launch. |
+| `thanks.html` | Where a buyer lands after paying. Point Stripe at it. |
 | `tools/build-pages.mjs` | Regenerates the landing pages from `tools/banks.json`. |
 | `tools/README-seo.md` | **Read before publishing the landing pages.** |
 
@@ -137,10 +139,62 @@ won't load otherwise.
 
 ---
 
-## Turning it on: taking money
+## Between here and your first dollar
 
-Two edits and you can sell. Both are at the top of the script block in
-`index.html`, under `CONFIG`.
+Run this at any point to see what is still in the way:
+
+```bash
+node tools/preflight.mjs
+```
+
+It exits non-zero while anything blocks a payment. Right now it reports exactly
+two things, both of which need a decision only you can make.
+
+### The two blockers
+
+**1. A checkout link.** `CONFIG.buyUrl` in `assets/app.js` is a placeholder, so
+every Buy button on all 21 pages goes nowhere. Create a Stripe Payment Link
+(dashboard → Payment links → one-off → $29) and paste the URL in. No API key, no
+server. Set its confirmation page to `thanks.html`. **~15 minutes.**
+
+**2. A support address.** `CONFIG.supportEmail` is a placeholder. A buyer whose
+key has not arrived currently has no way to reach you, and their next move is a
+chargeback rather than an email. One real inbox you actually read. **~1 minute.**
+
+Both live in the same `CONFIG` block, and the support address is wired into
+every page at runtime, so you edit it once rather than in 21 files.
+
+### Then, in order
+
+3. **Convert three of your own statements.** Different banks, ideally one you
+   expect to be awkward. You are checking that the column roles come out right
+   on real documents rather than the generated fixtures. **~20 minutes, and do
+   not skip it** — the first bug a customer finds costs more than the sale.
+4. **Buy your own product.** Pay the $29 through the real Stripe link, receive
+   the confirmation, issue yourself a key with `node tools/genkey.mjs --for
+   you@example.com`, and activate it. This is the only way to find out that the
+   flow works end to end. Refund yourself afterwards. **~10 minutes.**
+5. **Deploy.** Commit and push; GitHub Pages serves it. A domain is better but
+   is not blocking — you can sell from the Pages URL today and move later.
+6. **Go where the buyers already complain.** r/Bookkeeping, r/Accounting,
+   r/QuickBooks, r/smallbusiness, r/personalfinance. Do not post a link into an
+   empty thread. Find someone asking how to get statements into Excel, answer
+   the actual question, mention you built a free tool that runs locally. One
+   real answer a day beats any launch post, and this is the step most likely to
+   produce your first sale.
+7. **Submit the sitemap** to Google Search Console and Bing Webmaster Tools.
+   Free, ten minutes, and nothing indexes until you ask.
+8. **Show HN** once steps 1–5 are done and you have converted real statements.
+   The privacy architecture is the story. Highest-variance day you get — do not
+   spend it before checkout works.
+
+Realistically: **an afternoon of setup, then the first sale comes from step 6**,
+not from search. SEO is the compounding channel, but it takes months. The
+forum answers are what get you to a first dollar in weeks.
+
+## The config block
+
+Both editable values are at the top of `assets/app.js`, under `CONFIG`.
 
 ### 1. Checkout
 
@@ -159,9 +213,9 @@ sale.
 
 ### 2. Licence salt
 
-`CONFIG.salt` in `index.html` and `SALT` in `tools/genkey.mjs` must match. Change
-it once, now, to something only you know — then never again, because changing it
-invalidates every key you have already sold.
+Already generated for this install, and `tools/genkey.mjs` reads it straight out
+of `assets/app.js`, so there is nothing to keep in sync. Do not change it after
+your first sale — every key already issued would stop working.
 
 ### 3. Fulfilling a sale
 

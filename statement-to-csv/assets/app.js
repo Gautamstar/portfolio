@@ -5,10 +5,17 @@
    CONFIG — the two values you edit after setting up Stripe
    ============================================================ */
 var CONFIG = {
-  // Stripe Payment Link, Gumroad, Lemon Squeezy — any hosted checkout URL.
+  // ---- EDIT THESE TWO, THEN YOU CAN SELL ----------------------------------
+  // 1. Your hosted checkout. Stripe Payment Link, Gumroad, Lemon Squeezy — any
+  //    URL that takes a card. No API key and no server involved.
   buyUrl: "https://buy.stripe.com/REPLACE_WITH_YOUR_PAYMENT_LINK",
-  // Must match SALT in tools/genkey.mjs. Change it and every issued key dies.
-  salt: "siq-2026-v1",
+  // 2. Where a buyer with a problem reaches you. A real inbox you read.
+  supportEmail: "REPLACE_WITH_YOUR_EMAIL",
+  // -------------------------------------------------------------------------
+  // Generated once for this install. tools/genkey.mjs reads it from this file,
+  // so there is nothing to keep in sync. Change it and every key you have
+  // already sold stops working.
+  salt: "siq-m4Rtzx56ieZO",
   freeRowLimit: 25
 };
 
@@ -321,12 +328,43 @@ var COPY_LABEL='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strok
 // Without this a single missing node throws and takes the converter with it.
 var yr=$("yr"); if(yr) yr.textContent=new Date().getFullYear();
 var buy=$("buyBtn"); if(buy) buy.href = CONFIG.buyUrl;
+var supportLinks=document.querySelectorAll("[data-support]");
+for(var si=0; si<supportLinks.length; si++){
+  supportLinks[si].href = "mailto:"+CONFIG.supportEmail;
+  if(supportLinks[si].hasAttribute("data-support-text")) supportLinks[si].textContent = CONFIG.supportEmail;
+}
 function paintPro(){
   $("proPill").classList.toggle("hidden", !PRO);
   $("unlockBtn").classList.toggle("hidden", PRO);
-  $("dropHint").textContent = PRO ? "convert as many as you like" : "one file on the free tier, unlimited when licensed";
+  var hint=$("dropHint");
+  if(hint) hint.textContent = PRO ? "convert as many as you like" : "one file on the free tier, unlimited when licensed";
 }
 paintPro();
+
+/* --- licence dialog --- */
+var dlg=$("dlg");
+if(dlg && $("unlockBtn")) (function(){
+$("unlockBtn").addEventListener("click",function(){ $("dlgMsg").classList.add("hidden"); dlg.showModal(); $("keyInput").focus(); });
+$("keyClose").addEventListener("click",function(){ dlg.close(); });
+$("keyApply").addEventListener("click",function(){
+  var k=$("keyInput").value.trim().toUpperCase(), msg=$("dlgMsg");
+  msg.classList.remove("hidden");
+  if(keyValid(k)){
+    store.set("siq.key",k); PRO=true; paintPro();
+    msg.className="msg ok"; msg.textContent="Licence activated. All limits are removed on this browser.";
+    if(state.tx.length) renderTable();
+    setTimeout(function(){ dlg.close(); },900);
+  } else {
+    msg.className="msg err"; msg.textContent="That key was not accepted. Check it for a typo, or reply to your purchase confirmation.";
+  }
+});
+$("keyInput").addEventListener("keydown",function(e){ if(e.key==="Enter") $("keyApply").click(); });
+})();
+
+// Everything below drives the converter. Pages that carry the masthead but no
+// converter — the post-purchase page, the institution hub — stop here with the
+// licence dialog and support links already wired.
+if(!$("drop")) return;
 
 /* --- file input --- */
 var drop=$("drop"), fileEl=$("file");
@@ -558,24 +596,6 @@ $("rawBtn").addEventListener("click",function(){
   if(w.classList.contains("hidden")){ w.classList.remove("hidden"); $("raw").value=buildDelimited(","); $("rawBtn").textContent="Hide CSV"; }
   else { w.classList.add("hidden"); $("rawBtn").textContent="Show CSV"; }
 });
-
-/* --- licence dialog --- */
-var dlg=$("dlg");
-$("unlockBtn").addEventListener("click",function(){ $("dlgMsg").classList.add("hidden"); dlg.showModal(); $("keyInput").focus(); });
-$("keyClose").addEventListener("click",function(){ dlg.close(); });
-$("keyApply").addEventListener("click",function(){
-  var k=$("keyInput").value.trim().toUpperCase(), msg=$("dlgMsg");
-  msg.classList.remove("hidden");
-  if(keyValid(k)){
-    store.set("siq.key",k); PRO=true; paintPro();
-    msg.className="msg ok"; msg.textContent="Licence activated. All limits are removed on this browser.";
-    if(state.tx.length) renderTable();
-    setTimeout(function(){ dlg.close(); },900);
-  } else {
-    msg.className="msg err"; msg.textContent="That key was not accepted. Check it for a typo, or reply to your purchase confirmation.";
-  }
-});
-$("keyInput").addEventListener("keydown",function(e){ if(e.key==="Enter") $("keyApply").click(); });
 
 if(window.pdfjsLib){
   pdfjsLib.GlobalWorkerOptions.workerSrc="vendor/pdf.worker.min.js";

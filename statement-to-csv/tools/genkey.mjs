@@ -6,10 +6,23 @@
 //   node tools/genkey.mjs --for buyer@email.com  a key bound to a buyer, so you
 //                                                can tell later which key leaked
 //
-// SALT must match CONFIG.salt in index.html. Changing it invalidates every key
-// you have already sold, so pick one now and never touch it again.
+// The salt is read from assets/app.js, so there is nothing to keep in sync.
+// Changing it there invalidates every key you have already sold.
 
-const SALT = "siq-2026-v1";
+import fs from "node:fs";
+import path from "node:path";
+import { fileURLToPath } from "node:url";
+
+// The salt lives in assets/app.js so the page and this script can never drift
+// apart. A key that validates here is a key the page accepts, by construction.
+const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
+const appJs = fs.readFileSync(path.join(ROOT, "assets/app.js"), "utf8");
+const found = /salt:\s*"([^"]+)"/.exec(appJs);
+if (!found) {
+  console.error("Could not read the salt from assets/app.js. Has the CONFIG block been renamed?");
+  process.exit(1);
+}
+const SALT = found[1];
 
 const ALPHABET = "0123456789ABCDEFGHJKMNPQRSTVWXYZ"; // Crockford-ish: no I, L, O, U
 
