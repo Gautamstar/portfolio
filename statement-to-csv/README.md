@@ -17,10 +17,27 @@ cannot lose money while it waits to find customers.
 
 | Path | What it is |
 | :--- | :--- |
-| `index.html` | The entire product — landing page, parser, licence gate. No build step. |
+| `index.html` | The homepage — pitch, converter, pricing, disclosures. |
+| `assets/` | `app.css` and `app.js`: the whole product, shared by every page. |
+| `*-statement-to-csv.html` | 18 generated per-institution landing pages. |
+| `banks.html` | The hub linking them, plus `sitemap.xml` and `robots.txt`. |
 | `vendor/` | pdf.js 3.11.174, self-hosted (Apache-2.0, licence included). |
 | `fonts/` | Source Serif 4, Public Sans and IBM Plex Mono, latin subset (OFL). |
 | `tools/genkey.mjs` | Issues and verifies licence keys. This is how you fulfil a sale. |
+| `tools/build-pages.mjs` | Regenerates the landing pages from `tools/banks.json`. |
+| `tools/README-seo.md` | **Read before publishing the landing pages.** |
+
+The landing pages are generated, not hand-written:
+
+```bash
+node tools/build-pages.mjs
+```
+
+Shared chrome is sliced out of `index.html` at build time, so editing the
+homepage updates all 19 pages on the next build. Commit the generated HTML — the
+site itself stays static with nothing to build at serve time. `SITE` at the top
+of that script still points at GitHub Pages; change it to your domain before
+launch or every canonical tag points at the wrong place.
 
 Every asset is served from your own origin. The page makes **no third-party
 request at all**, which is what lets the FAQ invite people to open their network
@@ -212,11 +229,12 @@ Write for them. "Close the month faster" sells; "PDF parser" does not.
    your single highest-variance day — it either does nothing or sends 10k
    visitors.
 4. **Product Hunt**, same angle, a week after HN.
-5. **One landing page per bank.** "Convert a Chase statement to CSV",
-   "Wells Fargo statement to Excel", and so on, each its own file with real
-   instructions for that bank's export flow. These are low-competition long-tail
-   searches with obvious commercial intent, and they are the only durable
-   traffic source here. Ten pages, one a week.
+5. **The per-institution pages are already built** — 18 of them, covering US, UK
+   and global institutions. They are the only durable traffic source here. Set
+   the canonical domain, submit the sitemap to Search Console and Bing, then read
+   `tools/README-seo.md`, which covers the two fields worth verifying and the
+   duplicate-content risk this technique carries. Add more only when you can
+   write three real quirks for the institution.
 
 ### Honest numbers
 

@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://gautamstar.github.io/portfolio/statement-to-csv/sitemap.xml

@@ -1,0 +1,1068 @@
+{
+  "_note": "Content for the per-institution landing pages. Layout descriptions are archetypes: they describe what these statements most commonly print, and every page tells the reader that step 2 shows what was actually found in their file. Before publishing, read tools/README-seo.md — a few fields are worth verifying against a current statement.",
+  "banks": [
+    {
+      "slug": "chase",
+      "name": "Chase",
+      "legal": "JPMorgan Chase",
+      "region": "US",
+      "kind": "bank",
+      "also": [
+        "Chase checking",
+        "Chase Sapphire",
+        "Chase Freedom"
+      ],
+      "layout": {
+        "shape": "single-amount",
+        "columns": [
+          "Date",
+          "Description",
+          "Amount",
+          "Balance"
+        ],
+        "dates": "MM/DD/YYYY",
+        "numbers": "1,234.56"
+      },
+      "expect": "One amount column carrying its own minus signs, and a running balance beside it. The converter should mark column 1 as Amount and column 2 as Balance.",
+      "quirks": [
+        {
+          "t": "Deposits and withdrawals are grouped, not interleaved",
+          "b": "Chase checking statements often list all deposits together, then all withdrawals, rather than in one date sequence. Both groups convert, but the rows come out grouped the way they were printed. Sort by date in your spreadsheet afterwards."
+        },
+        {
+          "t": "Card statements carry two dates",
+          "b": "Chase credit card statements print a transaction date and a posting date. The converter takes the leftmost date, which is the transaction date — normally the one you want for bookkeeping. If you need the posting date instead, it is still in the description column."
+        },
+        {
+          "t": "Check images add pages with no transactions",
+          "b": "Statements that include check images have pages with no dated rows. Those pages produce nothing, which is correct, and they do not affect the rest of the conversion."
+        }
+      ],
+      "native": "Chase's own CSV download covers a recent window only, and account activity older than that is available as statement PDFs. Converting the PDFs is usually the only way to reach an older year.",
+      "getpdf": "In online banking, open the account and look for Statements or Statements & documents, then download the month you want as PDF.",
+      "sample": [
+        [
+          "03/14/2024",
+          "ZELLE PAYMENT TO M RIVERA JPM99A1B2C3",
+          "-240.00",
+          "4812.66"
+        ],
+        [
+          "03/15/2024",
+          "DEPOSIT FROM PAYROLL ACME CORP",
+          "3120.44",
+          "7933.10"
+        ],
+        [
+          "03/18/2024",
+          "AMAZON MKTPLACE PMTS AMZN.COM/BILL WA",
+          "-64.19",
+          "7868.91"
+        ]
+      ]
+    },
+    {
+      "slug": "bank-of-america",
+      "name": "Bank of America",
+      "legal": "Bank of America",
+      "region": "US",
+      "kind": "bank",
+      "also": [
+        "BoA",
+        "BofA"
+      ],
+      "layout": {
+        "shape": "sectioned",
+        "columns": [
+          "Date",
+          "Description",
+          "Amount"
+        ],
+        "dates": "MM/DD/YY",
+        "numbers": "1,234.56"
+      },
+      "expect": "A single amount column. Because deposits and withdrawals are printed in separate sections, both may arrive as positive numbers — check the sign on a withdrawal before exporting.",
+      "quirks": [
+        {
+          "t": "Separate sections for additions and subtractions",
+          "b": "The statement is split into 'Deposits and other additions' and 'Withdrawals and other subtractions', each with its own subtotal. Amounts inside the withdrawals section are frequently printed without a minus sign, because the section heading carries that meaning. Check a known withdrawal in step 3 — if it is positive, the Flip all signs box corrects the whole file at once, though you may prefer to convert the two sections separately."
+        },
+        {
+          "t": "Subtotal rows look like transactions",
+          "b": "Each section ends with a 'Total deposits' or 'Total withdrawals' line. Where those lines carry a date they are picked up as rows. Drop them with the × control before exporting, or your total will be double-counted."
+        },
+        {
+          "t": "Daily ending balance table is not transactions",
+          "b": "Statements end with a table of daily balances. Those rows have dates and amounts, so some of them convert. They are easy to spot at the end of the preview and should be dropped."
+        }
+      ],
+      "native": "Download windows for machine-readable formats are limited, and older activity remains available only as statement PDFs.",
+      "getpdf": "Open the account, choose Statements & Documents, then save the month you need as PDF.",
+      "sample": [
+        [
+          "03/04/24",
+          "MOBILE DEPOSIT",
+          "1250.00",
+          ""
+        ],
+        [
+          "03/07/24",
+          "SAFEWAY #1842 SAN JOSE CA",
+          "-88.31",
+          ""
+        ],
+        [
+          "03/09/24",
+          "CHECKCARD 0307 SHELL OIL 574412093",
+          "-52.10",
+          ""
+        ]
+      ]
+    },
+    {
+      "slug": "wells-fargo",
+      "name": "Wells Fargo",
+      "legal": "Wells Fargo",
+      "region": "US",
+      "kind": "bank",
+      "also": [
+        "Wells Fargo checking"
+      ],
+      "layout": {
+        "shape": "debit-credit-balance",
+        "columns": [
+          "Date",
+          "Check number",
+          "Description",
+          "Deposits / Credits",
+          "Withdrawals / Debits",
+          "Ending daily balance"
+        ],
+        "dates": "MM/DD",
+        "numbers": "1,234.56"
+      },
+      "expect": "Three number columns. The converter should mark them Credit, Debit and Balance in that order — confirm the first two are not swapped, because getting them backwards inverts every sign in the file.",
+      "quirks": [
+        {
+          "t": "Check numbers sit between the date and the description",
+          "b": "Only some rows have one. Because it is a number without decimals it is not read as an amount, so it lands in the description column where you can see it. That is usually what you want for reconciliation."
+        },
+        {
+          "t": "Dates carry no year",
+          "b": "Wells Fargo prints MM/DD. The converter fills in the current year when you normalise to ISO, which is wrong for a statement from a previous year. Either leave dates As printed and fix the year in your spreadsheet, or convert one statement period at a time so a single find-and-replace corrects it."
+        },
+        {
+          "t": "The balance column only appears on days with activity",
+          "b": "It is an ending daily balance, not a per-transaction balance, so several rows on the same day will show a balance only on the last of them. Blank balance cells are expected and are not a parsing failure."
+        }
+      ],
+      "native": "Machine-readable download is offered for recent activity; older periods are PDFs only.",
+      "getpdf": "From the account page choose Statements & documents and download the period you want.",
+      "sample": [
+        [
+          "03/02",
+          "PURCHASE AUTHORIZED ON 03/01 TRADER JOE S",
+          "-71.44",
+          "5210.88"
+        ],
+        [
+          "03/04",
+          "1042  CHECK",
+          "-900.00",
+          "4310.88"
+        ],
+        [
+          "03/05",
+          "DIRECT DEP ACME CORP PAYROLL",
+          "2980.12",
+          "7291.00"
+        ]
+      ]
+    },
+    {
+      "slug": "citibank",
+      "name": "Citi",
+      "legal": "Citibank",
+      "region": "US",
+      "kind": "bank",
+      "also": [
+        "Citibank",
+        "Citi card"
+      ],
+      "layout": {
+        "shape": "single-amount",
+        "columns": [
+          "Date",
+          "Description",
+          "Amount"
+        ],
+        "dates": "MM/DD",
+        "numbers": "1,234.56"
+      },
+      "expect": "One amount column. On card statements, payments and credits carry a minus sign while purchases are positive — which is the opposite of what most accounting software expects from an expense column.",
+      "quirks": [
+        {
+          "t": "Card sign convention is inverted for bookkeeping",
+          "b": "A purchase is printed as a positive number because it increases what you owe. If you are importing into software that expects expenses to be negative, tick Flip all signs before exporting."
+        },
+        {
+          "t": "Foreign transactions print an extra line",
+          "b": "The original currency and exchange rate appear on the line below the transaction. That line is merged into the description automatically, so the detail survives into your CSV rather than being dropped."
+        },
+        {
+          "t": "Section headings by cardholder",
+          "b": "On accounts with more than one card, transactions are grouped under each cardholder's name. The headings themselves have no date and are ignored, but the grouping means rows are not in date order."
+        }
+      ],
+      "native": "Recent activity can be downloaded directly; statement PDFs are the route to anything older.",
+      "getpdf": "Open the account and look under Statements for the month you need.",
+      "sample": [
+        [
+          "03/11",
+          "COSTCO WHSE #1129 SUNNYVALE CA",
+          "214.77",
+          ""
+        ],
+        [
+          "03/14",
+          "AUTOPAY THANK YOU",
+          "-1500.00",
+          ""
+        ],
+        [
+          "03/16",
+          "SNCF INTERNET PARIS FR 48.00 EUR AT 1.0842",
+          "52.04",
+          ""
+        ]
+      ]
+    },
+    {
+      "slug": "capital-one",
+      "name": "Capital One",
+      "legal": "Capital One",
+      "region": "US",
+      "kind": "card",
+      "also": [
+        "Capital One Venture",
+        "Capital One Quicksilver"
+      ],
+      "layout": {
+        "shape": "single-amount",
+        "columns": [
+          "Date",
+          "Description",
+          "Amount"
+        ],
+        "dates": "MMM DD",
+        "numbers": "1,234.56"
+      },
+      "expect": "One amount column, with dates written as a short month and day rather than as digits. The converter reads Mar 15 as a date without being told.",
+      "quirks": [
+        {
+          "t": "Dates have no year",
+          "b": "Capital One prints the month and day only. Normalising to ISO fills in the current year, so for an older statement either keep dates As printed or correct the year afterwards in one pass."
+        },
+        {
+          "t": "Transactions are grouped per card",
+          "b": "On accounts with authorised users, each card gets its own block with its own heading. Everything converts, but the result is grouped by card rather than sorted by date."
+        },
+        {
+          "t": "Fees and interest appear in their own section",
+          "b": "Interest charged and fees are listed separately from purchases, usually near the end. They convert as ordinary rows — worth checking you want them included before importing."
+        }
+      ],
+      "native": "Downloads cover recent statement periods; older ones remain as PDFs.",
+      "getpdf": "Choose the account, open Statements, and download the PDF for the period.",
+      "sample": [
+        [
+          "Mar 09",
+          "WHOLEFDS MKT #10442",
+          "132.08",
+          ""
+        ],
+        [
+          "Mar 12",
+          "CAPITAL ONE AUTOPAY PYMT",
+          "-620.00",
+          ""
+        ],
+        [
+          "Mar 15",
+          "SPOTIFY USA NEW YORK NY",
+          "11.99",
+          ""
+        ]
+      ]
+    },
+    {
+      "slug": "us-bank",
+      "name": "U.S. Bank",
+      "legal": "U.S. Bank",
+      "region": "US",
+      "kind": "bank",
+      "also": [
+        "US Bank",
+        "USBank"
+      ],
+      "layout": {
+        "shape": "debit-credit-balance",
+        "columns": [
+          "Date",
+          "Description",
+          "Withdrawals",
+          "Deposits",
+          "Balance"
+        ],
+        "dates": "MMM DD",
+        "numbers": "1,234.56"
+      },
+      "expect": "Three number columns, which the converter should map to Debit, Credit and Balance. Confirm the order before exporting.",
+      "quirks": [
+        {
+          "t": "Withdrawals are printed before deposits",
+          "b": "This is the reverse of several other banks, so if you convert statements from more than one institution do not assume the column order carries over. Step 2 shows sample values from each column, which is the fastest way to confirm which is which."
+        },
+        {
+          "t": "Analysis service charges are itemised",
+          "b": "Business accounts list per-item service charges in a separate section, sometimes with dates. Those rows convert; drop them if you only want customer transactions."
+        },
+        {
+          "t": "Overdraft and returned-item fees are dated rows",
+          "b": "Fee lines carry their own date and convert like any transaction. If you are reconciling customer activity rather than bank charges, they are worth dropping — they cluster near the end of each section."
+        }
+      ],
+      "native": "Recent activity is downloadable; older periods are PDF statements.",
+      "getpdf": "Open the account, then Statements, then download the period as PDF.",
+      "sample": [
+        [
+          "Mar 06",
+          "ELECTRONIC WITHDRAWAL PG&E AUTOPAY",
+          "-142.90",
+          "3980.22"
+        ],
+        [
+          "Mar 08",
+          "MOBILE CHECK DEPOSIT",
+          "740.00",
+          "4720.22"
+        ],
+        [
+          "Mar 11",
+          "TARGET T-1188 MINNEAPOLIS MN",
+          "-96.35",
+          "4623.87"
+        ]
+      ]
+    },
+    {
+      "slug": "pnc",
+      "name": "PNC Bank",
+      "legal": "PNC Bank",
+      "region": "US",
+      "kind": "bank",
+      "also": [
+        "PNC"
+      ],
+      "layout": {
+        "shape": "debit-credit-balance",
+        "columns": [
+          "Date",
+          "Description",
+          "Deposits",
+          "Withdrawals",
+          "Balance"
+        ],
+        "dates": "MM/DD/YYYY",
+        "numbers": "1,234.56"
+      },
+      "expect": "Three number columns mapping to Credit, Debit and Balance. The full date including the year means ISO normalisation works without correction.",
+      "quirks": [
+        {
+          "t": "Activity is split into typed sections",
+          "b": "Deposits, checks, and electronic withdrawals each get their own section with its own heading and subtotal. All of them convert, but the output follows the printed grouping rather than date order."
+        },
+        {
+          "t": "Section subtotals need dropping",
+          "b": "Where a subtotal line carries a date it converts as a row. Remove those before exporting or the totals will not reconcile."
+        },
+        {
+          "t": "Virtual Wallet accounts print three balances",
+          "b": "Spend, Reserve and Growth are reported separately, so a single PDF can contain three sets of activity with three running balances. Convert the sections separately if you need them kept apart, or add an account column afterwards."
+        }
+      ],
+      "native": "Machine-readable export covers a limited recent range; PDFs go back further.",
+      "getpdf": "From the account, open Statements and save the month as PDF.",
+      "sample": [
+        [
+          "03/05/2024",
+          "DIRECT DEPOSIT ACME CORP",
+          "2410.00",
+          "6188.40"
+        ],
+        [
+          "03/07/2024",
+          "CHECK 2081",
+          "-450.00",
+          "5738.40"
+        ],
+        [
+          "03/12/2024",
+          "POS PURCHASE GIANT EAGLE 0042",
+          "-118.62",
+          "5619.78"
+        ]
+      ]
+    },
+    {
+      "slug": "american-express",
+      "name": "American Express",
+      "legal": "American Express",
+      "region": "US",
+      "kind": "card",
+      "also": [
+        "Amex",
+        "Amex Platinum",
+        "Amex Gold"
+      ],
+      "layout": {
+        "shape": "single-amount",
+        "columns": [
+          "Date",
+          "Description",
+          "Amount"
+        ],
+        "dates": "MM/DD/YY",
+        "numbers": "1,234.56"
+      },
+      "expect": "One amount column. Charges are positive and payments negative, so tick Flip all signs if your accounting software expects expenses to be negative.",
+      "quirks": [
+        {
+          "t": "Merchant detail runs to several lines",
+          "b": "Amex prints the merchant, then the location, and often a reference or category on the lines beneath. Those continuation lines are merged into the description automatically, so a single row keeps the full merchant detail instead of losing it."
+        },
+        {
+          "t": "Each cardholder gets a section",
+          "b": "Supplementary cards are listed under their own headings, so the output is grouped by cardholder. The name itself is a heading with no date and does not become a row."
+        },
+        {
+          "t": "Foreign spend adds a conversion line",
+          "b": "The original amount and currency print below the charge and are merged into the description, so the original figure is preserved in the CSV."
+        }
+      ],
+      "native": "Amex offers downloads for recent periods; earlier statements are PDF only.",
+      "getpdf": "Open Statements & Activity and download the billing period as PDF.",
+      "sample": [
+        [
+          "03/08/24",
+          "DELTA AIR LINES ATLANTA GA 0062318841122",
+          "534.80",
+          ""
+        ],
+        [
+          "03/11/24",
+          "THE LANESBOROUGH LONDON GBR 410.00 GBP",
+          "521.16",
+          ""
+        ],
+        [
+          "03/20/24",
+          "AUTOPAY RECEIVED - THANK YOU",
+          "-2140.00",
+          ""
+        ]
+      ]
+    },
+    {
+      "slug": "discover",
+      "name": "Discover",
+      "legal": "Discover",
+      "region": "US",
+      "kind": "card",
+      "also": [
+        "Discover it"
+      ],
+      "layout": {
+        "shape": "single-amount",
+        "columns": [
+          "Trans. date",
+          "Post date",
+          "Description",
+          "Amount"
+        ],
+        "dates": "MM/DD/YY",
+        "numbers": "1,234.56"
+      },
+      "expect": "Two date columns and one amount column. The converter takes the leftmost date — the transaction date — and leaves the posting date in the description where you can still see it.",
+      "quirks": [
+        {
+          "t": "Two dates per row",
+          "b": "If you need the posting date rather than the transaction date, it remains visible in the description column and can be split out in your spreadsheet. Most bookkeeping uses the transaction date, which is what the Date column gives you."
+        },
+        {
+          "t": "Cashback bonus lines are transactions too",
+          "b": "Rewards credits appear as ordinary dated rows. Drop them if you are reconciling spend rather than account movement."
+        },
+        {
+          "t": "Categories are printed, not just amounts",
+          "b": "Discover labels each transaction with a spending category. It sits in the description column and survives into the CSV, which saves re-categorising everything by hand at the other end."
+        }
+      ],
+      "native": "Recent activity downloads directly; older billing periods are PDFs.",
+      "getpdf": "Open Statements and download the period you need.",
+      "sample": [
+        [
+          "03/06/24",
+          "03/07/24 UBER TRIP HELP.UBER.COM CA RESTAURANTS",
+          "23.40",
+          ""
+        ],
+        [
+          "03/09/24",
+          "03/11/24 KROGER #418 GROCERIES",
+          "141.02",
+          ""
+        ],
+        [
+          "03/14/24",
+          "03/14/24 CASHBACK BONUS REDEMPTION",
+          "-75.00",
+          ""
+        ]
+      ]
+    },
+    {
+      "slug": "fidelity",
+      "name": "Fidelity",
+      "legal": "Fidelity Investments",
+      "region": "US",
+      "kind": "broker",
+      "also": [
+        "Fidelity Investments",
+        "Fidelity brokerage"
+      ],
+      "layout": {
+        "shape": "single-amount",
+        "columns": [
+          "Date",
+          "Description / Security",
+          "Amount"
+        ],
+        "dates": "MMM DD YYYY",
+        "numbers": "1,234.56"
+      },
+      "expect": "Brokerage statements carry several tables, not one. Expect to keep the activity table and drop the rest — the preview makes this quick.",
+      "quirks": [
+        {
+          "t": "Holdings tables are not transactions",
+          "b": "A brokerage statement lists positions, market values and cost basis alongside the activity. Some of those rows carry dates and amounts, so they convert too. They cluster together in the preview and can be dropped in a few clicks."
+        },
+        {
+          "t": "Quantities and prices are separate numbers",
+          "b": "A trade line carries a share quantity and a price per share as well as the total. Where these fall in their own printed columns the converter treats them as columns you can set to Ignore, leaving only the settlement amount."
+        },
+        {
+          "t": "Multiple accounts in one document",
+          "b": "Household statements cover several accounts in one PDF. Everything converts into a single sheet, so add an account column yourself or convert each section separately if you need them kept apart."
+        }
+      ],
+      "native": "Activity downloads are offered for a limited recent window, and are per account rather than for the whole statement.",
+      "getpdf": "Open Statements, choose the period, and download the PDF.",
+      "sample": [
+        [
+          "Mar 05 2024",
+          "DIVIDEND RECEIVED VANGUARD TOTAL STOCK VTI",
+          "148.22",
+          ""
+        ],
+        [
+          "Mar 12 2024",
+          "YOU BOUGHT VTI 12 SHARES @ 254.10",
+          "-3049.20",
+          ""
+        ],
+        [
+          "Mar 29 2024",
+          "ELECTRONIC FUNDS TRANSFER RECEIVED",
+          "2000.00",
+          ""
+        ]
+      ]
+    },
+    {
+      "slug": "charles-schwab",
+      "name": "Charles Schwab",
+      "legal": "Charles Schwab",
+      "region": "US",
+      "kind": "broker",
+      "also": [
+        "Schwab"
+      ],
+      "layout": {
+        "shape": "single-amount",
+        "columns": [
+          "Date",
+          "Transaction",
+          "Description",
+          "Amount"
+        ],
+        "dates": "MM/DD/YYYY",
+        "numbers": "1,234.56"
+      },
+      "expect": "The activity section converts cleanly. As with any brokerage statement, position and performance tables also contain dated figures and are dropped in the preview.",
+      "quirks": [
+        {
+          "t": "Transaction type is its own column",
+          "b": "Buy, Sell, Dividend and similar labels print between the date and the description. They land in the description column, which keeps them in the export where they are useful for categorising."
+        },
+        {
+          "t": "Positions and performance tables convert too",
+          "b": "Only the transaction activity is usually wanted. The other tables appear as a contiguous block in the preview and are quick to drop."
+        },
+        {
+          "t": "Dividends and reinvestments are two rows",
+          "b": "A reinvested dividend prints once as income and once as a purchase. Both convert, which is correct for reconciliation but double-counts if you are only totalling income."
+        }
+      ],
+      "native": "Transaction history export covers a recent window per account; statement PDFs cover everything.",
+      "getpdf": "Open Statements & Tax Forms and download the monthly statement.",
+      "sample": [
+        [
+          "03/07/2024",
+          "BUY  SCHD  40 SHARES @ 27.44",
+          "-1097.60",
+          ""
+        ],
+        [
+          "03/15/2024",
+          "CASH DIVIDEND  SCHD",
+          "212.09",
+          ""
+        ],
+        [
+          "03/22/2024",
+          "JOURNAL  TRANSFER FROM BANK",
+          "1500.00",
+          ""
+        ]
+      ]
+    },
+    {
+      "slug": "robinhood",
+      "name": "Robinhood",
+      "legal": "Robinhood",
+      "region": "US",
+      "kind": "broker",
+      "also": [
+        "Robinhood brokerage"
+      ],
+      "layout": {
+        "shape": "single-amount",
+        "columns": [
+          "Date",
+          "Activity",
+          "Description",
+          "Amount"
+        ],
+        "dates": "MM/DD/YYYY",
+        "numbers": "1,234.56"
+      },
+      "expect": "A single amount column in the activity table, with the running account value printed separately rather than per row.",
+      "quirks": [
+        {
+          "t": "The statement is the only full record",
+          "b": "Monthly PDF statements are the complete account record, which is why converting them is the usual route to a full year of activity in a spreadsheet."
+        },
+        {
+          "t": "Options rows carry long descriptions",
+          "b": "Contract details make for long description text that can wrap across lines. Those wrapped lines are merged back into one row automatically."
+        },
+        {
+          "t": "Corporate actions arrive with no amount",
+          "b": "Splits and symbol changes appear as dated rows with a description but no figure. They convert with an empty Amount, which is accurate — drop them if your import rejects blank values."
+        }
+      ],
+      "native": "In-app export is limited; the monthly PDF statement is the authoritative record.",
+      "getpdf": "Open Account, then Statements, and download the monthly statement.",
+      "sample": [
+        [
+          "03/04/2024",
+          "BUY  NVDA  2 SHARES @ 880.10",
+          "-1760.20",
+          ""
+        ],
+        [
+          "03/18/2024",
+          "DIVIDEND  VOO",
+          "44.86",
+          ""
+        ],
+        [
+          "03/27/2024",
+          "ACH DEPOSIT FROM CHASE ****8891",
+          "1000.00",
+          ""
+        ]
+      ]
+    },
+    {
+      "slug": "barclays",
+      "name": "Barclays",
+      "legal": "Barclays",
+      "region": "UK",
+      "kind": "bank",
+      "also": [
+        "Barclays current account",
+        "Barclaycard"
+      ],
+      "layout": {
+        "shape": "debit-credit-balance",
+        "columns": [
+          "Date",
+          "Description",
+          "Paid out",
+          "Paid in",
+          "Balance"
+        ],
+        "dates": "DD MMM YY",
+        "numbers": "1,234.56"
+      },
+      "expect": "Three number columns mapping to Debit, Credit and Balance. Because UK statements write the day first, set Dates read as to Day first if you normalise them.",
+      "quirks": [
+        {
+          "t": "Day-first dates need the right setting",
+          "b": "05/03 means the fifth of March in the UK and the third of May in the US. The converter defaults to month-first for statements using slashes, so switch Dates read as to Day first before normalising, or leave dates As printed and avoid the question entirely."
+        },
+        {
+          "t": "Paid out comes before paid in",
+          "b": "The debit column is on the left, the reverse of several US banks. Check the sample values in step 2 rather than assuming."
+        },
+        {
+          "t": "Reference lines sit under the description",
+          "b": "Direct debit and standing order references print on a second line and are merged into the description, so the reference survives into your CSV."
+        }
+      ],
+      "native": "Downloads cover a recent range of transactions; older periods are PDF statements.",
+      "getpdf": "In online banking open the account and choose Statements, then download as PDF.",
+      "sample": [
+        [
+          "05 Mar 24",
+          "DD  BRITISH GAS 8842190",
+          "-96.40",
+          "2418.55"
+        ],
+        [
+          "07 Mar 24",
+          "BGC  SALARY MERIDIAN LTD",
+          "2740.00",
+          "5158.55"
+        ],
+        [
+          "11 Mar 24",
+          "DEB  SAINSBURYS S/MKTS 0288",
+          "-63.18",
+          "5095.37"
+        ]
+      ]
+    },
+    {
+      "slug": "hsbc",
+      "name": "HSBC",
+      "legal": "HSBC",
+      "region": "UK",
+      "kind": "bank",
+      "also": [
+        "HSBC UK",
+        "HSBC current account"
+      ],
+      "layout": {
+        "shape": "debit-credit-balance",
+        "columns": [
+          "Date",
+          "Payment type and details",
+          "Paid out",
+          "Paid in",
+          "Balance"
+        ],
+        "dates": "DD MMM YY",
+        "numbers": "1,234.56"
+      },
+      "expect": "Three number columns for Debit, Credit and Balance, with day-first dates.",
+      "quirks": [
+        {
+          "t": "The date is printed once per day, not per row",
+          "b": "Where several transactions share a date, HSBC prints the date on the first row only. Rows without a date are not read as transactions, so they may be merged into the row above instead of standing alone. Check the preview against the statement, and turn off Merge wrapped lines if rows are being combined that should be separate."
+        },
+        {
+          "t": "Payment type is part of the description",
+          "b": "The type code — DD, SO, VIS, BP — prints alongside the payee and is kept in the description, which is useful for categorising in a spreadsheet."
+        },
+        {
+          "t": "Day-first dates",
+          "b": "Set Dates read as to Day first before normalising, or leave them As printed."
+        }
+      ],
+      "native": "Transaction download covers a recent window; statement PDFs go back further.",
+      "getpdf": "Open the account and choose Statements, then download the PDF.",
+      "sample": [
+        [
+          "06 Mar 24",
+          "VIS  TFL TRAVEL CHARGE TFL.GOV.UK",
+          "-32.60",
+          "1884.20"
+        ],
+        [
+          "08 Mar 24",
+          "CR  SALARY NORTHWIND LTD",
+          "3120.00",
+          "5004.20"
+        ],
+        [
+          "12 Mar 24",
+          "DD  THAMES WATER 44120988",
+          "-58.00",
+          "4946.20"
+        ]
+      ]
+    },
+    {
+      "slug": "lloyds",
+      "name": "Lloyds Bank",
+      "legal": "Lloyds Bank",
+      "region": "UK",
+      "kind": "bank",
+      "also": [
+        "Lloyds"
+      ],
+      "layout": {
+        "shape": "debit-credit-balance",
+        "columns": [
+          "Date",
+          "Description",
+          "Paid out",
+          "Paid in",
+          "Balance"
+        ],
+        "dates": "DD MMM YY",
+        "numbers": "1,234.56"
+      },
+      "expect": "Three number columns for Debit, Credit and Balance, with day-first dates.",
+      "quirks": [
+        {
+          "t": "Transaction type codes prefix the description",
+          "b": "Codes such as DEB, DD, FPI and TFR sit at the front of the description and are kept, which makes categorising in a spreadsheet straightforward."
+        },
+        {
+          "t": "Day-first dates",
+          "b": "Switch Dates read as to Day first before normalising to ISO, otherwise the fifth of March becomes the third of May."
+        },
+        {
+          "t": "Balance is only printed when it changes",
+          "b": "Several transactions on the same day may show one balance on the last row. Blank balance cells are how the statement was printed, not a parsing error."
+        }
+      ],
+      "native": "Recent transactions can be downloaded; older activity is PDF statements.",
+      "getpdf": "Open the account, choose Statements, and download the PDF.",
+      "sample": [
+        [
+          "04 Mar 24",
+          "DEB  M&S SIMPLY FOOD 1180",
+          "-41.85",
+          "2260.14"
+        ],
+        [
+          "07 Mar 24",
+          "FPI  SALARY CALDER & CO",
+          "2480.00",
+          "4740.14"
+        ],
+        [
+          "09 Mar 24",
+          "SO  RENT HARTLEY LETTINGS",
+          "-1350.00",
+          "3390.14"
+        ]
+      ]
+    },
+    {
+      "slug": "monzo",
+      "name": "Monzo",
+      "legal": "Monzo Bank",
+      "region": "UK",
+      "kind": "fintech",
+      "also": [
+        "Monzo Bank"
+      ],
+      "layout": {
+        "shape": "debit-credit-balance",
+        "columns": [
+          "Date",
+          "Description",
+          "Money out",
+          "Money in",
+          "Balance"
+        ],
+        "dates": "DD/MM/YYYY",
+        "numbers": "1,234.56"
+      },
+      "expect": "Three number columns and a full day-first date. Set Dates read as to Day first if you normalise.",
+      "quirks": [
+        {
+          "t": "Monzo already offers CSV in the app",
+          "b": "If you only need recent activity, exporting CSV directly from Monzo is simpler and you do not need this tool. Converting the PDF statement is worth it when you need a specific past month, a document that matches what you sent to a lender or accountant, or a consistent format across several banks."
+        },
+        {
+          "t": "Emoji and merchant logos in descriptions",
+          "b": "Descriptions can contain characters that some accounting software rejects on import. They are preserved as printed; strip them in your spreadsheet if your software complains."
+        },
+        {
+          "t": "Pot transfers appear as ordinary transactions",
+          "b": "Moving money into a Pot prints as money out with the Pot name as the payee. If you treat Pots as your own money rather than spending, filter those rows out after export."
+        }
+      ],
+      "native": "Monzo exports CSV directly from the app for recent activity, which is the easier route when it covers the period you need.",
+      "getpdf": "In the app open the account, then Statements, and export the month as PDF.",
+      "sample": [
+        [
+          "05/03/2024",
+          "Tesco Metro",
+          "-28.44",
+          "912.60"
+        ],
+        [
+          "07/03/2024",
+          "Salary — Northwind Ltd",
+          "2480.00",
+          "3392.60"
+        ],
+        [
+          "09/03/2024",
+          "Transfer to Holiday pot",
+          "-300.00",
+          "3092.60"
+        ]
+      ]
+    },
+    {
+      "slug": "paypal",
+      "name": "PayPal",
+      "legal": "PayPal",
+      "region": "Global",
+      "kind": "fintech",
+      "also": [
+        "PayPal business",
+        "PayPal statement"
+      ],
+      "layout": {
+        "shape": "debit-credit-balance",
+        "columns": [
+          "Date",
+          "Description",
+          "Gross",
+          "Fee",
+          "Net",
+          "Balance"
+        ],
+        "dates": "DD/MM/YYYY or MM/DD/YYYY by locale",
+        "numbers": "1,234.56"
+      },
+      "expect": "More number columns than a bank statement. Set the ones you do not want to Ignore — most people keep Net and Balance, or Gross and Fee if they need to account for fees separately.",
+      "quirks": [
+        {
+          "t": "Fees are their own column and matter",
+          "b": "Gross, fee and net are printed separately. Importing gross as the amount overstates income and loses the deductible fee, so decide which column you actually want before exporting. The Ignore role on the others keeps the CSV clean."
+        },
+        {
+          "t": "Date order depends on your account locale",
+          "b": "PayPal follows the region on the account rather than a single global format. Check a day-of-month above twelve in the preview to see which order your statement uses, then set Dates read as accordingly."
+        },
+        {
+          "t": "Currency conversions appear as paired rows",
+          "b": "A conversion prints as two rows, one out of the source currency and one into the target. Both convert; keep both if you are reconciling balances."
+        }
+      ],
+      "native": "PayPal offers CSV activity downloads for recent periods, which is easier when it covers what you need. PDF statements are the route to older months.",
+      "getpdf": "Open Reports or Statements in your account and download the monthly statement as PDF.",
+      "sample": [
+        [
+          "12/03/2024",
+          "Payment received from J Whitfield",
+          "148.00",
+          "2410.88"
+        ],
+        [
+          "12/03/2024",
+          "PayPal fee",
+          "-5.62",
+          "2405.26"
+        ],
+        [
+          "18/03/2024",
+          "Withdrawal to bank account",
+          "-2000.00",
+          "405.26"
+        ]
+      ]
+    },
+    {
+      "slug": "wise",
+      "name": "Wise",
+      "legal": "Wise",
+      "region": "Global",
+      "kind": "fintech",
+      "also": [
+        "TransferWise",
+        "Wise multi-currency"
+      ],
+      "layout": {
+        "shape": "debit-credit-balance",
+        "columns": [
+          "Date",
+          "Description",
+          "Paid out",
+          "Paid in",
+          "Balance"
+        ],
+        "dates": "DD MMMM YYYY",
+        "numbers": "1,234.56 or 1.234,56 by currency"
+      },
+      "expect": "Three number columns. Because Wise issues a separate statement per currency, each conversion is a separate document with its own number format — the converter detects which format each file uses on its own.",
+      "quirks": [
+        {
+          "t": "One statement per currency balance",
+          "b": "A multi-currency account produces a separate statement for each currency. Convert them separately and add a currency column yourself, or a licence lets you convert them in one pass — though the amounts will then sit in one column across currencies, which is rarely what you want for accounting."
+        },
+        {
+          "t": "Number format changes with the currency",
+          "b": "A euro statement may print 1.234,56 where a sterling one prints 1,234.56. The format is detected per document, so you do not need to change the setting between files — but it is worth glancing at the Numbers control to confirm."
+        },
+        {
+          "t": "Conversions show both sides",
+          "b": "Moving money between currencies appears in both statements, once as an outgoing and once as incoming. Expect to see each conversion twice across the set."
+        }
+      ],
+      "native": "Wise offers CSV export for recent activity per balance. PDF statements are useful when you need a fixed document for a specific period.",
+      "getpdf": "Open the balance, choose Statements, pick the period and currency, and download as PDF.",
+      "sample": [
+        [
+          "05 March 2024",
+          "Card transaction  LIDL BERLIN",
+          "-42.18",
+          "1284.60"
+        ],
+        [
+          "11 March 2024",
+          "Received from ACME GMBH",
+          "1800.00",
+          "3084.60"
+        ],
+        [
+          "19 March 2024",
+          "Converted to GBP",
+          "-1000.00",
+          "2084.60"
+        ]
+      ]
+    }
+  ]
+}
