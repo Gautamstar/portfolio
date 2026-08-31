@@ -19,7 +19,35 @@ cannot lose money while it waits to find customers.
 | :--- | :--- |
 | `index.html` | The entire product — landing page, parser, licence gate. No build step. |
 | `vendor/` | pdf.js 3.11.174, self-hosted (Apache-2.0, licence included). |
+| `fonts/` | Source Serif 4, Public Sans and IBM Plex Mono, latin subset (OFL). |
 | `tools/genkey.mjs` | Issues and verifies licence keys. This is how you fulfil a sale. |
+
+Every asset is served from your own origin. The page makes **no third-party
+request at all**, which is what lets the FAQ invite people to open their network
+panel and check — a Google Fonts request in that panel would undercut the one
+claim the product is sold on.
+
+## The design, and why it looks like this
+
+Someone is being asked to hand over a document listing every purchase they made
+last month. The page has to earn that in the first two seconds, so it borrows
+the visual language of institutional finance rather than of a SaaS landing page:
+a serif display face with a formal masthead and a single brass rule, hairline
+dividers instead of floating cards, tabular figures throughout, numbered steps,
+and a disclosures band set as fine print.
+
+Two rules held while building it, and worth holding as you edit:
+
+- **The accent is navy, not green.** Green and red are reserved for credit and
+  debit. A brand accent that collides with semantic colour makes a ledger harder
+  to read, which is the one thing this page cannot afford.
+- **No invented trust signals.** There are no certification badges, no security
+  seals, no customer counts, no testimonials. Everything asserted on the page is
+  either verifiable by the visitor (open the network panel) or is a promise you
+  personally control (the refund window). Financial buyers check, and one
+  fabricated badge costs more than every sale it wins. The disclosures band
+  states the real limitations — scans need OCR, output needs reconciling — which
+  is what actual institutions do, and it reads as more credible than a badge.
 
 ---
 

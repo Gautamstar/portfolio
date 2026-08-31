@@ -10,236 +10,455 @@
 <meta property="og:title" content="Statement to CSV — private PDF statement converter">
 <meta property="og:description" content="Turn PDF bank statements into clean CSV. 100% in-browser, nothing uploaded.">
 <meta name="twitter:card" content="summary_large_image">
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%23111827'/%3E%3Cpath d='M9 8h9l5 5v11a2 2 0 0 1-2 2H9a2 2 0 0 1-2-2V10a2 2 0 0 1 2-2z' fill='none' stroke='%2334d399' stroke-width='2'/%3E%3Cpath d='M11 18h10M11 22h6' stroke='%2334d399' stroke-width='2' stroke-linecap='round'/%3E%3C/svg%3E">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' fill='%2317376A'/%3E%3Cpath d='M8 7h9l7 7v11H8z' fill='none' stroke='%23fff' stroke-width='1.6'/%3E%3Cpath d='M11 18h10M11 21.5h6' stroke='%23fff' stroke-width='1.6'/%3E%3C/svg%3E">
 <script type="application/ld+json">
 {"@context":"https://schema.org","@type":"SoftwareApplication","name":"Statement to CSV","applicationCategory":"FinanceApplication","operatingSystem":"Any (web browser)","description":"Convert PDF bank and brokerage statements to CSV entirely in the browser. No upload, no account.","offers":[{"@type":"Offer","price":"0","priceCurrency":"USD","name":"Free"},{"@type":"Offer","price":"29","priceCurrency":"USD","name":"Pro lifetime licence"}]}
 </script>
 <style>
+/* ---------- self-hosted faces: no third-party request, so the network tab
+              stays as empty as the privacy claim says it is ---------- */
+@font-face{font-family:"Source Serif 4";src:url("fonts/source-serif-4-latin-wght-normal.woff2") format("woff2-variations");font-weight:200 900;font-style:normal;font-display:swap}
+@font-face{font-family:"Public Sans";src:url("fonts/public-sans-latin-wght-normal.woff2") format("woff2-variations");font-weight:100 900;font-style:normal;font-display:swap}
+@font-face{font-family:"IBM Plex Mono";src:url("fonts/ibm-plex-mono-latin-400-normal.woff2") format("woff2");font-weight:400;font-style:normal;font-display:swap}
+@font-face{font-family:"IBM Plex Mono";src:url("fonts/ibm-plex-mono-latin-500-normal.woff2") format("woff2");font-weight:500;font-style:normal;font-display:swap}
+
 :root{
-  --bg:#ffffff; --bg-soft:#f6f7f9; --bg-sunk:#eef0f4;
-  --fg:#111827; --fg-mid:#4b5563; --fg-dim:#6b7280;
-  --line:#e3e6ec; --line-strong:#cfd4dd;
-  --accent:#0f766e; --accent-fg:#ffffff; --accent-soft:#e6f4f1;
-  --warn:#b45309; --warn-soft:#fef3c7;
-  --danger:#b91c1c;
-  --radius:10px; --radius-lg:16px;
-  --shadow:0 1px 2px rgba(16,24,40,.05),0 8px 24px -12px rgba(16,24,40,.18);
-  --mono:ui-monospace,SFMono-Regular,"SF Mono",Menlo,Consolas,monospace;
-  --sans:-apple-system,BlinkMacSystemFont,"Segoe UI",Inter,Roboto,Helvetica,Arial,sans-serif;
+  --paper:#ffffff;
+  --paper-sunk:#f4f6fa;
+  --paper-deep:#e9edf4;
+  --ink:#101a2b;
+  --ink-mid:#41506a;
+  --ink-dim:#6b7890;
+  --navy:#17376a;
+  --navy-lift:#1f4a8c;
+  --navy-wash:#eef2f9;
+  --on-navy:#ffffff;
+  --brass:#96793f;
+  --rule:#d5dce6;
+  --rule-firm:#b4c0d0;
+  --credit:#1a6349;
+  --debit:#9e2b22;
+  --flag:#8a6413;
+  --flag-wash:#fdf6e4;
+
+  --serif:"Source Serif 4",Georgia,"Times New Roman",serif;
+  --sans:"Public Sans",-apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif;
+  --mono:"IBM Plex Mono",ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
 }
 @media (prefers-color-scheme:dark){
   :root:not([data-theme="light"]){
-    --bg:#0d1117; --bg-soft:#151b23; --bg-sunk:#1c232c;
-    --fg:#e8eaed; --fg-mid:#aab1bd; --fg-dim:#8b939f;
-    --line:#262d37; --line-strong:#39414d;
-    --accent:#2dd4bf; --accent-fg:#04211f; --accent-soft:#12312e;
-    --warn:#fbbf24; --warn-soft:#3a2e10;
-    --danger:#f87171;
-    --shadow:0 1px 2px rgba(0,0,0,.4),0 8px 24px -12px rgba(0,0,0,.6);
+    --paper:#0c1420;
+    --paper-sunk:#111c2c;
+    --paper-deep:#18253a;
+    --ink:#e6ebf3;
+    --ink-mid:#a8b4c7;
+    --ink-dim:#7d8CA3;
+    --navy:#8fb2e8;
+    --navy-lift:#a9c6f2;
+    --navy-wash:#152742;
+    --on-navy:#0c1420;
+    --brass:#c9a961;
+    --rule:#23324a;
+    --rule-firm:#354865;
+    --credit:#5fc39b;
+    --debit:#e8837a;
+    --flag:#e0b458;
+    --flag-wash:#2a2313;
   }
 }
 :root[data-theme="dark"]{
-  --bg:#0d1117; --bg-soft:#151b23; --bg-sunk:#1c232c;
-  --fg:#e8eaed; --fg-mid:#aab1bd; --fg-dim:#8b939f;
-  --line:#262d37; --line-strong:#39414d;
-  --accent:#2dd4bf; --accent-fg:#04211f; --accent-soft:#12312e;
-  --warn:#fbbf24; --warn-soft:#3a2e10;
-  --danger:#f87171;
-  --shadow:0 1px 2px rgba(0,0,0,.4),0 8px 24px -12px rgba(0,0,0,.6);
+  --paper:#0c1420;
+  --paper-sunk:#111c2c;
+  --paper-deep:#18253a;
+  --ink:#e6ebf3;
+  --ink-mid:#a8b4c7;
+  --ink-dim:#7d8ca3;
+  --navy:#8fb2e8;
+  --navy-lift:#a9c6f2;
+  --navy-wash:#152742;
+  --on-navy:#0c1420;
+  --brass:#c9a961;
+  --rule:#23324a;
+  --rule-firm:#354865;
+  --credit:#5fc39b;
+  --debit:#e8837a;
+  --flag:#e0b458;
+  --flag-wash:#2a2313;
 }
+
 *{box-sizing:border-box}
-body{margin:0;background:var(--bg);color:var(--fg);font:15px/1.55 var(--sans);-webkit-font-smoothing:antialiased}
-.wrap{max-width:1080px;margin:0 auto;padding:0 20px}
-a{color:inherit}
-h1,h2,h3{line-height:1.2;letter-spacing:-.02em;margin:0}
-button{font:inherit;cursor:pointer}
+html{-webkit-text-size-adjust:100%}
+body{
+  margin:0;background:var(--paper);color:var(--ink);
+  font:400 15px/1.6 var(--sans);
+  font-variant-numeric:tabular-nums;
+  -webkit-font-smoothing:antialiased;
+}
+.wrap{max-width:1060px;margin:0 auto;padding:0 24px}
+a{color:var(--navy)}
+h1,h2,h3{margin:0;line-height:1.18;text-wrap:balance;font-family:var(--serif);font-weight:600;letter-spacing:-.01em}
+button{font:inherit;cursor:pointer;color:inherit}
+:focus-visible{outline:2px solid var(--navy);outline-offset:2px}
+@media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
 
-/* ---------- header ---------- */
-header{border-bottom:1px solid var(--line);position:sticky;top:0;background:color-mix(in srgb,var(--bg) 88%,transparent);backdrop-filter:blur(8px);z-index:20}
-.hrow{display:flex;align-items:center;gap:14px;height:58px}
-.brand{display:flex;align-items:center;gap:9px;font-weight:700;letter-spacing:-.02em;text-decoration:none}
-.brand svg{width:24px;height:24px;flex:none}
-nav{margin-left:auto;display:flex;align-items:center;gap:6px}
-nav a{color:var(--fg-mid);text-decoration:none;font-size:14px;padding:7px 10px;border-radius:8px}
-nav a:hover{color:var(--fg);background:var(--bg-soft)}
-.pill{font:600 11px/1 var(--sans);letter-spacing:.04em;text-transform:uppercase;padding:5px 8px;border-radius:999px;background:var(--accent-soft);color:var(--accent);border:1px solid color-mix(in srgb,var(--accent) 25%,transparent)}
+.eyebrow{
+  font:600 11px/1 var(--sans);letter-spacing:.14em;text-transform:uppercase;
+  color:var(--ink-dim);margin:0 0 10px;
+}
 
-/* ---------- hero ---------- */
-.hero{padding:52px 0 26px;text-align:center}
-.hero h1{font-size:clamp(30px,5.2vw,46px);font-weight:800;max-width:19ch;margin:0 auto 14px}
-.hero p{color:var(--fg-mid);font-size:17px;max-width:56ch;margin:0 auto 20px}
-.badges{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin-bottom:6px}
-.badge{display:inline-flex;align-items:center;gap:6px;font-size:13px;color:var(--fg-mid);background:var(--bg-soft);border:1px solid var(--line);padding:6px 11px;border-radius:999px}
-.badge svg{width:14px;height:14px;color:var(--accent);flex:none}
+/* ---------- masthead: navy plate over a brass hairline, the way an
+              engraved certificate carries exactly one rule ---------- */
+.masthead{background:var(--paper);border-bottom:1px solid var(--rule)}
+.mast-row{display:flex;align-items:center;gap:18px;height:66px}
+.mark{display:flex;align-items:center;gap:11px;text-decoration:none;color:var(--ink)}
+.mark svg{width:30px;height:30px;flex:none}
+.mark-name{font-family:var(--serif);font-weight:600;font-size:19px;letter-spacing:-.01em;line-height:1}
+.mark-name i{font-style:normal;color:var(--brass);padding:0 1px}
+.mark-sub{
+  display:block;font:600 9.5px/1 var(--sans);letter-spacing:.16em;
+  text-transform:uppercase;color:var(--ink-dim);margin-top:4px;
+}
+.mast-nav{margin-left:auto;display:flex;align-items:center;gap:4px}
+.mast-nav a{
+  color:var(--ink-mid);text-decoration:none;font-size:13.5px;font-weight:500;
+  padding:8px 11px;border-radius:2px;
+}
+.mast-nav a:hover{color:var(--ink);background:var(--paper-sunk)}
+.rule-brass{height:2px;background:var(--brass);opacity:.55}
+.rule-navy{height:4px;background:var(--navy)}
 
-/* ---------- app ---------- */
-.app{margin:26px 0 40px}
-.card{background:var(--bg);border:1px solid var(--line);border-radius:var(--radius-lg);box-shadow:var(--shadow);overflow:hidden}
-.drop{border:2px dashed var(--line-strong);border-radius:var(--radius-lg);background:var(--bg-soft);padding:44px 24px;text-align:center;transition:.15s;cursor:pointer}
-.drop:hover,.drop.over{border-color:var(--accent);background:var(--accent-soft)}
-.drop svg.big{width:38px;height:38px;color:var(--fg-dim);margin-bottom:10px}
-.drop.over svg.big,.drop:hover svg.big{color:var(--accent)}
-.drop b{display:block;font-size:17px;margin-bottom:5px}
-.drop span{color:var(--fg-dim);font-size:14px}
-.btn{display:inline-flex;align-items:center;justify-content:center;gap:7px;padding:10px 16px;border-radius:var(--radius);border:1px solid var(--line-strong);background:var(--bg);color:var(--fg);font-weight:600;font-size:14px;text-decoration:none;transition:.12s}
-.btn:hover{background:var(--bg-soft)}
-.btn.primary{background:var(--accent);border-color:var(--accent);color:var(--accent-fg)}
-.btn.primary:hover{filter:brightness(1.08)}
+.tag-pro{
+  font:600 10px/1 var(--sans);letter-spacing:.12em;text-transform:uppercase;
+  padding:5px 8px;border:1px solid var(--credit);color:var(--credit);border-radius:2px;
+}
+
+/* ---------- buttons: squared, institutional, no glow ---------- */
+.btn{
+  display:inline-flex;align-items:center;justify-content:center;gap:7px;
+  padding:10px 17px;border-radius:2px;border:1px solid var(--rule-firm);
+  background:var(--paper);color:var(--ink);font-weight:600;font-size:13.5px;
+  text-decoration:none;transition:background .12s,border-color .12s;
+}
+.btn:hover{background:var(--paper-sunk);border-color:var(--ink-dim)}
+.btn.primary{background:var(--navy);border-color:var(--navy);color:var(--on-navy)}
+.btn.primary:hover{background:var(--navy-lift);border-color:var(--navy-lift)}
 .btn:disabled{opacity:.45;cursor:not-allowed}
 .btn svg{width:15px;height:15px}
+.btn.small{padding:7px 12px;font-size:12.5px}
 
-.panel{padding:16px 18px;border-top:1px solid var(--line)}
-.panel:first-child{border-top:0}
-.panel h3{font-size:13px;text-transform:uppercase;letter-spacing:.06em;color:var(--fg-dim);font-weight:700;margin-bottom:12px}
+/* ---------- statement of purpose ---------- */
+.intro{padding:52px 0 40px;border-bottom:1px solid var(--rule)}
+.intro-grid{display:grid;grid-template-columns:minmax(0,1.35fr) minmax(0,1fr);gap:56px;align-items:start}
+.intro h1{font-size:clamp(31px,4.4vw,45px);letter-spacing:-.022em;margin-bottom:16px}
+.intro .lede{color:var(--ink-mid);font-size:16.5px;max-width:62ch;margin:0}
+.intro .lede strong{color:var(--ink);font-weight:600}
+
+.assurances{margin:0;border-top:1px solid var(--rule)}
+.assurances > div{
+  display:grid;grid-template-columns:24px 1fr;gap:13px;align-items:start;
+  padding:15px 0;border-bottom:1px solid var(--rule);
+}
+.assurances svg{width:19px;height:19px;color:var(--navy);margin-top:2px}
+.assurances dt{font-weight:600;font-size:13.5px;margin-bottom:3px}
+.assurances dd{margin:0;color:var(--ink-dim);font-size:13px;line-height:1.5}
+
+/* ---------- the converter, set as a formal document ---------- */
+.doc{margin:40px 0 46px;border:1px solid var(--rule-firm);background:var(--paper)}
+.doc-head{
+  display:flex;align-items:baseline;gap:14px;flex-wrap:wrap;
+  padding:15px 20px;background:var(--paper-sunk);border-bottom:1px solid var(--rule-firm);
+}
+.doc-head h2{font-size:16px;font-weight:600}
+.doc-ref{
+  margin-left:auto;font:400 11.5px/1 var(--mono);color:var(--ink-dim);
+  letter-spacing:.02em;
+}
+.panel{padding:20px;border-top:1px solid var(--rule)}
+.panel:first-of-type{border-top:0}
+.panel-label{
+  display:flex;align-items:center;gap:10px;margin-bottom:14px;
+}
+.panel-label .step{
+  width:21px;height:21px;flex:none;border:1px solid var(--navy);color:var(--navy);
+  border-radius:50%;display:grid;place-items:center;
+  font:600 11px/1 var(--sans);
+}
+.panel-label h3{
+  font-family:var(--sans);font-size:11px;font-weight:700;letter-spacing:.13em;
+  text-transform:uppercase;color:var(--ink-mid);
+}
+
+.drop{
+  border:1px dashed var(--rule-firm);background:var(--paper-sunk);
+  padding:42px 24px;text-align:center;cursor:pointer;transition:.14s;
+}
+.drop:hover,.drop.over{border-color:var(--navy);background:var(--navy-wash)}
+.drop svg.big{width:34px;height:34px;color:var(--ink-dim);margin-bottom:12px}
+.drop:hover svg.big,.drop.over svg.big{color:var(--navy)}
+.drop b{display:block;font-family:var(--serif);font-size:19px;font-weight:600;margin-bottom:6px}
+.drop span{color:var(--ink-dim);font-size:13.5px}
+
 .bar{display:flex;flex-wrap:wrap;gap:10px;align-items:center}
 .spacer{flex:1 1 auto}
-.filechip{display:inline-flex;align-items:center;gap:8px;background:var(--bg-soft);border:1px solid var(--line);border-radius:999px;padding:6px 12px;font-size:13px}
+.filechip{
+  display:inline-flex;align-items:center;gap:9px;background:var(--paper-sunk);
+  border:1px solid var(--rule);padding:7px 12px;font-size:13px;border-radius:2px;
+}
 .filechip b{font-weight:600}
-.filechip .x{border:0;background:none;color:var(--fg-dim);padding:0 2px;font-size:16px;line-height:1}
-.filechip .x:hover{color:var(--danger)}
+.filechip .stat{font-family:var(--mono);font-size:11.5px;color:var(--ink-dim)}
+.filechip .x{border:0;background:none;color:var(--ink-dim);padding:0 2px;font-size:16px;line-height:1}
+.filechip .x:hover{color:var(--debit)}
 
-select,input[type=text]{font:inherit;font-size:13px;padding:6px 9px;border-radius:8px;border:1px solid var(--line-strong);background:var(--bg);color:var(--fg)}
-label.fld{display:inline-flex;align-items:center;gap:7px;font-size:13px;color:var(--fg-mid)}
+select,input[type=text]{
+  font:inherit;font-size:13px;padding:7px 9px;border-radius:2px;
+  border:1px solid var(--rule-firm);background:var(--paper);color:var(--ink);
+}
+label.fld{display:inline-flex;align-items:center;gap:7px;font-size:12.5px;color:var(--ink-mid)}
+input[type=checkbox]{accent-color:var(--navy)}
 
 table.cols{width:100%;border-collapse:collapse;font-size:13px}
-table.cols th,table.cols td{text-align:left;padding:7px 9px;border-bottom:1px solid var(--line)}
-table.cols th{color:var(--fg-dim);font-weight:600;font-size:12px;text-transform:uppercase;letter-spacing:.04em}
-table.cols td.sample{font-family:var(--mono);color:var(--fg-mid);font-size:12px}
+table.cols th,table.cols td{text-align:left;padding:8px 10px;border-bottom:1px solid var(--rule)}
+table.cols th{
+  font:700 10.5px/1 var(--sans);letter-spacing:.11em;text-transform:uppercase;
+  color:var(--ink-dim);border-bottom:1px solid var(--rule-firm);
+}
+table.cols td:first-child{font-family:var(--mono);color:var(--ink-mid);font-size:12px}
+table.cols td.sample{font-family:var(--mono);color:var(--ink-mid);font-size:12px;letter-spacing:-.01em}
 
-.tablewrap{overflow:auto;max-height:460px;border-top:1px solid var(--line)}
+.settings{
+  display:flex;flex-wrap:wrap;gap:16px;align-items:center;
+  margin-top:16px;padding-top:15px;border-top:1px solid var(--rule);
+}
+
+/* ---------- ledger ---------- */
+.tablewrap{overflow:auto;max-height:470px;border-top:1px solid var(--rule-firm)}
 table.tx{width:100%;border-collapse:collapse;font-size:13px}
-table.tx th{position:sticky;top:0;background:var(--bg-sunk);z-index:1;text-align:left;padding:9px 10px;font-size:11px;text-transform:uppercase;letter-spacing:.05em;color:var(--fg-dim);border-bottom:1px solid var(--line-strong);white-space:nowrap}
-table.tx td{padding:7px 10px;border-bottom:1px solid var(--line);vertical-align:top}
-table.tx tbody tr:hover{background:var(--bg-soft)}
-table.tx tr.off{opacity:.35}
+table.tx th{
+  position:sticky;top:0;z-index:1;background:var(--paper-deep);text-align:left;
+  padding:10px;font:700 10.5px/1 var(--sans);letter-spacing:.11em;text-transform:uppercase;
+  color:var(--ink-mid);border-bottom:1px solid var(--rule-firm);white-space:nowrap;
+}
+table.tx td{padding:8px 10px;border-bottom:1px solid var(--rule);vertical-align:top}
+table.tx tbody tr:nth-child(even){background:var(--paper-sunk)}
+table.tx tbody tr:hover{background:var(--navy-wash)}
+table.tx tr.off{opacity:.4}
 table.tx tr.off td:not(.act){text-decoration:line-through}
-table.tx td.num{font-family:var(--mono);text-align:right;white-space:nowrap}
-table.tx td.neg{color:var(--danger)}
-table.tx td.date{font-family:var(--mono);white-space:nowrap}
+table.tx td.num{font-family:var(--mono);font-size:12.5px;text-align:right;white-space:nowrap}
+table.tx td.neg{color:var(--debit)}
+table.tx td.date{font-family:var(--mono);font-size:12.5px;white-space:nowrap;color:var(--ink-mid)}
 table.tx td.act{width:34px;text-align:center}
-table.tx td.act button{border:0;background:none;color:var(--fg-dim);font-size:15px;line-height:1;padding:2px 5px;border-radius:6px}
-table.tx td.act button:hover{background:var(--bg-sunk);color:var(--fg)}
-table.tx td.desc{min-width:220px}
-tr.locked td{background:repeating-linear-gradient(45deg,transparent,transparent 6px,var(--bg-sunk) 6px,var(--bg-sunk) 12px)}
+table.tx td.act button{border:0;background:none;color:var(--ink-dim);font-size:15px;line-height:1;padding:2px 5px}
+table.tx td.act button:hover{color:var(--ink)}
+table.tx td.desc{min-width:230px}
+tr.locked td:not(.act){color:var(--ink-dim)}
+tr.locked td.num{opacity:.4}
 
-.note{font-size:13px;color:var(--fg-mid);background:var(--bg-soft);border:1px solid var(--line);border-left:3px solid var(--accent);padding:10px 13px;border-radius:8px}
-.note.warn{border-left-color:var(--warn);background:var(--warn-soft);color:var(--fg)}
-.stat{font-size:13px;color:var(--fg-dim)}
-.stat b{color:var(--fg);font-weight:600}
+.note{
+  font-size:13px;color:var(--ink-mid);background:var(--paper-sunk);
+  border:1px solid var(--rule);border-left:3px solid var(--navy);
+  padding:11px 14px;
+}
+.note.warn{border-left-color:var(--flag);background:var(--flag-wash);color:var(--ink)}
+.note b{color:var(--ink)}
+.stat{font-size:13px;color:var(--ink-dim)}
+.stat b{color:var(--ink);font-weight:600;font-family:var(--mono);font-size:12.5px}
 .hidden{display:none!important}
-progress{width:100%;height:6px;border:0;border-radius:999px;overflow:hidden;background:var(--bg-sunk)}
-progress::-webkit-progress-bar{background:var(--bg-sunk)}
-progress::-webkit-progress-value{background:var(--accent)}
-progress::-moz-progress-bar{background:var(--accent)}
-textarea#raw{width:100%;height:180px;font:12px/1.5 var(--mono);padding:10px;border-radius:8px;border:1px solid var(--line-strong);background:var(--bg-soft);color:var(--fg);resize:vertical}
+progress{width:100%;height:4px;border:0;background:var(--paper-deep)}
+progress::-webkit-progress-bar{background:var(--paper-deep)}
+progress::-webkit-progress-value{background:var(--navy)}
+progress::-moz-progress-bar{background:var(--navy)}
+textarea#raw{
+  width:100%;height:180px;font:400 12px/1.55 var(--mono);padding:11px;
+  border:1px solid var(--rule-firm);background:var(--paper-sunk);color:var(--ink);
+  border-radius:2px;resize:vertical;
+}
+.doc-foot{
+  padding:12px 20px;border-top:1px solid var(--rule);background:var(--paper-sunk);
+  font-size:12.5px;color:var(--ink-dim);
+}
 
 /* ---------- sections ---------- */
-section{padding:44px 0;border-top:1px solid var(--line)}
-section h2{font-size:26px;font-weight:700;margin-bottom:8px}
-section > .wrap > p.lede{color:var(--fg-mid);max-width:60ch;margin:0 0 26px}
-.grid3{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:18px}
-.step{background:var(--bg-soft);border:1px solid var(--line);border-radius:var(--radius);padding:18px}
-.step .n{width:26px;height:26px;border-radius:7px;background:var(--accent);color:var(--accent-fg);display:grid;place-items:center;font-weight:700;font-size:13px;margin-bottom:10px}
-.step h3{font-size:15px;margin-bottom:5px}
-.step p{margin:0;color:var(--fg-mid);font-size:14px}
+section.band{padding:52px 0;border-top:1px solid var(--rule)}
+section.band h2{font-size:27px;margin-bottom:10px}
+section.band > .wrap > p.lede{color:var(--ink-mid);max-width:64ch;margin:0 0 30px}
 
-.prices{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:18px;max-width:680px}
-.price{border:1px solid var(--line);border-radius:var(--radius-lg);padding:22px;background:var(--bg)}
-.price.hi{border-color:var(--accent);border-width:2px;position:relative}
-.price.hi::after{content:"Best value";position:absolute;top:-10px;right:16px;background:var(--accent);color:var(--accent-fg);font-size:11px;font-weight:700;padding:3px 9px;border-radius:999px;letter-spacing:.03em}
-.price h3{font-size:15px;color:var(--fg-dim);text-transform:uppercase;letter-spacing:.05em;margin-bottom:8px}
-.amt{font-size:36px;font-weight:800;letter-spacing:-.03em}
-.amt small{font-size:14px;font-weight:500;color:var(--fg-dim);letter-spacing:0}
-.price ul{list-style:none;padding:0;margin:16px 0 20px;font-size:14px}
-.price li{display:flex;gap:9px;padding:5px 0;color:var(--fg-mid)}
-.price li svg{width:15px;height:15px;color:var(--accent);flex:none;margin-top:3px}
+.steps{display:grid;grid-template-columns:repeat(auto-fit,minmax(228px,1fr));gap:0;border-top:1px solid var(--rule-firm)}
+.steps li{
+  list-style:none;padding:20px 22px 22px 0;border-bottom:1px solid var(--rule);
+}
+.steps li + li{padding-left:22px;border-left:1px solid var(--rule)}
+.steps .n{
+  font:400 11px/1 var(--mono);color:var(--brass);letter-spacing:.1em;
+  display:block;margin-bottom:9px;
+}
+.steps h3{font-size:16.5px;margin-bottom:6px}
+.steps p{margin:0;color:var(--ink-mid);font-size:13.5px;line-height:1.55}
+
+.prices{display:grid;grid-template-columns:repeat(auto-fit,minmax(272px,1fr));gap:0;max-width:720px;border:1px solid var(--rule-firm)}
+.price{padding:26px}
+.price + .price{border-left:1px solid var(--rule-firm)}
+.price.hi{background:var(--paper-sunk)}
+.price h3{font-family:var(--sans);font-size:11px;font-weight:700;letter-spacing:.13em;text-transform:uppercase;color:var(--ink-dim);margin-bottom:12px}
+.amt{font-family:var(--serif);font-size:40px;font-weight:600;letter-spacing:-.025em;line-height:1}
+.amt small{font-family:var(--sans);font-size:13px;font-weight:500;color:var(--ink-dim);letter-spacing:0}
+.price ul{list-style:none;padding:0;margin:18px 0 22px;font-size:13.5px}
+.price li{display:flex;gap:10px;padding:6px 0;color:var(--ink-mid);border-bottom:1px solid var(--rule)}
+.price li:last-child{border-bottom:0}
+.price li svg{width:14px;height:14px;color:var(--navy);flex:none;margin-top:4px}
 .price .btn{width:100%}
 
-details.faq{border-bottom:1px solid var(--line);padding:14px 0}
-details.faq summary{cursor:pointer;font-weight:600;list-style:none;display:flex;align-items:center;gap:10px}
+details.faq{border-bottom:1px solid var(--rule);padding:15px 0}
+details.faq summary{cursor:pointer;font-weight:600;list-style:none;display:flex;gap:12px;font-size:14.5px}
 details.faq summary::-webkit-details-marker{display:none}
-details.faq summary::before{content:"+";color:var(--accent);font-weight:700;font-size:17px;width:14px;flex:none}
-details.faq[open] summary::before{content:"−"}
-details.faq p{color:var(--fg-mid);margin:10px 0 0 24px;font-size:14px;max-width:66ch}
+details.faq summary::before{content:"+";color:var(--brass);font-family:var(--mono);font-weight:400;width:12px;flex:none}
+details.faq[open] summary::before{content:"–"}
+details.faq p{color:var(--ink-mid);margin:10px 0 0 24px;font-size:13.5px;max-width:68ch;line-height:1.6}
 
-dialog{border:1px solid var(--line-strong);border-radius:var(--radius-lg);padding:0;background:var(--bg);color:var(--fg);max-width:420px;width:calc(100% - 40px);box-shadow:0 20px 60px -20px rgba(0,0,0,.5)}
-dialog::backdrop{background:rgba(10,14,20,.55)}
-.dlg{padding:22px}
-.dlg h3{font-size:18px;margin-bottom:6px}
-.dlg p{color:var(--fg-mid);font-size:14px;margin:0 0 16px}
-.dlg input{width:100%;font-family:var(--mono);text-transform:uppercase;letter-spacing:.06em;padding:10px;font-size:14px;margin-bottom:10px}
-.dlg .row{display:flex;gap:8px}
-.msg{font-size:13px;margin-bottom:10px;padding:8px 11px;border-radius:8px}
-.msg.err{background:color-mix(in srgb,var(--danger) 12%,transparent);color:var(--danger)}
-.msg.ok{background:var(--accent-soft);color:var(--accent)}
+/* ---------- disclosures: the fine print a real statement carries,
+              here carrying limits that are actually true ---------- */
+.disclosures{background:var(--paper-sunk);border-top:1px solid var(--rule-firm);padding:34px 0}
+.disclosures h2{
+  font-family:var(--sans);font-size:11px;font-weight:700;letter-spacing:.14em;
+  text-transform:uppercase;color:var(--ink-mid);margin-bottom:14px;
+}
+.disclosures ol{margin:0;padding-left:20px;columns:2;column-gap:44px}
+.disclosures li{
+  font-size:12.5px;line-height:1.65;color:var(--ink-dim);
+  margin-bottom:9px;break-inside:avoid;
+}
+.disclosures li b{color:var(--ink-mid);font-weight:600}
+@media (max-width:720px){.disclosures ol{columns:1}}
 
-footer{border-top:1px solid var(--line);padding:28px 0;color:var(--fg-dim);font-size:13px}
-footer .hrow{height:auto;flex-wrap:wrap;gap:12px}
-footer a{color:var(--fg-mid)}
+footer{border-top:1px solid var(--rule);padding:26px 0;color:var(--ink-dim);font-size:12.5px}
+footer .row{display:flex;flex-wrap:wrap;gap:16px;align-items:center}
+footer a{color:var(--ink-mid);text-decoration:none}
+footer a:hover{color:var(--ink);text-decoration:underline}
+
+dialog{
+  border:1px solid var(--rule-firm);border-top:4px solid var(--navy);border-radius:0;
+  padding:0;background:var(--paper);color:var(--ink);max-width:430px;width:calc(100% - 40px);
+}
+dialog::backdrop{background:rgba(16,26,43,.6)}
+.dlg{padding:24px}
+.dlg h3{font-size:19px;margin-bottom:7px}
+.dlg p{color:var(--ink-mid);font-size:13.5px;margin:0 0 17px}
+.dlg input{width:100%;font-family:var(--mono);text-transform:uppercase;letter-spacing:.08em;padding:11px;font-size:14px;margin-bottom:11px}
+.dlg .row{display:flex;gap:9px}
+.msg{font-size:12.5px;margin-bottom:11px;padding:9px 12px;border-left:3px solid}
+.msg.err{background:var(--flag-wash);border-color:var(--debit);color:var(--debit)}
+.msg.ok{background:var(--navy-wash);border-color:var(--credit);color:var(--credit)}
+
+@media (max-width:860px){
+  .intro-grid{grid-template-columns:1fr;gap:34px}
+  .steps li + li{padding-left:0;border-left:0}
+  .steps li{padding-right:0}
+  .price + .price{border-left:0;border-top:1px solid var(--rule-firm)}
+}
 @media (max-width:640px){
-  .hero{padding:34px 0 18px}
-  nav a.hide-s{display:none}
+  .intro{padding:34px 0 28px}
+  .mast-nav a.hide-s{display:none}
   table.tx td.desc{min-width:150px}
 }
 </style>
 </head>
 <body>
 
-<header>
-  <div class="wrap hrow">
-    <a class="brand" href="#top">
-      <svg viewBox="0 0 32 32" aria-hidden="true"><rect width="32" height="32" rx="7" fill="currentColor" opacity=".08"/><path d="M9 8h9l5 5v11a2 2 0 0 1-2 2H9a2 2 0 0 1-2-2V10a2 2 0 0 1 2-2z" fill="none" stroke="currentColor" stroke-width="2"/><path d="M11 18h10M11 22h6" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
-      Statement<span style="color:var(--accent)">→</span>CSV
-    </a>
-    <nav>
-      <a href="#how" class="hide-s">How it works</a>
-      <a href="#pricing">Pricing</a>
-      <a href="#faq" class="hide-s">FAQ</a>
-      <button class="btn" id="unlockBtn" style="padding:7px 12px">Enter licence</button>
-      <span class="pill hidden" id="proPill">Pro</span>
-    </nav>
+<header class="masthead" id="top">
+  <div class="wrap">
+    <div class="mast-row">
+      <a class="mark" href="#top">
+        <svg viewBox="0 0 32 32" aria-hidden="true">
+          <rect x=".8" y=".8" width="30.4" height="30.4" fill="none" stroke="currentColor" stroke-width="1.1" opacity=".28"/>
+          <rect x="3.4" y="3.4" width="25.2" height="25.2" fill="none" stroke="currentColor" stroke-width=".7" opacity=".18"/>
+          <path d="M10 8.5h7l5.2 5.2V23.5H10z" fill="none" stroke="currentColor" stroke-width="1.5"/>
+          <path d="M17 8.5v5.2h5.2" fill="none" stroke="currentColor" stroke-width="1.1"/>
+          <path d="M12.4 17.4h7.2M12.4 20.3h4.4" stroke="currentColor" stroke-width="1.4"/>
+        </svg>
+        <span>
+          <span class="mark-name">Statement <i>/</i> CSV</span>
+          <span class="mark-sub">Document conversion</span>
+        </span>
+      </a>
+      <nav class="mast-nav">
+        <a href="#method" class="hide-s">Method</a>
+        <a href="#pricing">Pricing</a>
+        <a href="#faq" class="hide-s">Questions</a>
+        <button class="btn small" id="unlockBtn">Enter licence</button>
+        <span class="tag-pro hidden" id="proPill">Licensed</span>
+      </nav>
+    </div>
   </div>
+  <div class="rule-navy"></div>
+  <div class="rule-brass"></div>
 </header>
 
-<main id="top">
+<main>
 
-<div class="wrap hero">
-  <h1>Turn PDF bank statements into clean spreadsheets</h1>
-  <p>Drop in a statement, get back CSV. Every calculation happens inside this tab — your financial documents are never uploaded, because there is no server to upload them to.</p>
-  <div class="badges">
-    <span class="badge"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M12 3l7 3v6c0 4.4-3 7.9-7 9-4-1.1-7-4.6-7-9V6l7-3z"/></svg> Nothing leaves your device</span>
-    <span class="badge"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M5 13l4 4L19 7"/></svg> Any bank or broker</span>
-    <span class="badge"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M12 6v6l4 2"/><circle cx="12" cy="12" r="9"/></svg> No account, no signup</span>
+<div class="intro">
+  <div class="wrap intro-grid">
+    <div>
+      <p class="eyebrow">PDF statement conversion</p>
+      <h1>Your statements become spreadsheets without ever leaving your computer.</h1>
+      <p class="lede">Drop in a PDF from any bank, card issuer or broker and take back clean CSV. The conversion runs inside this browser tab — <strong>the file is never transmitted anywhere</strong>, because there is no server on the other end to receive it.</p>
+    </div>
+    <dl class="assurances">
+      <div>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><path d="M12 3l7.5 3.2v5.6c0 4.6-3.1 8.3-7.5 9.4-4.4-1.1-7.5-4.8-7.5-9.4V6.2L12 3z"/><path d="M9 12.2l2.2 2.2L15.4 10"/></svg>
+        <div>
+          <dt>Nothing is uploaded</dt>
+          <dd>Open your browser's network panel while you convert. You will see no request carrying the file, because none is made.</dd>
+        </div>
+      </div>
+      <div>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><rect x="3.5" y="4.5" width="17" height="15" rx="1"/><path d="M3.5 9.5h17M9 9.5v10"/></svg>
+        <div>
+          <dt>Not built per bank</dt>
+          <dd>It reads the page's own column geometry, then shows you what it found so you can correct it. Unusual layouts still convert.</dd>
+        </div>
+      </div>
+      <div>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><circle cx="12" cy="12" r="8.5"/><path d="M12 7.2v5.1l3.3 1.9"/></svg>
+        <div>
+          <dt>No account, no waiting</dt>
+          <dd>There is nothing to register for and no queue. Conversion begins the moment you choose a file.</dd>
+        </div>
+      </div>
+    </dl>
   </div>
 </div>
 
-<div class="wrap app">
-  <div class="card">
+<div class="wrap">
+  <section class="doc">
+    <div class="doc-head">
+      <h2>Convert a statement</h2>
+      <span class="doc-ref">LOCAL SESSION · NO TRANSMISSION</span>
+    </div>
 
     <!-- step 1: input -->
     <div class="panel" id="panelDrop">
+      <div class="panel-label"><span class="step">1</span><h3>Select the document</h3></div>
       <div class="drop" id="drop" tabindex="0" role="button" aria-label="Choose PDF statements">
-        <svg class="big" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M12 16V4m0 0L8 8m4-4l4 4"/><path d="M4 16v2a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-2"/></svg>
-        <b>Drop PDF statements here</b>
-        <span>or click to browse · <span id="dropHint">1 file on Free, unlimited on Pro</span></span>
+        <svg class="big" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M12 16V4m0 0L8 8m4-4l4 4"/><path d="M4 16v2a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-2"/></svg>
+        <b>Drop a PDF statement here</b>
+        <span>or click to browse · <span id="dropHint">one file on the free tier, unlimited when licensed</span></span>
       </div>
       <input type="file" id="file" accept="application/pdf,.pdf" multiple class="hidden">
-      <div id="files" class="bar" style="margin-top:12px"></div>
-      <div id="progWrap" class="hidden" style="margin-top:12px">
+      <div id="files" class="bar" style="margin-top:14px"></div>
+      <div id="progWrap" class="hidden" style="margin-top:14px">
         <progress id="prog" max="100" value="0"></progress>
-        <div class="stat" id="progText" style="margin-top:6px"></div>
+        <div class="stat" id="progText" style="margin-top:7px"></div>
       </div>
-      <div id="parseErr" class="note warn hidden" style="margin-top:12px"></div>
+      <div id="parseErr" class="note warn hidden" style="margin-top:14px"></div>
     </div>
 
     <!-- step 2: column mapping -->
     <div class="panel hidden" id="panelCols">
-      <h3>Detected number columns — check the roles are right</h3>
+      <div class="panel-label"><span class="step">2</span><h3>Verify the columns</h3></div>
       <table class="cols">
-        <thead><tr><th style="width:90px">Column</th><th style="width:170px">Role</th><th>Sample values</th></tr></thead>
+        <thead><tr><th style="width:88px">Column</th><th style="width:184px">Role</th><th>Values found</th></tr></thead>
         <tbody id="colBody"></tbody>
       </table>
-      <div class="bar" style="margin-top:14px">
+      <div class="settings">
         <label class="fld">Numbers
           <select id="numFmt">
             <option value="us">1,234.56</option>
@@ -267,16 +486,16 @@ footer a{color:var(--fg-mid)}
 
     <!-- step 3: preview -->
     <div class="panel hidden" id="panelOut" style="padding-bottom:0">
+      <div class="panel-label"><span class="step">3</span><h3>Review and export</h3></div>
       <div class="bar">
-        <h3 style="margin:0">Transactions</h3>
         <span class="stat" id="counts"></span>
         <div class="spacer"></div>
-        <button class="btn" id="copyBtn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg> Copy for spreadsheet</button>
+        <button class="btn" id="copyBtn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="9" y="9" width="12" height="12"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg> Copy for spreadsheet</button>
         <button class="btn" id="rawBtn">Show CSV</button>
-        <button class="btn primary" id="csvBtn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 4v11m0 0l-4-4m4 4l4-4"/><path d="M5 19h14"/></svg> Download CSV</button>
+        <button class="btn primary" id="csvBtn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 4v11m0 0l-4-4m4 4l4-4"/><path d="M5 19h14"/></svg> Download CSV</button>
       </div>
-      <div id="limitNote" class="note warn hidden" style="margin-top:12px"></div>
-      <div id="rawWrap" class="hidden" style="margin-top:12px"><textarea id="raw" readonly spellcheck="false"></textarea></div>
+      <div id="limitNote" class="note warn hidden" style="margin-top:14px"></div>
+      <div id="rawWrap" class="hidden" style="margin-top:14px"><textarea id="raw" readonly spellcheck="false"></textarea></div>
     </div>
     <div class="tablewrap hidden" id="tableWrap">
       <table class="tx">
@@ -285,79 +504,106 @@ footer a{color:var(--fg-mid)}
       </table>
     </div>
 
-  </div>
-  <p class="stat" style="margin-top:12px;text-align:center">
-    Nothing here is uploaded. Turn off your wi-fi and it still works — that is the whole point.
-  </p>
+    <div class="doc-foot">This document was processed on your own machine. Closing the tab discards it entirely — nothing is retained here or anywhere else.</div>
+  </section>
 </div>
 
-<section id="how">
+<section class="band" id="method">
   <div class="wrap">
-    <h2>How it works</h2>
-    <p class="lede">Most converters ask you to email or upload a document that lists every purchase you made last month. This one reads the file in the browser tab you already have open.</p>
-    <div class="grid3">
-      <div class="step"><div class="n">1</div><h3>Read the page geometry</h3><p>The PDF's text is extracted with its coordinates, then rows are rebuilt by grouping items that sit on the same baseline.</p></div>
-      <div class="step"><div class="n">2</div><h3>Find the money columns</h3><p>Amounts are clustered by their right edge, which is how statements align them. That is what separates debit, credit and balance without knowing the bank.</p></div>
-      <div class="step"><div class="n">3</div><h3>You confirm, then export</h3><p>Roles are guessed and shown for correction. Drop any row that shouldn't be there and take the CSV.</p></div>
-    </div>
+    <p class="eyebrow">Method</p>
+    <h2>How a statement is read</h2>
+    <p class="lede">Statements share no common format, so nothing here is written against a particular bank. The parser works from the geometry of the printed page, which is the one thing every statement has in common.</p>
+    <ol class="steps">
+      <li>
+        <span class="n">STEP 01</span>
+        <h3>Rebuild the rows</h3>
+        <p>Every text run in the PDF carries a coordinate. Runs sharing a baseline are regrouped into rows, and runs whose boxes touch are merged, so a split <em>Mar 15</em> becomes one date again.</p>
+      </li>
+      <li>
+        <span class="n">STEP 02</span>
+        <h3>Recover the columns</h3>
+        <p>Amounts are clustered by their right edge across the whole document. Statements right-align figures, so those clusters are the real columns — that is what separates debit from credit from balance without being told.</p>
+      </li>
+      <li>
+        <span class="n">STEP 03</span>
+        <h3>Hand it back for checking</h3>
+        <p>The roles it inferred are shown beside the values that produced them. You correct anything wrong and drop rows that should not be there, which is why layouts it has never seen still convert.</p>
+      </li>
+    </ol>
   </div>
 </section>
 
-<section id="pricing">
+<section class="band" id="pricing">
   <div class="wrap">
-    <h2>Pricing</h2>
-    <p class="lede">One payment. No subscription, no seat count, no expiry.</p>
+    <p class="eyebrow">Pricing</p>
+    <h2>One payment, held permanently</h2>
+    <p class="lede">Convert a real statement on the free tier first. You will know whether it reads your bank's format correctly before any money changes hands.</p>
     <div class="prices">
       <div class="price">
         <h3>Free</h3>
         <div class="amt">$0</div>
         <ul>
-          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 13l4 4L19 7"/></svg> One statement at a time</li>
-          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 13l4 4L19 7"/></svg> Full preview of every row</li>
-          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 13l4 4L19 7"/></svg> Export the first 25 rows</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M5 13l4 4L19 7"/></svg> One statement at a time</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M5 13l4 4L19 7"/></svg> Every row shown in full</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M5 13l4 4L19 7"/></svg> First 25 rows exported</li>
         </ul>
-        <button class="btn" onclick="document.getElementById('drop').click()">Try it now</button>
+        <button class="btn" onclick="document.getElementById('drop').click()">Convert a statement</button>
       </div>
       <div class="price hi">
-        <h3>Pro — lifetime</h3>
-        <div class="amt">$29 <small>once</small></div>
+        <h3>Licensed — one time</h3>
+        <div class="amt">$29 <small>once, not annually</small></div>
         <ul>
-          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 13l4 4L19 7"/></svg> Unlimited rows and pages</li>
-          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 13l4 4L19 7"/></svg> Batch several statements at once</li>
-          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 13l4 4L19 7"/></svg> Column setups remembered per bank</li>
-          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 13l4 4L19 7"/></svg> Every future update included</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M5 13l4 4L19 7"/></svg> Unlimited rows and pages</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M5 13l4 4L19 7"/></svg> Several statements in one pass</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M5 13l4 4L19 7"/></svg> Column settings kept per bank</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M5 13l4 4L19 7"/></svg> Every later version included</li>
         </ul>
-        <a class="btn primary" id="buyBtn" href="#" target="_blank" rel="noopener">Buy a licence</a>
+        <a class="btn primary" id="buyBtn" href="#" target="_blank" rel="noopener">Purchase a licence</a>
       </div>
     </div>
   </div>
 </section>
 
-<section id="faq">
+<section class="band" id="faq">
   <div class="wrap">
-    <h2>Questions</h2>
-    <details class="faq"><summary>Are my statements really not uploaded?</summary><p>Correct. The page loads a PDF reader and does the parsing in JavaScript on your machine. There is no backend, no database and no account system — the site is a set of static files. You can confirm it by opening your browser's network tab while you convert, or by disconnecting from the internet after the page loads.</p></details>
-    <details class="faq"><summary>Which banks does it support?</summary><p>It isn't built per-bank. It reads the layout geometry, so it handles most statement formats from retail banks, credit cards and brokerages. When the automatic guess is wrong, you correct the column roles yourself, which is why unusual formats still work.</p></details>
-    <details class="faq"><summary>My statement is a scan and nothing was found.</summary><p>Scanned or photographed statements are images with no text layer, so there is nothing to extract. Run the file through OCR first — macOS Preview, Adobe Acrobat and most scanner apps can add a text layer — then convert it here.</p></details>
-    <details class="faq"><summary>What do I actually get for $29?</summary><p>A licence key that removes the row limit and enables batch conversion, on every browser and machine you use, permanently. There is no renewal.</p></details>
-    <details class="faq"><summary>Can I get a refund?</summary><p>Yes — within 30 days, no questions. Convert a real statement on the free tier before paying and you will already know whether it reads your format correctly.</p></details>
+    <p class="eyebrow">Questions</p>
+    <h2>Before you send a statement anywhere</h2>
+    <details class="faq"><summary>Is the file genuinely not uploaded?</summary><p>Yes, and you do not have to take it on faith. Open your browser's network panel before converting: no request carries the document. The site is a set of static files with no backend, no database and no account system, so there is nowhere for a statement to be sent. Once the page has loaded you can disconnect from the internet entirely and it will still convert.</p></details>
+    <details class="faq"><summary>Which banks are supported?</summary><p>It is not written per bank. It reads the layout of the printed page, so it handles most retail bank, credit card and brokerage statements, including ones it has never encountered. Where the automatic reading is wrong you correct the column roles yourself, which is why unfamiliar formats still work.</p></details>
+    <details class="faq"><summary>Nothing was found in my statement.</summary><p>The usual cause is a scanned or photographed statement, which is an image with no text layer for any parser to read. Run the file through OCR first — Preview on macOS, Acrobat, and most scanner applications can add a text layer — then convert it here.</p></details>
+    <details class="faq"><summary>What exactly does the licence cover?</summary><p>A key that removes the row limit and enables multi-file conversion, on every browser and machine you use, with no renewal and no expiry. Later versions are included.</p></details>
+    <details class="faq"><summary>Can I have a refund?</summary><p>Within 30 days, without explanation. Because the free tier shows you every parsed row before you pay, you should already know whether it reads your statements correctly.</p></details>
   </div>
 </section>
+
+<div class="disclosures">
+  <div class="wrap">
+    <h2>Disclosures</h2>
+    <ol>
+      <li><b>Scanned documents cannot be read.</b> A PDF containing only page images has no text layer to extract. Apply OCR before converting.</li>
+      <li><b>Password-protected files must be unlocked first.</b> Remove the password in your PDF reader, then convert the unlocked copy.</li>
+      <li><b>Statements written as prose will not parse.</b> The parser requires dated rows carrying amounts; narrative summaries have neither.</li>
+      <li><b>Automatic column reading is a starting point.</b> Roles, number format and date order are inferred and presented for your correction. Check them against the statement before exporting.</li>
+      <li><b>Verify totals before filing.</b> This is a conversion tool, not a bookkeeping system, and no output should be relied upon for tax or audit purposes without being reconciled against the original document.</li>
+      <li><b>This service is not a bank</b> and is not affiliated with, endorsed by, or acting on behalf of any financial institution whose statements it converts.</li>
+    </ol>
+  </div>
+</div>
 
 </main>
 
 <footer>
-  <div class="wrap hrow">
-    <span>© <span id="yr"></span> Statement→CSV</span>
+  <div class="wrap row">
+    <span>© <span id="yr"></span> Statement / CSV</span>
     <div class="spacer"></div>
-    <a href="#pricing">Pricing</a><a href="#faq">FAQ</a><a href="mailto:support@example.com">Support</a>
+    <a href="#method">Method</a><a href="#pricing">Pricing</a><a href="#faq">Questions</a><a href="mailto:support@example.com">Support</a>
   </div>
 </footer>
 
 <dialog id="dlg">
   <div class="dlg">
     <h3>Enter your licence key</h3>
-    <p>Paste the key from your purchase email. It is stored in this browser only.</p>
+    <p>Paste the key from your purchase confirmation. It is held in this browser only.</p>
     <div id="dlgMsg" class="msg hidden"></div>
     <input type="text" id="keyInput" placeholder="SIQ-XXXXX-XXXXX-XXXXX" autocomplete="off" spellcheck="false">
     <div class="row">
@@ -412,7 +658,7 @@ var PRO = keyValid(store.get("siq.key"));
    ============================================================ */
 // Accepts both 1,234.56 and 1.234,56 — which one this document means is
 // decided once, by majority, in detectNumFmt().
-var AMOUNT_RE = /^[(\-−+]?\s*[$€£¥]?\s*(?:\d{1,3}(?:[.,  ]\d{3})*[.,]\d{2}|\d+[.,]\d{2})\s*\)?\s*(?:CR|DR|EUR|USD|GBP)?[\-−]?$/i;
+var AMOUNT_RE = /^[(\-−+]?\s*[$€£¥]?\s*(?:\d{1,3}(?:[.,  ]\d{3})*[.,]\d{2}|\d+[.,]\d{2})\s*\)?\s*(?:CR|DR|EUR|USD|GBP)?[\-−]?$/i;
 var AMOUNT_RE_ALT = AMOUNT_RE;
 var NUMFMT = "us"; // or "eu"
 var MON = "Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Sept|Oct|Nov|Dec";
@@ -428,6 +674,7 @@ function isDate(s){
   for(var i=0;i<DATE_RES.length;i++) if(DATE_RES[i].test(s)) return true;
   return false;
 }
+
 // Which separator is the decimal point? Whichever one sits before the final
 // two digits more often across the whole document.
 function detectNumFmt(strings){
@@ -684,13 +931,14 @@ function fmtDate(raw, mode){
    ============================================================ */
 var $=function(id){ return document.getElementById(id); };
 var state = { files:[], analysis:null, cols:[], roles:[], tx:[] };
+var COPY_LABEL='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="9" y="9" width="12" height="12"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg> Copy for spreadsheet';
 
 document.getElementById("yr").textContent=new Date().getFullYear();
 $("buyBtn").href = CONFIG.buyUrl;
 function paintPro(){
   $("proPill").classList.toggle("hidden", !PRO);
   $("unlockBtn").classList.toggle("hidden", PRO);
-  $("dropHint").textContent = PRO ? "batch as many as you like" : "1 file on Free, unlimited on Pro";
+  $("dropHint").textContent = PRO ? "convert as many as you like" : "one file on the free tier, unlimited when licensed";
 }
 paintPro();
 
@@ -710,8 +958,8 @@ fileEl.addEventListener("change",function(){ handleFiles(fileEl.files); fileEl.v
 function handleFiles(list){
   var picked=[];
   for(var i=0;i<list.length;i++) if(/\.pdf$/i.test(list[i].name)||list[i].type==="application/pdf") picked.push(list[i]);
-  if(!picked.length){ showErr("That doesn't look like a PDF. Statements exported from online banking are usually already PDFs."); return; }
-  if(!PRO && picked.length>1){ picked=[picked[0]]; showErr("Free converts one statement at a time — using the first file. Pro batches them."); }
+  if(!picked.length){ showErr("That is not a PDF. Statements exported from online banking are normally PDFs already."); return; }
+  if(!PRO && picked.length>1){ picked=[picked[0]]; showErr("The free tier converts one statement at a time, so the first file was used. A licence converts them together."); }
   else hideErr();
   state.files = PRO ? state.files.concat(picked) : picked;
   renderFiles();
@@ -752,14 +1000,14 @@ async function run(){
     }
   }catch(err){
     $("progWrap").classList.add("hidden");
-    showErr("Couldn't read that PDF: "+(err && err.message ? err.message : err)+". If it is password protected, remove the password and try again.");
+    showErr("That PDF could not be read: "+(err && err.message ? err.message : err)+". If it is password protected, remove the password and convert the unlocked copy.");
     return;
   }
   $("progWrap").classList.add("hidden");
 
   var a = analyse(rows);
   if(!a.txRows.length){
-    showErr("No transaction rows found. This usually means the PDF is a scan with no text layer — run it through OCR first — or the statement uses a layout without dated rows.");
+    showErr("No transaction rows were found. This normally means the PDF is a scan with no text layer — apply OCR first — or the statement has no dated rows to read.");
     return;
   }
   state.analysis=a;
@@ -788,7 +1036,7 @@ function renderCols(){
   var ROLES=[["amount","Amount"],["debit","Debit / withdrawal"],["credit","Credit / deposit"],["balance","Balance"],["ignore","Ignore"]];
   state.cols.forEach(function(c,i){
     var tr=document.createElement("tr");
-    var td1=document.createElement("td"); td1.textContent="#"+(i+1);
+    var td1=document.createElement("td"); td1.textContent="COL "+(i+1);
     var td2=document.createElement("td");
     var sel=document.createElement("select");
     ROLES.forEach(function(r){
@@ -862,11 +1110,11 @@ function renderTable(){
 
   var total=state.tx.filter(function(t){return t.keep;}).length;
   var sum=state.tx.reduce(function(a,t){ return a + (t.keep && t.amount!=null ? t.amount : 0); },0);
-  $("counts").innerHTML = "<b>"+total+"</b> rows · net <b>"+sum.toFixed(2)+"</b>";
+  $("counts").innerHTML = "<b>"+total+"</b> rows retained · net <b>"+sum.toFixed(2)+"</b>";
 
   var ln=$("limitNote");
   if(!PRO && total>CONFIG.freeRowLimit){
-    ln.innerHTML = "Free exports the first <b>"+CONFIG.freeRowLimit+"</b> of these <b>"+total+"</b> rows. The parse above is complete and correct — a $29 licence exports all of it. <a href=\""+CONFIG.buyUrl+"\" target=\"_blank\" rel=\"noopener\">Get a licence</a>";
+    ln.innerHTML = "The free tier exports the first <b>"+CONFIG.freeRowLimit+"</b> of these <b>"+total+"</b> rows. Every row above was parsed in full — a $29 licence exports all of them. <a href=\""+CONFIG.buyUrl+"\" target=\"_blank\" rel=\"noopener\">Purchase a licence</a>";
     ln.classList.remove("hidden");
   } else ln.classList.add("hidden");
 }
@@ -909,8 +1157,8 @@ $("csvBtn").addEventListener("click",function(){
 $("copyBtn").addEventListener("click",function(){
   var tsv=buildDelimited("\t"), btn=$("copyBtn");
   var done=function(ok){
-    btn.innerHTML = ok ? "Copied — paste into your sheet" : "Press Ctrl/Cmd+C";
-    setTimeout(function(){ btn.innerHTML='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg> Copy for spreadsheet'; },2200);
+    btn.textContent = ok ? "Copied — paste into your sheet" : "Press Ctrl/Cmd+C";
+    setTimeout(function(){ btn.innerHTML=COPY_LABEL; },2200);
   };
   if(navigator.clipboard && navigator.clipboard.writeText){
     navigator.clipboard.writeText(tsv).then(function(){ done(true); },function(){ fallback(); });
@@ -934,11 +1182,11 @@ $("keyApply").addEventListener("click",function(){
   msg.classList.remove("hidden");
   if(keyValid(k)){
     store.set("siq.key",k); PRO=true; paintPro();
-    msg.className="msg ok"; msg.textContent="Activated. Thank you — every limit is off.";
+    msg.className="msg ok"; msg.textContent="Licence activated. All limits are removed on this browser.";
     if(state.tx.length) renderTable();
     setTimeout(function(){ dlg.close(); },900);
   } else {
-    msg.className="msg err"; msg.textContent="That key isn't valid. Check for a typo, or reply to your purchase email.";
+    msg.className="msg err"; msg.textContent="That key was not accepted. Check it for a typo, or reply to your purchase confirmation.";
   }
 });
 $("keyInput").addEventListener("keydown",function(e){ if(e.key==="Enter") $("keyApply").click(); });
@@ -946,7 +1194,7 @@ $("keyInput").addEventListener("keydown",function(e){ if(e.key==="Enter") $("key
 if(window.pdfjsLib){
   pdfjsLib.GlobalWorkerOptions.workerSrc="vendor/pdf.worker.min.js";
 } else {
-  showErr("The PDF engine didn't load — check your connection or any script blocker, then reload.");
+  showErr("The PDF engine did not load. Check your connection or any script blocker, then reload the page.");
 }
 })();
 </script>
