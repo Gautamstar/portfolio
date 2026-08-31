@@ -1,0 +1,954 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Statement to CSV — Convert PDF bank statements to spreadsheets, privately</title>
+<meta name="description" content="Convert PDF bank and brokerage statements to CSV or Excel. Runs entirely in your browser — your statements are never uploaded to any server. Works with any bank.">
+<link rel="canonical" href="https://statementtocsv.com/">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Statement to CSV — private PDF statement converter">
+<meta property="og:description" content="Turn PDF bank statements into clean CSV. 100% in-browser, nothing uploaded.">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%23111827'/%3E%3Cpath d='M9 8h9l5 5v11a2 2 0 0 1-2 2H9a2 2 0 0 1-2-2V10a2 2 0 0 1 2-2z' fill='none' stroke='%2334d399' stroke-width='2'/%3E%3Cpath d='M11 18h10M11 22h6' stroke='%2334d399' stroke-width='2' stroke-linecap='round'/%3E%3C/svg%3E">
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"SoftwareApplication","name":"Statement to CSV","applicationCategory":"FinanceApplication","operatingSystem":"Any (web browser)","description":"Convert PDF bank and brokerage statements to CSV entirely in the browser. No upload, no account.","offers":[{"@type":"Offer","price":"0","priceCurrency":"USD","name":"Free"},{"@type":"Offer","price":"29","priceCurrency":"USD","name":"Pro lifetime licence"}]}
+</script>
+<style>
+:root{
+  --bg:#ffffff; --bg-soft:#f6f7f9; --bg-sunk:#eef0f4;
+  --fg:#111827; --fg-mid:#4b5563; --fg-dim:#6b7280;
+  --line:#e3e6ec; --line-strong:#cfd4dd;
+  --accent:#0f766e; --accent-fg:#ffffff; --accent-soft:#e6f4f1;
+  --warn:#b45309; --warn-soft:#fef3c7;
+  --danger:#b91c1c;
+  --radius:10px; --radius-lg:16px;
+  --shadow:0 1px 2px rgba(16,24,40,.05),0 8px 24px -12px rgba(16,24,40,.18);
+  --mono:ui-monospace,SFMono-Regular,"SF Mono",Menlo,Consolas,monospace;
+  --sans:-apple-system,BlinkMacSystemFont,"Segoe UI",Inter,Roboto,Helvetica,Arial,sans-serif;
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    --bg:#0d1117; --bg-soft:#151b23; --bg-sunk:#1c232c;
+    --fg:#e8eaed; --fg-mid:#aab1bd; --fg-dim:#8b939f;
+    --line:#262d37; --line-strong:#39414d;
+    --accent:#2dd4bf; --accent-fg:#04211f; --accent-soft:#12312e;
+    --warn:#fbbf24; --warn-soft:#3a2e10;
+    --danger:#f87171;
+    --shadow:0 1px 2px rgba(0,0,0,.4),0 8px 24px -12px rgba(0,0,0,.6);
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#0d1117; --bg-soft:#151b23; --bg-sunk:#1c232c;
+  --fg:#e8eaed; --fg-mid:#aab1bd; --fg-dim:#8b939f;
+  --line:#262d37; --line-strong:#39414d;
+  --accent:#2dd4bf; --accent-fg:#04211f; --accent-soft:#12312e;
+  --warn:#fbbf24; --warn-soft:#3a2e10;
+  --danger:#f87171;
+  --shadow:0 1px 2px rgba(0,0,0,.4),0 8px 24px -12px rgba(0,0,0,.6);
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--fg);font:15px/1.55 var(--sans);-webkit-font-smoothing:antialiased}
+.wrap{max-width:1080px;margin:0 auto;padding:0 20px}
+a{color:inherit}
+h1,h2,h3{line-height:1.2;letter-spacing:-.02em;margin:0}
+button{font:inherit;cursor:pointer}
+
+/* ---------- header ---------- */
+header{border-bottom:1px solid var(--line);position:sticky;top:0;background:color-mix(in srgb,var(--bg) 88%,transparent);backdrop-filter:blur(8px);z-index:20}
+.hrow{display:flex;align-items:center;gap:14px;height:58px}
+.brand{display:flex;align-items:center;gap:9px;font-weight:700;letter-spacing:-.02em;text-decoration:none}
+.brand svg{width:24px;height:24px;flex:none}
+nav{margin-left:auto;display:flex;align-items:center;gap:6px}
+nav a{color:var(--fg-mid);text-decoration:none;font-size:14px;padding:7px 10px;border-radius:8px}
+nav a:hover{color:var(--fg);background:var(--bg-soft)}
+.pill{font:600 11px/1 var(--sans);letter-spacing:.04em;text-transform:uppercase;padding:5px 8px;border-radius:999px;background:var(--accent-soft);color:var(--accent);border:1px solid color-mix(in srgb,var(--accent) 25%,transparent)}
+
+/* ---------- hero ---------- */
+.hero{padding:52px 0 26px;text-align:center}
+.hero h1{font-size:clamp(30px,5.2vw,46px);font-weight:800;max-width:19ch;margin:0 auto 14px}
+.hero p{color:var(--fg-mid);font-size:17px;max-width:56ch;margin:0 auto 20px}
+.badges{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin-bottom:6px}
+.badge{display:inline-flex;align-items:center;gap:6px;font-size:13px;color:var(--fg-mid);background:var(--bg-soft);border:1px solid var(--line);padding:6px 11px;border-radius:999px}
+.badge svg{width:14px;height:14px;color:var(--accent);flex:none}
+
+/* ---------- app ---------- */
+.app{margin:26px 0 40px}
+.card{background:var(--bg);border:1px solid var(--line);border-radius:var(--radius-lg);box-shadow:var(--shadow);overflow:hidden}
+.drop{border:2px dashed var(--line-strong);border-radius:var(--radius-lg);background:var(--bg-soft);padding:44px 24px;text-align:center;transition:.15s;cursor:pointer}
+.drop:hover,.drop.over{border-color:var(--accent);background:var(--accent-soft)}
+.drop svg.big{width:38px;height:38px;color:var(--fg-dim);margin-bottom:10px}
+.drop.over svg.big,.drop:hover svg.big{color:var(--accent)}
+.drop b{display:block;font-size:17px;margin-bottom:5px}
+.drop span{color:var(--fg-dim);font-size:14px}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:7px;padding:10px 16px;border-radius:var(--radius);border:1px solid var(--line-strong);background:var(--bg);color:var(--fg);font-weight:600;font-size:14px;text-decoration:none;transition:.12s}
+.btn:hover{background:var(--bg-soft)}
+.btn.primary{background:var(--accent);border-color:var(--accent);color:var(--accent-fg)}
+.btn.primary:hover{filter:brightness(1.08)}
+.btn:disabled{opacity:.45;cursor:not-allowed}
+.btn svg{width:15px;height:15px}
+
+.panel{padding:16px 18px;border-top:1px solid var(--line)}
+.panel:first-child{border-top:0}
+.panel h3{font-size:13px;text-transform:uppercase;letter-spacing:.06em;color:var(--fg-dim);font-weight:700;margin-bottom:12px}
+.bar{display:flex;flex-wrap:wrap;gap:10px;align-items:center}
+.spacer{flex:1 1 auto}
+.filechip{display:inline-flex;align-items:center;gap:8px;background:var(--bg-soft);border:1px solid var(--line);border-radius:999px;padding:6px 12px;font-size:13px}
+.filechip b{font-weight:600}
+.filechip .x{border:0;background:none;color:var(--fg-dim);padding:0 2px;font-size:16px;line-height:1}
+.filechip .x:hover{color:var(--danger)}
+
+select,input[type=text]{font:inherit;font-size:13px;padding:6px 9px;border-radius:8px;border:1px solid var(--line-strong);background:var(--bg);color:var(--fg)}
+label.fld{display:inline-flex;align-items:center;gap:7px;font-size:13px;color:var(--fg-mid)}
+
+table.cols{width:100%;border-collapse:collapse;font-size:13px}
+table.cols th,table.cols td{text-align:left;padding:7px 9px;border-bottom:1px solid var(--line)}
+table.cols th{color:var(--fg-dim);font-weight:600;font-size:12px;text-transform:uppercase;letter-spacing:.04em}
+table.cols td.sample{font-family:var(--mono);color:var(--fg-mid);font-size:12px}
+
+.tablewrap{overflow:auto;max-height:460px;border-top:1px solid var(--line)}
+table.tx{width:100%;border-collapse:collapse;font-size:13px}
+table.tx th{position:sticky;top:0;background:var(--bg-sunk);z-index:1;text-align:left;padding:9px 10px;font-size:11px;text-transform:uppercase;letter-spacing:.05em;color:var(--fg-dim);border-bottom:1px solid var(--line-strong);white-space:nowrap}
+table.tx td{padding:7px 10px;border-bottom:1px solid var(--line);vertical-align:top}
+table.tx tbody tr:hover{background:var(--bg-soft)}
+table.tx tr.off{opacity:.35}
+table.tx tr.off td:not(.act){text-decoration:line-through}
+table.tx td.num{font-family:var(--mono);text-align:right;white-space:nowrap}
+table.tx td.neg{color:var(--danger)}
+table.tx td.date{font-family:var(--mono);white-space:nowrap}
+table.tx td.act{width:34px;text-align:center}
+table.tx td.act button{border:0;background:none;color:var(--fg-dim);font-size:15px;line-height:1;padding:2px 5px;border-radius:6px}
+table.tx td.act button:hover{background:var(--bg-sunk);color:var(--fg)}
+table.tx td.desc{min-width:220px}
+tr.locked td{background:repeating-linear-gradient(45deg,transparent,transparent 6px,var(--bg-sunk) 6px,var(--bg-sunk) 12px)}
+
+.note{font-size:13px;color:var(--fg-mid);background:var(--bg-soft);border:1px solid var(--line);border-left:3px solid var(--accent);padding:10px 13px;border-radius:8px}
+.note.warn{border-left-color:var(--warn);background:var(--warn-soft);color:var(--fg)}
+.stat{font-size:13px;color:var(--fg-dim)}
+.stat b{color:var(--fg);font-weight:600}
+.hidden{display:none!important}
+progress{width:100%;height:6px;border:0;border-radius:999px;overflow:hidden;background:var(--bg-sunk)}
+progress::-webkit-progress-bar{background:var(--bg-sunk)}
+progress::-webkit-progress-value{background:var(--accent)}
+progress::-moz-progress-bar{background:var(--accent)}
+textarea#raw{width:100%;height:180px;font:12px/1.5 var(--mono);padding:10px;border-radius:8px;border:1px solid var(--line-strong);background:var(--bg-soft);color:var(--fg);resize:vertical}
+
+/* ---------- sections ---------- */
+section{padding:44px 0;border-top:1px solid var(--line)}
+section h2{font-size:26px;font-weight:700;margin-bottom:8px}
+section > .wrap > p.lede{color:var(--fg-mid);max-width:60ch;margin:0 0 26px}
+.grid3{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:18px}
+.step{background:var(--bg-soft);border:1px solid var(--line);border-radius:var(--radius);padding:18px}
+.step .n{width:26px;height:26px;border-radius:7px;background:var(--accent);color:var(--accent-fg);display:grid;place-items:center;font-weight:700;font-size:13px;margin-bottom:10px}
+.step h3{font-size:15px;margin-bottom:5px}
+.step p{margin:0;color:var(--fg-mid);font-size:14px}
+
+.prices{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:18px;max-width:680px}
+.price{border:1px solid var(--line);border-radius:var(--radius-lg);padding:22px;background:var(--bg)}
+.price.hi{border-color:var(--accent);border-width:2px;position:relative}
+.price.hi::after{content:"Best value";position:absolute;top:-10px;right:16px;background:var(--accent);color:var(--accent-fg);font-size:11px;font-weight:700;padding:3px 9px;border-radius:999px;letter-spacing:.03em}
+.price h3{font-size:15px;color:var(--fg-dim);text-transform:uppercase;letter-spacing:.05em;margin-bottom:8px}
+.amt{font-size:36px;font-weight:800;letter-spacing:-.03em}
+.amt small{font-size:14px;font-weight:500;color:var(--fg-dim);letter-spacing:0}
+.price ul{list-style:none;padding:0;margin:16px 0 20px;font-size:14px}
+.price li{display:flex;gap:9px;padding:5px 0;color:var(--fg-mid)}
+.price li svg{width:15px;height:15px;color:var(--accent);flex:none;margin-top:3px}
+.price .btn{width:100%}
+
+details.faq{border-bottom:1px solid var(--line);padding:14px 0}
+details.faq summary{cursor:pointer;font-weight:600;list-style:none;display:flex;align-items:center;gap:10px}
+details.faq summary::-webkit-details-marker{display:none}
+details.faq summary::before{content:"+";color:var(--accent);font-weight:700;font-size:17px;width:14px;flex:none}
+details.faq[open] summary::before{content:"−"}
+details.faq p{color:var(--fg-mid);margin:10px 0 0 24px;font-size:14px;max-width:66ch}
+
+dialog{border:1px solid var(--line-strong);border-radius:var(--radius-lg);padding:0;background:var(--bg);color:var(--fg);max-width:420px;width:calc(100% - 40px);box-shadow:0 20px 60px -20px rgba(0,0,0,.5)}
+dialog::backdrop{background:rgba(10,14,20,.55)}
+.dlg{padding:22px}
+.dlg h3{font-size:18px;margin-bottom:6px}
+.dlg p{color:var(--fg-mid);font-size:14px;margin:0 0 16px}
+.dlg input{width:100%;font-family:var(--mono);text-transform:uppercase;letter-spacing:.06em;padding:10px;font-size:14px;margin-bottom:10px}
+.dlg .row{display:flex;gap:8px}
+.msg{font-size:13px;margin-bottom:10px;padding:8px 11px;border-radius:8px}
+.msg.err{background:color-mix(in srgb,var(--danger) 12%,transparent);color:var(--danger)}
+.msg.ok{background:var(--accent-soft);color:var(--accent)}
+
+footer{border-top:1px solid var(--line);padding:28px 0;color:var(--fg-dim);font-size:13px}
+footer .hrow{height:auto;flex-wrap:wrap;gap:12px}
+footer a{color:var(--fg-mid)}
+@media (max-width:640px){
+  .hero{padding:34px 0 18px}
+  nav a.hide-s{display:none}
+  table.tx td.desc{min-width:150px}
+}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap hrow">
+    <a class="brand" href="#top">
+      <svg viewBox="0 0 32 32" aria-hidden="true"><rect width="32" height="32" rx="7" fill="currentColor" opacity=".08"/><path d="M9 8h9l5 5v11a2 2 0 0 1-2 2H9a2 2 0 0 1-2-2V10a2 2 0 0 1 2-2z" fill="none" stroke="currentColor" stroke-width="2"/><path d="M11 18h10M11 22h6" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+      Statement<span style="color:var(--accent)">→</span>CSV
+    </a>
+    <nav>
+      <a href="#how" class="hide-s">How it works</a>
+      <a href="#pricing">Pricing</a>
+      <a href="#faq" class="hide-s">FAQ</a>
+      <button class="btn" id="unlockBtn" style="padding:7px 12px">Enter licence</button>
+      <span class="pill hidden" id="proPill">Pro</span>
+    </nav>
+  </div>
+</header>
+
+<main id="top">
+
+<div class="wrap hero">
+  <h1>Turn PDF bank statements into clean spreadsheets</h1>
+  <p>Drop in a statement, get back CSV. Every calculation happens inside this tab — your financial documents are never uploaded, because there is no server to upload them to.</p>
+  <div class="badges">
+    <span class="badge"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M12 3l7 3v6c0 4.4-3 7.9-7 9-4-1.1-7-4.6-7-9V6l7-3z"/></svg> Nothing leaves your device</span>
+    <span class="badge"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M5 13l4 4L19 7"/></svg> Any bank or broker</span>
+    <span class="badge"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M12 6v6l4 2"/><circle cx="12" cy="12" r="9"/></svg> No account, no signup</span>
+  </div>
+</div>
+
+<div class="wrap app">
+  <div class="card">
+
+    <!-- step 1: input -->
+    <div class="panel" id="panelDrop">
+      <div class="drop" id="drop" tabindex="0" role="button" aria-label="Choose PDF statements">
+        <svg class="big" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M12 16V4m0 0L8 8m4-4l4 4"/><path d="M4 16v2a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-2"/></svg>
+        <b>Drop PDF statements here</b>
+        <span>or click to browse · <span id="dropHint">1 file on Free, unlimited on Pro</span></span>
+      </div>
+      <input type="file" id="file" accept="application/pdf,.pdf" multiple class="hidden">
+      <div id="files" class="bar" style="margin-top:12px"></div>
+      <div id="progWrap" class="hidden" style="margin-top:12px">
+        <progress id="prog" max="100" value="0"></progress>
+        <div class="stat" id="progText" style="margin-top:6px"></div>
+      </div>
+      <div id="parseErr" class="note warn hidden" style="margin-top:12px"></div>
+    </div>
+
+    <!-- step 2: column mapping -->
+    <div class="panel hidden" id="panelCols">
+      <h3>Detected number columns — check the roles are right</h3>
+      <table class="cols">
+        <thead><tr><th style="width:90px">Column</th><th style="width:170px">Role</th><th>Sample values</th></tr></thead>
+        <tbody id="colBody"></tbody>
+      </table>
+      <div class="bar" style="margin-top:14px">
+        <label class="fld">Numbers
+          <select id="numFmt">
+            <option value="us">1,234.56</option>
+            <option value="eu">1.234,56</option>
+          </select>
+        </label>
+        <label class="fld">Dates read as
+          <select id="dateOrder">
+            <option value="mdy">Month first</option>
+            <option value="dmy">Day first</option>
+          </select>
+        </label>
+        <label class="fld">Write dates
+          <select id="dateFmt">
+            <option value="raw">As printed</option>
+            <option value="iso">ISO — 2024-01-15</option>
+            <option value="us">US — 01/15/2024</option>
+            <option value="eu">EU — 15/01/2024</option>
+          </select>
+        </label>
+        <label class="fld"><input type="checkbox" id="flipSign"> Flip all signs</label>
+        <label class="fld"><input type="checkbox" id="mergeWrap" checked> Merge wrapped lines</label>
+      </div>
+    </div>
+
+    <!-- step 3: preview -->
+    <div class="panel hidden" id="panelOut" style="padding-bottom:0">
+      <div class="bar">
+        <h3 style="margin:0">Transactions</h3>
+        <span class="stat" id="counts"></span>
+        <div class="spacer"></div>
+        <button class="btn" id="copyBtn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg> Copy for spreadsheet</button>
+        <button class="btn" id="rawBtn">Show CSV</button>
+        <button class="btn primary" id="csvBtn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 4v11m0 0l-4-4m4 4l4-4"/><path d="M5 19h14"/></svg> Download CSV</button>
+      </div>
+      <div id="limitNote" class="note warn hidden" style="margin-top:12px"></div>
+      <div id="rawWrap" class="hidden" style="margin-top:12px"><textarea id="raw" readonly spellcheck="false"></textarea></div>
+    </div>
+    <div class="tablewrap hidden" id="tableWrap">
+      <table class="tx">
+        <thead><tr id="thead"></tr></thead>
+        <tbody id="tbody"></tbody>
+      </table>
+    </div>
+
+  </div>
+  <p class="stat" style="margin-top:12px;text-align:center">
+    Nothing here is uploaded. Turn off your wi-fi and it still works — that is the whole point.
+  </p>
+</div>
+
+<section id="how">
+  <div class="wrap">
+    <h2>How it works</h2>
+    <p class="lede">Most converters ask you to email or upload a document that lists every purchase you made last month. This one reads the file in the browser tab you already have open.</p>
+    <div class="grid3">
+      <div class="step"><div class="n">1</div><h3>Read the page geometry</h3><p>The PDF's text is extracted with its coordinates, then rows are rebuilt by grouping items that sit on the same baseline.</p></div>
+      <div class="step"><div class="n">2</div><h3>Find the money columns</h3><p>Amounts are clustered by their right edge, which is how statements align them. That is what separates debit, credit and balance without knowing the bank.</p></div>
+      <div class="step"><div class="n">3</div><h3>You confirm, then export</h3><p>Roles are guessed and shown for correction. Drop any row that shouldn't be there and take the CSV.</p></div>
+    </div>
+  </div>
+</section>
+
+<section id="pricing">
+  <div class="wrap">
+    <h2>Pricing</h2>
+    <p class="lede">One payment. No subscription, no seat count, no expiry.</p>
+    <div class="prices">
+      <div class="price">
+        <h3>Free</h3>
+        <div class="amt">$0</div>
+        <ul>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 13l4 4L19 7"/></svg> One statement at a time</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 13l4 4L19 7"/></svg> Full preview of every row</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 13l4 4L19 7"/></svg> Export the first 25 rows</li>
+        </ul>
+        <button class="btn" onclick="document.getElementById('drop').click()">Try it now</button>
+      </div>
+      <div class="price hi">
+        <h3>Pro — lifetime</h3>
+        <div class="amt">$29 <small>once</small></div>
+        <ul>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 13l4 4L19 7"/></svg> Unlimited rows and pages</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 13l4 4L19 7"/></svg> Batch several statements at once</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 13l4 4L19 7"/></svg> Column setups remembered per bank</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 13l4 4L19 7"/></svg> Every future update included</li>
+        </ul>
+        <a class="btn primary" id="buyBtn" href="#" target="_blank" rel="noopener">Buy a licence</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="faq">
+  <div class="wrap">
+    <h2>Questions</h2>
+    <details class="faq"><summary>Are my statements really not uploaded?</summary><p>Correct. The page loads a PDF reader and does the parsing in JavaScript on your machine. There is no backend, no database and no account system — the site is a set of static files. You can confirm it by opening your browser's network tab while you convert, or by disconnecting from the internet after the page loads.</p></details>
+    <details class="faq"><summary>Which banks does it support?</summary><p>It isn't built per-bank. It reads the layout geometry, so it handles most statement formats from retail banks, credit cards and brokerages. When the automatic guess is wrong, you correct the column roles yourself, which is why unusual formats still work.</p></details>
+    <details class="faq"><summary>My statement is a scan and nothing was found.</summary><p>Scanned or photographed statements are images with no text layer, so there is nothing to extract. Run the file through OCR first — macOS Preview, Adobe Acrobat and most scanner apps can add a text layer — then convert it here.</p></details>
+    <details class="faq"><summary>What do I actually get for $29?</summary><p>A licence key that removes the row limit and enables batch conversion, on every browser and machine you use, permanently. There is no renewal.</p></details>
+    <details class="faq"><summary>Can I get a refund?</summary><p>Yes — within 30 days, no questions. Convert a real statement on the free tier before paying and you will already know whether it reads your format correctly.</p></details>
+  </div>
+</section>
+
+</main>
+
+<footer>
+  <div class="wrap hrow">
+    <span>© <span id="yr"></span> Statement→CSV</span>
+    <div class="spacer"></div>
+    <a href="#pricing">Pricing</a><a href="#faq">FAQ</a><a href="mailto:support@example.com">Support</a>
+  </div>
+</footer>
+
+<dialog id="dlg">
+  <div class="dlg">
+    <h3>Enter your licence key</h3>
+    <p>Paste the key from your purchase email. It is stored in this browser only.</p>
+    <div id="dlgMsg" class="msg hidden"></div>
+    <input type="text" id="keyInput" placeholder="SIQ-XXXXX-XXXXX-XXXXX" autocomplete="off" spellcheck="false">
+    <div class="row">
+      <button class="btn primary" id="keyApply" style="flex:1">Activate</button>
+      <button class="btn" id="keyClose">Cancel</button>
+    </div>
+  </div>
+</dialog>
+
+<script src="vendor/pdf.min.js"></script>
+<script>
+(function(){
+"use strict";
+
+/* ============================================================
+   CONFIG — the two values you edit after setting up Stripe
+   ============================================================ */
+var CONFIG = {
+  // Stripe Payment Link, Gumroad, Lemon Squeezy — any hosted checkout URL.
+  buyUrl: "https://buy.stripe.com/REPLACE_WITH_YOUR_PAYMENT_LINK",
+  // Must match SALT in tools/genkey.mjs. Change it and every issued key dies.
+  salt: "siq-2026-v1",
+  freeRowLimit: 25
+};
+
+/* ============================================================
+   Licence — deterrence-grade, see README before you rely on it
+   ============================================================ */
+function h32(s){
+  var h1=0x811c9dc5>>>0, h2=0x01000193>>>0, i;
+  for(i=0;i<s.length;i++){
+    h1 = (h1 ^ s.charCodeAt(i))>>>0;
+    h1 = Math.imul(h1,16777619)>>>0;
+    h2 = (Math.imul(h2 ^ s.charCodeAt(i), 2246822519) + i)>>>0;
+  }
+  var A="0123456789ABCDEFGHJKMNPQRSTVWXYZ", out="", v=(BigInt(h1)<<32n)|BigInt(h2);
+  for(i=0;i<5;i++){ out = A[Number(v & 31n)] + out; v >>= 5n; }
+  return out;
+}
+function keyValid(k){
+  var m=/^SIQ-([0-9A-HJKMNP-TV-Z]{5})-([0-9A-HJKMNP-TV-Z]{5})-([0-9A-HJKMNP-TV-Z]{5})$/.exec(String(k||"").trim().toUpperCase());
+  return !!m && h32(m[1]+m[2]+CONFIG.salt) === m[3];
+}
+var store = {
+  get:function(k){ try{ return localStorage.getItem(k); }catch(e){ return null; } },
+  set:function(k,v){ try{ localStorage.setItem(k,v); }catch(e){} }
+};
+var PRO = keyValid(store.get("siq.key"));
+
+/* ============================================================
+   Parsing
+   ============================================================ */
+// Accepts both 1,234.56 and 1.234,56 — which one this document means is
+// decided once, by majority, in detectNumFmt().
+var AMOUNT_RE = /^[(\-−+]?\s*[$€£¥]?\s*(?:\d{1,3}(?:[.,  ]\d{3})*[.,]\d{2}|\d+[.,]\d{2})\s*\)?\s*(?:CR|DR|EUR|USD|GBP)?[\-−]?$/i;
+var AMOUNT_RE_ALT = AMOUNT_RE;
+var NUMFMT = "us"; // or "eu"
+var MON = "Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Sept|Oct|Nov|Dec";
+var DATE_RES = [
+  new RegExp("^\\d{4}[-/]\\d{1,2}[-/]\\d{1,2}$"),
+  new RegExp("^\\d{1,2}[-/.]\\d{1,2}(?:[-/.]\\d{2,4})?$"),
+  new RegExp("^(?:"+MON+")[a-z]*\\.?\\s*\\d{1,2}(?:,?\\s*\\d{2,4})?$","i"),
+  new RegExp("^\\d{1,2}\\s*(?:"+MON+")[a-z]*\\.?(?:\\s*\\d{2,4})?$","i")
+];
+function isAmount(s){ s=s.trim(); return AMOUNT_RE.test(s)||AMOUNT_RE_ALT.test(s); }
+function isDate(s){
+  s=s.trim().replace(/\s+/g," ");
+  for(var i=0;i<DATE_RES.length;i++) if(DATE_RES[i].test(s)) return true;
+  return false;
+}
+// Which separator is the decimal point? Whichever one sits before the final
+// two digits more often across the whole document.
+function detectNumFmt(strings){
+  var us=0, eu=0;
+  for(var i=0;i<strings.length;i++){
+    var s=strings[i];
+    if(/,\d{2}\s*\)?\s*(?:CR|DR)?[\-−]?$/i.test(s) && /[.  ]\d{3}|^\D*\d{1,3},\d{2}/.test(s)) eu++;
+    if(/\.\d{2}\s*\)?\s*(?:CR|DR)?[\-−]?$/i.test(s)) us++;
+    else if(/,\d{2}\s*\)?\s*(?:CR|DR)?[\-−]?$/i.test(s)) eu++;
+  }
+  return eu>us ? "eu" : "us";
+}
+
+function parseAmount(s){
+  var t=String(s).trim(), neg=false;
+  if(/^\(.*\)$/.test(t)){ neg=true; t=t.slice(1,-1); }
+  if(/^[-−]/.test(t)){ neg=true; t=t.replace(/^[-−]\s*/,""); }
+  if(/[-−]$/.test(t)){ neg=true; t=t.replace(/[-−]$/,""); }
+  if(/\bDR\b/i.test(t)) neg=true;
+  if(/\bCR\b/i.test(t)) neg=false;
+  if(NUMFMT==="eu"){
+    t=t.replace(/[^0-9.,]/g,"").replace(/\./g,"").replace(",",".");
+  } else {
+    t=t.replace(/[^0-9.,]/g,"").replace(/,/g,"");
+  }
+  var n=parseFloat(t);
+  if(!isFinite(n)) return null;
+  return neg ? -n : n;
+}
+
+// cells: merge text items that visually touch, keeping x span
+function toCells(items){
+  var out=[], cur=null, GAP=5.5;
+  items.sort(function(a,b){ return a.x-b.x; });
+  for(var i=0;i<items.length;i++){
+    var it=items[i];
+    if(cur && it.x - (cur.x+cur.w) < GAP){
+      cur.str += (it.x-(cur.x+cur.w) > 1.0 ? " " : "") + it.str;
+      cur.w = (it.x + it.w) - cur.x;
+    } else {
+      cur = { str:it.str, x:it.x, w:it.w };
+      out.push(cur);
+    }
+  }
+  for(var j=0;j<out.length;j++){ out[j].str=out[j].str.replace(/\s+/g," ").trim(); out[j].right=out[j].x+out[j].w; }
+  return out.filter(function(c){ return c.str.length; });
+}
+
+function pageRows(items, pageNo){
+  var TOL=3.2, rows=[], cur=null;
+  items.sort(function(a,b){ return (b.y-a.y) || (a.x-b.x); });
+  for(var i=0;i<items.length;i++){
+    var it=items[i];
+    if(!cur || Math.abs(cur.y-it.y) > TOL){ cur={ y:it.y, page:pageNo, items:[] }; rows.push(cur); }
+    cur.items.push(it);
+  }
+  return rows.map(function(r){ return { y:r.y, page:r.page, cells:toCells(r.items) }; })
+             .filter(function(r){ return r.cells.length; });
+}
+
+async function readPdf(file, onPage){
+  var buf = await file.arrayBuffer();
+  var pdf = await pdfjsLib.getDocument({ data:buf, isEvalSupported:false }).promise;
+  var all=[];
+  for(var p=1;p<=pdf.numPages;p++){
+    var page = await pdf.getPage(p);
+    var tc = await page.getTextContent();
+    var items=[];
+    for(var i=0;i<tc.items.length;i++){
+      var it=tc.items[i];
+      if(!it.str || !it.str.trim()) continue;
+      items.push({ str:it.str, x:it.transform[4], y:it.transform[5], w:it.width||0 });
+    }
+    all = all.concat(pageRows(items,p));
+    if(onPage) onPage(p, pdf.numPages);
+  }
+  try{ pdf.destroy(); }catch(e){}
+  return all;
+}
+
+// 1-D clustering on right edges — statements right-align numbers
+function clusterRights(vals, gap){
+  if(!vals.length) return [];
+  var s=vals.slice().sort(function(a,b){return a-b;}), groups=[], cur=[s[0]];
+  for(var i=1;i<s.length;i++){
+    if(s[i]-s[i-1] > gap){ groups.push(cur); cur=[]; }
+    cur.push(s[i]);
+  }
+  groups.push(cur);
+  return groups.map(function(g){
+    var sum=0; for(var i=0;i<g.length;i++) sum+=g[i];
+    return { min:g[0], max:g[g.length-1], center:sum/g.length, count:g.length };
+  }).filter(function(c){ return c.count>=2; });
+}
+
+function analyse(rows){
+  // a transaction row needs a date near the left and at least one amount
+  var txRows=[], rights=[];
+  for(var i=0;i<rows.length;i++){
+    var cells=rows[i].cells, dIdx=-1, amts=[];
+    for(var c=0;c<Math.min(cells.length,3) && dIdx<0;c++){
+      if(isDate(cells[c].str)) dIdx=c;
+      else if(c+1<cells.length && isDate(cells[c].str+" "+cells[c+1].str)) dIdx=c;
+    }
+    for(var k=0;k<cells.length;k++) if(isAmount(cells[k].str)) amts.push(cells[k]);
+    if(dIdx>=0 && amts.length){
+      txRows.push({ row:rows[i], dIdx:dIdx, amts:amts });
+      for(var a=0;a<amts.length;a++) rights.push(amts[a].right);
+    }
+  }
+  var cols = clusterRights(rights, 22);
+  var amtStrings=[];
+  for(var m=0;m<txRows.length;m++)
+    for(var n=0;n<txRows[m].amts.length;n++) amtStrings.push(txRows[m].amts[n].str);
+  NUMFMT = detectNumFmt(amtStrings);
+  return { txRows:txRows, cols:cols, rows:rows, numfmt:NUMFMT };
+}
+
+function defaultRoles(n){
+  if(n<=0) return [];
+  if(n===1) return ["amount"];
+  if(n===2) return ["amount","balance"];
+  if(n===3) return ["debit","credit","balance"];
+  var r=[]; for(var i=0;i<n;i++) r.push(i===n-1?"balance":(i===n-2?"credit":(i===n-3?"debit":"ignore")));
+  return r;
+}
+
+// typical baseline-to-baseline distance, used to tell a wrapped line from a footer
+function medianLineGap(rows){
+  var d=[];
+  for(var i=1;i<rows.length;i++){
+    if(rows[i].page!==rows[i-1].page) continue;
+    var g=rows[i-1].y-rows[i].y;
+    if(g>1 && g<60) d.push(g);
+  }
+  if(!d.length) return 14;
+  d.sort(function(a,b){ return a-b; });
+  return d[Math.floor(d.length/2)];
+}
+
+function buildTx(state){
+  var cols=state.cols, roles=state.roles, out=[];
+  var flip = document.getElementById("flipSign").checked;
+  var merge = document.getElementById("mergeWrap").checked;
+  var txIndex = {}; state.analysis.txRows.forEach(function(t){ txIndex[t.row.y+"|"+t.row.page]=t; });
+  var lineGap = medianLineGap(state.analysis.rows);
+
+  for(var i=0;i<state.analysis.rows.length;i++){
+    var row=state.analysis.rows[i], t=txIndex[row.y+"|"+row.page];
+    if(!t){
+      // A wrapped description line, not a footer. Real continuations start inside
+      // the description column and sit within a line or two of the row above;
+      // page furniture sits at the left margin, further down.
+      if(merge && out.length && row.cells.length && row.cells.length<=3){
+        var last = out[out.length-1];
+        var joined = row.cells.map(function(c){ return c.str; }).join(" ").trim();
+        var indented = row.cells[0].x >= last._descX - 4;
+        var close = row.page===last._page && (last._y - row.y) <= lineGap*2.2 && row.y < last._y;
+        var furniture = /^(page\b|statement\b|continued\b|member\s+fdic|minimum\s+payment|questions\?)/i.test(joined);
+        if(joined && joined.length<90 && indented && close && !furniture){
+          last.description = (last.description+" "+joined).replace(/\s+/g," ").trim();
+        }
+      }
+      continue;
+    }
+    var cells=row.cells, dCell=cells[t.dIdx], dateStr=dCell.str;
+    if(!isDate(dateStr) && cells[t.dIdx+1]) dateStr = dCell.str+" "+cells[t.dIdx+1].str;
+
+    var vals=[]; for(var z=0;z<cols.length;z++) vals.push(null);
+    var firstAmtX=Infinity;
+    for(var a=0;a<t.amts.length;a++){
+      var am=t.amts[a], best=-1, bd=1e9;
+      for(var c2=0;c2<cols.length;c2++){
+        var d=Math.abs(am.right-cols[c2].center);
+        if(d<bd){ bd=d; best=c2; }
+      }
+      if(best>=0 && bd<=34){ vals[best]=am.str; firstAmtX=Math.min(firstAmtX, am.x); }
+    }
+
+    var descParts=[], descX=null;
+    for(var q=0;q<cells.length;q++){
+      var cl=cells[q];
+      if(q<=t.dIdx) continue;
+      if(cl.x>=firstAmtX-1) continue;
+      if(isAmount(cl.str)) continue;
+      if(descX==null) descX=cl.x;
+      descParts.push(cl.str);
+    }
+    if(descX==null) descX = dCell.x + 40;
+
+    var amount=null, balance=null;
+    for(var r2=0;r2<cols.length;r2++){
+      if(vals[r2]==null) continue;
+      var v=parseAmount(vals[r2]);
+      if(v==null) continue;
+      if(roles[r2]==="amount") amount = (amount==null? v : amount);
+      else if(roles[r2]==="debit") amount = (amount==null? -Math.abs(v) : amount);
+      else if(roles[r2]==="credit") amount = (amount==null? Math.abs(v) : amount);
+      else if(roles[r2]==="balance") balance = v;
+    }
+    if(amount!=null && flip) amount = -amount;
+
+    out.push({
+      _page: row.page,
+      _y: row.y,
+      _descX: descX,
+      date: dateStr.replace(/\s+/g," ").trim(),
+      description: descParts.join(" ").replace(/\s+/g," ").trim(),
+      amount: amount,
+      balance: balance,
+      keep: true
+    });
+  }
+  return out;
+}
+
+/* ---------- date normalising ---------- */
+var MONTHS={jan:1,feb:2,mar:3,apr:4,may:5,jun:6,jul:7,aug:8,sep:9,sept:9,oct:10,nov:11,dec:12};
+var DATE_ORDER="mdy";
+function splitDate(s){
+  s=s.trim().replace(/,/g," ").replace(/\s+/g," ");
+  var m;
+  if((m=/^(\d{4})[-/](\d{1,2})[-/](\d{1,2})$/.exec(s))) return {y:+m[1],m:+m[2],d:+m[3]};
+  if((m=/^(\d{1,2})[-/.](\d{1,2})(?:[-/.](\d{2,4}))?$/.exec(s))){
+    var y=m[3]?(+m[3]<100? 2000+ +m[3] : +m[3]):null;
+    var a=+m[1], b=+m[2];
+    // 13/07 can only be day-first; otherwise honour the user's choice
+    var dayFirst = (a>12) || (b<=12 && DATE_ORDER==="dmy");
+    return dayFirst ? {y:y,m:b,d:a} : {y:y,m:a,d:b};
+  }
+  if((m=/^([A-Za-z]{3,9})\.?\s*(\d{1,2})(?:\s+(\d{2,4}))?$/.exec(s))){
+    var mo=MONTHS[m[1].toLowerCase().slice(0,4)]||MONTHS[m[1].toLowerCase().slice(0,3)];
+    if(mo) return {y:m[3]?(+m[3]<100?2000+ +m[3]:+m[3]):null,m:mo,d:+m[2]};
+  }
+  if((m=/^(\d{1,2})\s*([A-Za-z]{3,9})\.?(?:\s+(\d{2,4}))?$/.exec(s))){
+    var mo2=MONTHS[m[2].toLowerCase().slice(0,4)]||MONTHS[m[2].toLowerCase().slice(0,3)];
+    if(mo2) return {y:m[3]?(+m[3]<100?2000+ +m[3]:+m[3]):null,m:mo2,d:+m[1]};
+  }
+  return null;
+}
+function fmtDate(raw, mode){
+  if(mode==="raw") return raw;
+  var p=splitDate(raw);
+  if(!p||!p.m||!p.d) return raw;
+  var y=p.y||new Date().getFullYear();
+  var mm=String(p.m).padStart(2,"0"), dd=String(p.d).padStart(2,"0");
+  if(mode==="iso") return y+"-"+mm+"-"+dd;
+  if(mode==="us")  return mm+"/"+dd+"/"+y;
+  return dd+"/"+mm+"/"+y;
+}
+
+/* ============================================================
+   UI
+   ============================================================ */
+var $=function(id){ return document.getElementById(id); };
+var state = { files:[], analysis:null, cols:[], roles:[], tx:[] };
+
+document.getElementById("yr").textContent=new Date().getFullYear();
+$("buyBtn").href = CONFIG.buyUrl;
+function paintPro(){
+  $("proPill").classList.toggle("hidden", !PRO);
+  $("unlockBtn").classList.toggle("hidden", PRO);
+  $("dropHint").textContent = PRO ? "batch as many as you like" : "1 file on Free, unlimited on Pro";
+}
+paintPro();
+
+/* --- file input --- */
+var drop=$("drop"), fileEl=$("file");
+drop.addEventListener("click",function(){ fileEl.click(); });
+drop.addEventListener("keydown",function(e){ if(e.key==="Enter"||e.key===" "){ e.preventDefault(); fileEl.click(); } });
+["dragenter","dragover"].forEach(function(ev){
+  drop.addEventListener(ev,function(e){ e.preventDefault(); drop.classList.add("over"); });
+});
+["dragleave","drop"].forEach(function(ev){
+  drop.addEventListener(ev,function(e){ e.preventDefault(); drop.classList.remove("over"); });
+});
+drop.addEventListener("drop",function(e){ handleFiles(e.dataTransfer.files); });
+fileEl.addEventListener("change",function(){ handleFiles(fileEl.files); fileEl.value=""; });
+
+function handleFiles(list){
+  var picked=[];
+  for(var i=0;i<list.length;i++) if(/\.pdf$/i.test(list[i].name)||list[i].type==="application/pdf") picked.push(list[i]);
+  if(!picked.length){ showErr("That doesn't look like a PDF. Statements exported from online banking are usually already PDFs."); return; }
+  if(!PRO && picked.length>1){ picked=[picked[0]]; showErr("Free converts one statement at a time — using the first file. Pro batches them."); }
+  else hideErr();
+  state.files = PRO ? state.files.concat(picked) : picked;
+  renderFiles();
+  run();
+}
+function renderFiles(){
+  var host=$("files"); host.innerHTML="";
+  state.files.forEach(function(f,i){
+    var el=document.createElement("span");
+    el.className="filechip";
+    el.innerHTML='<b></b><span class="stat"></span><button class="x" title="Remove">&times;</button>';
+    el.querySelector("b").textContent=f.name;
+    el.querySelector(".stat").textContent=(f.size/1024).toFixed(0)+" KB";
+    el.querySelector(".x").addEventListener("click",function(){ state.files.splice(i,1); renderFiles(); state.files.length?run():reset(); });
+    host.appendChild(el);
+  });
+}
+function showErr(m){ var e=$("parseErr"); e.textContent=m; e.classList.remove("hidden"); }
+function hideErr(){ $("parseErr").classList.add("hidden"); }
+function reset(){
+  ["panelCols","panelOut","tableWrap"].forEach(function(id){ $(id).classList.add("hidden"); });
+}
+
+async function run(){
+  reset(); hideErr();
+  $("progWrap").classList.remove("hidden");
+  var rows=[], fi;
+  try{
+    for(fi=0; fi<state.files.length; fi++){
+      var f=state.files[fi];
+      var idx=fi;
+      var r = await readPdf(f, function(p,total){
+        var pct = ((idx + p/total)/state.files.length)*100;
+        $("prog").value=pct;
+        $("progText").textContent="Reading "+f.name+" — page "+p+" of "+total;
+      });
+      rows = rows.concat(r);
+    }
+  }catch(err){
+    $("progWrap").classList.add("hidden");
+    showErr("Couldn't read that PDF: "+(err && err.message ? err.message : err)+". If it is password protected, remove the password and try again.");
+    return;
+  }
+  $("progWrap").classList.add("hidden");
+
+  var a = analyse(rows);
+  if(!a.txRows.length){
+    showErr("No transaction rows found. This usually means the PDF is a scan with no text layer — run it through OCR first — or the statement uses a layout without dated rows.");
+    return;
+  }
+  state.analysis=a;
+  state.cols=a.cols;
+  state.roles=defaultRoles(a.cols.length);
+  // seed the controls from what the document itself looks like
+  $("numFmt").value = a.numfmt;
+  NUMFMT = a.numfmt;
+  DATE_ORDER = a.numfmt==="eu" ? "dmy" : "mdy";
+  $("dateOrder").value = DATE_ORDER;
+  renderCols();
+  refresh();
+}
+
+function renderCols(){
+  var body=$("colBody"); body.innerHTML="";
+  var samples=[];
+  state.cols.forEach(function(){ samples.push([]); });
+  state.analysis.txRows.forEach(function(t){
+    t.amts.forEach(function(am){
+      var best=-1,bd=1e9;
+      state.cols.forEach(function(c,i){ var d=Math.abs(am.right-c.center); if(d<bd){bd=d;best=i;} });
+      if(best>=0 && bd<=34 && samples[best].length<3) samples[best].push(am.str);
+    });
+  });
+  var ROLES=[["amount","Amount"],["debit","Debit / withdrawal"],["credit","Credit / deposit"],["balance","Balance"],["ignore","Ignore"]];
+  state.cols.forEach(function(c,i){
+    var tr=document.createElement("tr");
+    var td1=document.createElement("td"); td1.textContent="#"+(i+1);
+    var td2=document.createElement("td");
+    var sel=document.createElement("select");
+    ROLES.forEach(function(r){
+      var o=document.createElement("option"); o.value=r[0]; o.textContent=r[1];
+      if(state.roles[i]===r[0]) o.selected=true;
+      sel.appendChild(o);
+    });
+    sel.addEventListener("change",function(){ state.roles[i]=sel.value; refresh(); });
+    td2.appendChild(sel);
+    var td3=document.createElement("td"); td3.className="sample"; td3.textContent=samples[i].join("   ") || "—";
+    tr.appendChild(td1); tr.appendChild(td2); tr.appendChild(td3);
+    body.appendChild(tr);
+  });
+  $("panelCols").classList.remove("hidden");
+}
+
+["dateFmt","flipSign","mergeWrap","numFmt","dateOrder"].forEach(function(id){
+  $(id).addEventListener("change", function(){
+    NUMFMT = $("numFmt").value;
+    DATE_ORDER = $("dateOrder").value;
+    refresh();
+  });
+});
+
+function refresh(){
+  state.tx = buildTx(state);
+  renderTable();
+  $("panelOut").classList.remove("hidden");
+  $("tableWrap").classList.remove("hidden");
+}
+
+function renderTable(){
+  var hasBal = state.roles.indexOf("balance")>=0;
+  var thead=$("thead");
+  thead.innerHTML="";
+  ["","Date","Description","Amount"].concat(hasBal?["Balance"]:[]).forEach(function(h){
+    var th=document.createElement("th"); th.textContent=h; thead.appendChild(th);
+  });
+  var tb=$("tbody"); tb.innerHTML="";
+  var kept=0;
+  var fmt=$("dateFmt").value;
+  state.tx.forEach(function(t,i){
+    if(t.keep) kept++;
+    var locked = !PRO && t.keep && kept>CONFIG.freeRowLimit;
+    var tr=document.createElement("tr");
+    if(!t.keep) tr.className="off";
+    else if(locked) tr.className="locked";
+
+    var tdA=document.createElement("td"); tdA.className="act";
+    var b=document.createElement("button");
+    b.innerHTML = t.keep ? "&times;" : "&#8635;";
+    b.title = t.keep ? "Exclude this row" : "Put it back";
+    b.addEventListener("click",function(){ t.keep=!t.keep; renderTable(); });
+    tdA.appendChild(b); tr.appendChild(tdA);
+
+    var tdD=document.createElement("td"); tdD.className="date"; tdD.textContent=fmtDate(t.date,fmt); tr.appendChild(tdD);
+    var tdN=document.createElement("td"); tdN.className="desc"; tdN.contentEditable="true"; tdN.spellcheck=false;
+    tdN.textContent=t.description;
+    tdN.addEventListener("input",function(){ t.description=tdN.textContent; });
+    tr.appendChild(tdN);
+    var tdM=document.createElement("td"); tdM.className="num"+(t.amount!=null&&t.amount<0?" neg":"");
+    tdM.textContent = t.amount==null ? "" : t.amount.toFixed(2);
+    tr.appendChild(tdM);
+    if(hasBal){
+      var tdB=document.createElement("td"); tdB.className="num";
+      tdB.textContent = t.balance==null ? "" : t.balance.toFixed(2);
+      tr.appendChild(tdB);
+    }
+    tb.appendChild(tr);
+  });
+
+  var total=state.tx.filter(function(t){return t.keep;}).length;
+  var sum=state.tx.reduce(function(a,t){ return a + (t.keep && t.amount!=null ? t.amount : 0); },0);
+  $("counts").innerHTML = "<b>"+total+"</b> rows · net <b>"+sum.toFixed(2)+"</b>";
+
+  var ln=$("limitNote");
+  if(!PRO && total>CONFIG.freeRowLimit){
+    ln.innerHTML = "Free exports the first <b>"+CONFIG.freeRowLimit+"</b> of these <b>"+total+"</b> rows. The parse above is complete and correct — a $29 licence exports all of it. <a href=\""+CONFIG.buyUrl+"\" target=\"_blank\" rel=\"noopener\">Get a licence</a>";
+    ln.classList.remove("hidden");
+  } else ln.classList.add("hidden");
+}
+
+/* --- export --- */
+function rowsForExport(){
+  var kept=state.tx.filter(function(t){ return t.keep; });
+  return PRO ? kept : kept.slice(0, CONFIG.freeRowLimit);
+}
+function buildDelimited(sep){
+  var hasBal = state.roles.indexOf("balance")>=0;
+  var fmt=$("dateFmt").value;
+  var head=["Date","Description","Amount"].concat(hasBal?["Balance"]:[]);
+  var esc=function(v){
+    v = v==null ? "" : String(v);
+    if(sep==="\t") return v.replace(/[\t\r\n]/g," ");
+    return /[",\r\n]/.test(v) ? '"'+v.replace(/"/g,'""')+'"' : v;
+  };
+  var lines=[head.join(sep)];
+  rowsForExport().forEach(function(t){
+    var r=[fmtDate(t.date,fmt), t.description, t.amount==null?"":t.amount.toFixed(2)];
+    if(hasBal) r.push(t.balance==null?"":t.balance.toFixed(2));
+    lines.push(r.map(esc).join(sep));
+  });
+  return lines.join("\r\n");
+}
+$("csvBtn").addEventListener("click",function(){
+  var csv=buildDelimited(",");
+  var name=(state.files[0]?state.files[0].name.replace(/\.pdf$/i,""):"statement")+".csv";
+  try{
+    var blob=new Blob(["﻿"+csv],{type:"text/csv;charset=utf-8"});
+    var url=URL.createObjectURL(blob);
+    var a=document.createElement("a");
+    a.href=url; a.download=name; document.body.appendChild(a); a.click();
+    setTimeout(function(){ URL.revokeObjectURL(url); a.remove(); },1500);
+  }catch(e){
+    $("rawWrap").classList.remove("hidden"); $("raw").value=csv;
+  }
+});
+$("copyBtn").addEventListener("click",function(){
+  var tsv=buildDelimited("\t"), btn=$("copyBtn");
+  var done=function(ok){
+    btn.innerHTML = ok ? "Copied — paste into your sheet" : "Press Ctrl/Cmd+C";
+    setTimeout(function(){ btn.innerHTML='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg> Copy for spreadsheet'; },2200);
+  };
+  if(navigator.clipboard && navigator.clipboard.writeText){
+    navigator.clipboard.writeText(tsv).then(function(){ done(true); },function(){ fallback(); });
+  } else fallback();
+  function fallback(){
+    $("rawWrap").classList.remove("hidden"); $("raw").value=tsv; $("raw").select(); done(false);
+  }
+});
+$("rawBtn").addEventListener("click",function(){
+  var w=$("rawWrap");
+  if(w.classList.contains("hidden")){ w.classList.remove("hidden"); $("raw").value=buildDelimited(","); $("rawBtn").textContent="Hide CSV"; }
+  else { w.classList.add("hidden"); $("rawBtn").textContent="Show CSV"; }
+});
+
+/* --- licence dialog --- */
+var dlg=$("dlg");
+$("unlockBtn").addEventListener("click",function(){ $("dlgMsg").classList.add("hidden"); dlg.showModal(); $("keyInput").focus(); });
+$("keyClose").addEventListener("click",function(){ dlg.close(); });
+$("keyApply").addEventListener("click",function(){
+  var k=$("keyInput").value.trim().toUpperCase(), msg=$("dlgMsg");
+  msg.classList.remove("hidden");
+  if(keyValid(k)){
+    store.set("siq.key",k); PRO=true; paintPro();
+    msg.className="msg ok"; msg.textContent="Activated. Thank you — every limit is off.";
+    if(state.tx.length) renderTable();
+    setTimeout(function(){ dlg.close(); },900);
+  } else {
+    msg.className="msg err"; msg.textContent="That key isn't valid. Check for a typo, or reply to your purchase email.";
+  }
+});
+$("keyInput").addEventListener("keydown",function(e){ if(e.key==="Enter") $("keyApply").click(); });
+
+if(window.pdfjsLib){
+  pdfjsLib.GlobalWorkerOptions.workerSrc="vendor/pdf.worker.min.js";
+} else {
+  showErr("The PDF engine didn't load — check your connection or any script blocker, then reload.");
+}
+})();
+</script>
+</body>
+</html>
