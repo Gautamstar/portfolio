@@ -140,35 +140,38 @@
     z-index: -1;
     overflow: hidden;
     pointer-events: none;
-    -webkit-mask-image: radial-gradient(58% 54% at 50% 44%, rgba(0,0,0,.3) 0%, rgba(0,0,0,.62) 46%, #000 84%);
-    mask-image: radial-gradient(58% 54% at 50% 44%, rgba(0,0,0,.3) 0%, rgba(0,0,0,.62) 46%, #000 84%);
+  }
+  .chart::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(58% 54% at 50% 44%,
+      rgba(255, 255, 255, 0.7) 0%,
+      rgba(255, 255, 255, 0.38) 46%,
+      rgba(255, 255, 255, 0) 84%);
   }
   .chart-layer {
     position: absolute;
     top: 0;
     left: 0;
-    width: 200%;
     height: 100%;
     background-repeat: repeat;
-    will-change: transform;
-  }
-  @keyframes drift-900 {
-    from { transform: translate3d(0, 0, 0); }
-    to   { transform: translate3d(-900px, 0, 0); }
   }
   @keyframes drift-700 {
     from { transform: translate3d(0, 0, 0); }
     to   { transform: translate3d(-700px, 0, 0); }
   }
   .chart-far {
+    width: calc(100% + 900px);
     background-size: 900px 900px;
-    animation: drift-900 320s linear infinite;
     background-image: var(--chart-far);
   }
   .chart-near {
+    width: calc(100% + 700px);
     background-size: 700px 700px;
-    animation: drift-700 210s linear infinite;
     background-image: var(--chart-near);
+    animation: drift-700 150s linear infinite;
+    will-change: transform;
   }
 
   /* Softens the chart behind the headline without hiding it. */
@@ -185,8 +188,7 @@
     position: sticky;
     top: 0;
     z-index: 50;
-    background: rgba(255, 255, 255, 0.78);
-    backdrop-filter: saturate(160%) blur(16px);
+    background: rgba(255, 255, 255, 0.93);
     border-bottom: 1px solid var(--line);
   }
   .nav-in {
@@ -341,9 +343,8 @@
     border: 1px solid var(--line);
     border-radius: var(--radius);
     overflow: hidden;
-    backdrop-filter: blur(10px);
   }
-  .fact { background: rgba(255, 255, 255, 0.82); padding: 22px; transition: background 0.18s; }
+  .fact { background: rgba(255, 255, 255, 0.88); padding: 22px; transition: background 0.18s; }
   .fact:hover { background: rgba(248, 250, 252, 0.95); }
   .fact b {
     display: block;
