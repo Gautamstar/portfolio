@@ -18,9 +18,29 @@ It stays a static file on purpose. The page has no state to manage and no data t
 - All CSS inline in one `<style>` block, so no stylesheet request stands between the document and the first paint.
 - One line of JavaScript, for the footer year. Everything else is HTML and CSS.
 - An inline SVG favicon as a data URI, so there is no icon round trip.
-- No image files. The whole theme is SVG data URIs and CSS gradients: stars are circles inside one tiled SVG per layer, the Milky Way is a masked band with dust lanes drawn over it in noise, and the field continues behind every section as one fixed layer that never repaints on scroll. A single four-point sparkle, defined once as a custom property, serves the list bullets, timeline markers and skill headings.
-- The sky is inverted like a photographic plate: dark stars on white, the way survey plates and printed star atlases render them, with dot size standing in for magnitude. The band is ink rather than glow, and its dust lanes read light instead of dark.
+- No image files. The whole theme is SVG data URIs and CSS gradients: stars are circles inside one tiled SVG per layer, and the field covers the whole site as one fixed layer that never repaints on scroll. A single four-point sparkle, defined once as a custom property, serves the list bullets, timeline markers and skill headings.
+- The sky is inverted like a photographic plate: dark stars on white, the way survey plates and printed star atlases render them, with dot size standing in for magnitude. The Milky Way is carried by stippling, a rise in star density, because a grey wash on white reads as a smudge rather than a band.
 - JSON-LD Person data, an explicit `lang`, and a meta description.
+
+### Runtime cost is not the same thing
+
+Lighthouse scores the load. It says nothing about what the page costs while it
+sits there animating, and this page scored 100 on every category while making a
+browser lag. Three things caused that, none of which any audit flags:
+
+- **`backdrop-filter` on the sticky nav.** The bar never leaves the screen, so
+  the browser re-sampled and re-blurred everything behind it on every scroll
+  frame. This was the worst of the three and the blur was barely visible against
+  a white page. Do not reintroduce it.
+- **A mask over animated children.** Masking forces the subtree to be composited
+  offscreen before it can be drawn, and because the stars drift continuously that
+  pass re-ran every frame for as long as the tab was open. The same vignette
+  painted as a plain white overlay looks identical and composites once.
+- **Layers larger than they need to be, and more of them animating than
+  necessary.** Each star layer was twice the viewport wide; viewport plus one
+  tile gives the same seamless loop. Only one layer drifts now.
+
+If the page ever feels heavy again, look for those three before anything else.
 
 Re-check after any change:
 
