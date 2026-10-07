@@ -6,7 +6,7 @@ A single-page site for anyone screening me. It opens with what I do and whether 
 
 ## How it's built
 
-One `index.html`, around 46 KB, with every style in a single `<style>` block, plus two self-hosted font files and the resume PDF. No framework, no bundler, no build step, and no dependencies. GitHub Pages serves it straight off `main`, so pushing is deploying.
+One `index.html`, around 75 KB, with every style in a single `<style>` block, plus two self-hosted font files and the resume PDF. No framework, no bundler, no build step, and no dependencies. GitHub Pages serves it straight off `main`, so pushing is deploying.
 
 It stays a static file on purpose. The page has no state to manage and no data to fetch, so it keeps working without maintenance or version churn.
 
