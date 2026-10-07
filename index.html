@@ -4,14 +4,14 @@
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Gautam Singh · Software Engineer</title>
-<meta name="description" content="Gautam Singh, software and data engineer in Guelph, Ontario. Computer Science honours grad building data pipelines, machine learning systems, and full-stack applications. Two apps live in production. Open to work." />
+<meta name="description" content="Gautam Singh, software engineer in Guelph, Ontario. Machine learning intern on an automated vehicle damage inspection system, Computer Science honours grad, and the builder of three apps live in production. Open to work." />
 <meta name="author" content="Gautam Singh" />
 <meta name="robots" content="index, follow" />
 <meta name="theme-color" content="#ffffff" />
 
 <meta property="og:type" content="profile" />
 <meta property="og:title" content="Gautam Singh · Software &amp; Data Engineer" />
-<meta property="og:description" content="Computer Science honours grad building data pipelines, machine learning systems, and full-stack applications. Two apps live in production. Open to work." />
+<meta property="og:description" content="Machine learning intern and Computer Science honours grad building data pipelines, ML systems, and full-stack products. Three apps live in production, one on its own domain. Open to work." />
 <meta name="twitter:card" content="summary" />
 
 <link rel="preload" href="plus-jakarta-sans.woff2" as="font" type="font/woff2" crossorigin />
@@ -782,10 +782,11 @@
     </p>
 
     <p class="pitch">
-      Computer Science honours grad who builds <strong>data pipelines</strong>,
-      <strong>machine learning systems</strong>, and the full-stack applications on top of them.
-      Three of my apps are <strong>live in production</strong> right now, and I have two software
-      co-op terms behind me.
+      Computer Science honours grad, currently a <strong>machine learning intern</strong> on an
+      automated vehicle damage inspection system. I build <strong>data pipelines</strong>,
+      <strong>ML systems</strong>, and the full-stack products on top of them. Three of my apps are
+      <strong>live in production</strong>, one on its own domain with a published
+      <strong>MCP server</strong> on npm.
     </p>
 
     <div class="cta">
@@ -808,7 +809,7 @@
     <div class="facts">
       <div class="fact"><b>3</b><span>apps live in production</span></div>
       <div class="fact"><b>10</b><span>projects shipped</span></div>
-      <div class="fact"><b>2</b><span>software co-op terms</span></div>
+      <div class="fact"><b>3</b><span>co-op and internship terms</span></div>
       <div class="fact"><b>BCS</b><span>Honours, Conestoga, 2025</span></div>
     </div>
   </div>
@@ -820,32 +821,35 @@
   <div class="sec-head reveal">
     <p class="eyebrow"><span class="num">01</span> Selected work</p>
     <h2>Projects</h2>
-    <p>Three of these are deployed and open to the public. Every one of them has source code you can read.</p>
+    <p>Three of these are live and open to the public right now. Where the code is public, the card links straight to the repository.</p>
   </div>
 
   <div class="cards">
-
     <article class="card reveal">
       <div class="card-top">
-        <h3><a href="https://github.com/Gautamstar/distill" target="_blank" rel="noopener">Distill</a></h3>
+        <h3><a href="https://fitfilesize.com" target="_blank" rel="noopener">FitFileSize</a></h3>
+        <span class="chip chip-live"><span class="dot" aria-hidden="true"></span>Live</span>
         <span class="card-year">2026</span>
       </div>
-      <p class="lead">Invoices and receipts into structured data, with per-field confidence and a human review queue. Runs locally.</p>
+      <p class="lead">Pick an upload limit and get a file that fits under it. PDFs and images, iPhone HEIC photos included, on its own domain with its own npm package.</p>
       <ul class="points">
-        <li>The model alone is <strong>0.804 field F1</strong>. The system delivers <strong>96.7%</strong> by auto-accepting only what it trusts and routing the rest to a person</li>
-        <li>Confidence is self-consistency agreement across k samples, capped when arithmetic or format validation fails. Trusted fields run <strong>94.4%</strong> accurate against <strong>54.1%</strong> for flagged ones, a <strong>40-point separation</strong> that makes auto-accept safe</li>
-        <li>A subtotal equal to the total with no tax printed is arithmetically incoherent, so it goes to a human instead of into the books. The model does not have to be right, it has to know when it might be wrong</li>
-        <li><strong>175 tests</strong>, most written from real failures found in error analysis. CI re-scores frozen predictions on every push, so a change that silently moves a published number <strong>fails the build</strong></li>
-        <li>Calibration measured rather than assumed: <strong>ECE 0.115</strong> with a reliability table, and the accuracy-versus-coverage tradeoff shipped as an explicit dial with its exchange rate priced</li>
-        <li>Local inference on one consumer GPU at <strong>$0.00 per document</strong>, against roughly $0.004 on a hosted vision API</li>
+        <li>Shipped as a product rather than a demo: seven file formats, <strong>37 landing pages</strong> for specific limits, and <strong>12 form presets</strong> (US visa DS-160, Indian e-Visa, IBPS, SBI, RRB, IRCC) that each set the size cap, the minimum size, and the exact pixel dimensions the form demands</li>
+        <li>Replaced blind bisection with a search that predicts the right setting from the sizes already measured. On production, a 5 MB photo to 200 KB fell from <strong>9.2 s to 4.2 s</strong>, a 4.9 MB scan to 500 KB from <strong>11.3 s to 4.9 s</strong>, and renders per run from four to two, with every output byte-identical</li>
+        <li>A limit chosen before upload starts the run while the visitor is still reading the size picker, which turns the wait after pressing Compress from <strong>3.9 s into 0.3 s</strong></li>
+        <li>Large photos are resampled in the browser before upload: a 10.7 MB 48 MP photo goes up as <strong>1.5 MB</strong>, which on a 1.5 Mbit/s connection is <strong>8.9 s instead of 57.7 s</strong>, verified to reach the same answer in 23 of 24 photo-and-limit pairs</li>
+        <li>An <strong>MCP server published to npm</strong> and listed in the official Model Context Protocol registry, so an AI assistant can fit a file to a form&rsquo;s exact rules in one call</li>
+        <li>The API and two workers run in Docker Compose on a VPS behind a Cloudflare Tunnel, with a watchdog that restarts any container the health endpoint reports stuck and an autodeploy that ships main <strong>within two minutes of a merge</strong></li>
       </ul>
       <div class="tags">
-        <span class="tag">Python</span><span class="tag">PyTorch</span><span class="tag">Qwen2.5-VL</span>
-        <span class="tag">FastAPI</span><span class="tag">Pydantic</span><span class="tag">GitHub Actions</span>
-        <span class="tag">Docker</span>
+        <span class="tag">Python</span><span class="tag">FastAPI</span><span class="tag">React</span>
+        <span class="tag">TypeScript</span><span class="tag">Redis</span><span class="tag">RQ</span>
+        <span class="tag">Docker</span><span class="tag">Ghostscript</span><span class="tag">Pillow</span>
+        <span class="tag">Cloudflare</span><span class="tag">MCP</span>
       </div>
       <div class="card-links">
-        <a class="btn btn-sm" href="https://github.com/Gautamstar/distill" target="_blank" rel="noopener">GitHub</a>
+        <a class="btn btn-sm" href="https://fitfilesize.com" target="_blank" rel="noopener">Open live app</a>
+        <a class="btn btn-sm" href="https://github.com/Gautamstar/fitfilesize" target="_blank" rel="noopener">GitHub</a>
+        <a class="btn btn-sm" href="https://www.npmjs.com/package/fitfilesize-mcp" target="_blank" rel="noopener">npm package</a>
       </div>
     </article>
 
@@ -855,7 +859,7 @@
         <span class="chip chip-live"><span class="dot" aria-hidden="true"></span>Live</span>
         <span class="card-year">2026</span>
       </div>
-      <p class="lead">Self-hosted web analytics. Rust on Lambda, no cookies, no IP addresses stored.</p>
+      <p class="lead">Self-hosted web analytics. Rust on Lambda, no cookies, no IP addresses stored, and it is counting this page view.</p>
       <ul class="points">
         <li>Ingest is <strong>one DynamoDB write per event</strong>. Bot filtering, user-agent classification, URL normalisation and visitor hashing are pure CPU with no I/O. Measured on arm64 at 128 MB: <strong>184 ms cold start, 5.1 ms warm, 30 MB peak</strong></li>
         <li>Visitor IDs are a keyed BLAKE3 hash over site, address and user agent, under a salt derived from the UTC date, so IDs cannot be correlated across days. The persisted type has <strong>no IP field</strong>, and query strings are stripped before write</li>
@@ -876,25 +880,47 @@
 
     <article class="card reveal">
       <div class="card-top">
-        <h3><a href="https://fitpdf-rose.vercel.app" target="_blank" rel="noopener">Fitmit</a></h3>
-        <span class="chip chip-live"><span class="dot" aria-hidden="true"></span>Live</span>
+        <h3>Distill</h3>
         <span class="card-year">2026</span>
       </div>
-      <p class="lead">Pick a target file size and get a file that fits under it.</p>
+      <p class="lead">Invoices and receipts into structured data, with per-field confidence and a human review queue. Runs locally on one consumer GPU.</p>
       <ul class="points">
-        <li>A binary search across twelve quality settings finds the gentlest one that still meets the target, so <strong>twelve options resolve in at most four attempts</strong></li>
-        <li>A lossless pass runs first, and when a target is out of reach it reports <strong>the smallest the file can actually go</strong> instead of returning something still too big</li>
-        <li>PDFs go through Ghostscript and images through Pillow behind one strategy interface, so adding a format means four methods</li>
-        <li>FastAPI with a Redis queue and a background worker, progress streamed over Server-Sent Events, uploads deleted within ten minutes</li>
+        <li>The model alone is <strong>0.804 field F1</strong>. The system delivers <strong>96.7%</strong> by auto-accepting only what it trusts and routing the rest to a person</li>
+        <li>Confidence is self-consistency agreement across k samples, capped when arithmetic or format validation fails. Trusted fields run <strong>94.4%</strong> accurate against <strong>54.1%</strong> for flagged ones, a <strong>40-point separation</strong> that makes auto-accept safe</li>
+        <li>A subtotal equal to the total with no tax printed is arithmetically incoherent, so it goes to a human instead of into the books. The model does not have to be right, it has to know when it might be wrong</li>
+        <li><strong>175 tests</strong>, most written from real failures found in error analysis. CI re-scores frozen predictions on every push, so a change that silently moves a published number <strong>fails the build</strong></li>
+        <li>Calibration measured rather than assumed: <strong>ECE 0.115</strong> with a reliability table, and the accuracy-versus-coverage tradeoff shipped as an explicit dial with its exchange rate priced</li>
+        <li>Local inference at <strong>$0.00 per document</strong>, against roughly $0.004 on a hosted vision API</li>
       </ul>
       <div class="tags">
-        <span class="tag">FastAPI</span><span class="tag">React</span><span class="tag">TypeScript</span>
-        <span class="tag">Redis</span><span class="tag">RQ</span><span class="tag">Ghostscript</span>
-        <span class="tag">Docker</span><span class="tag">Render</span><span class="tag">Vercel</span>
+        <span class="tag">Python</span><span class="tag">PyTorch</span><span class="tag">Qwen2.5-VL</span>
+        <span class="tag">FastAPI</span><span class="tag">Pydantic</span><span class="tag">GitHub Actions</span>
+        <span class="tag">Docker</span>
+      </div>
+      <!-- No GitHub link here: the distill repo is private, so the link 404s for
+           every visitor, the same failure edaProj had. Leave it off until the
+           repo is public. -->
+    </article>
+
+    <article class="card reveal">
+      <div class="card-top">
+        <h3><a href="https://github.com/NolanMM/Capstones_Stock_Prediction" target="_blank" rel="noopener">The Almanac</a></h3>
+        <span class="chip">Capstone</span>
+        <span class="card-year">2025</span>
+      </div>
+      <p class="lead">Cloud data pipeline and forecasting platform, built as my capstone project.</p>
+      <ul class="points">
+        <li>A three-tier pipeline on Databricks and Azure Data Factory moves raw OHLCV data through PySpark indicators into Azure SQL, which <strong>cut data latency by 35%</strong></li>
+        <li>A 2-layer PyTorch LSTM trained on 11,213 sliding windows predicts next-day price at <strong>60-70% accuracy</strong>, validated with walk-forward cross-validation</li>
+        <li>Served through a Django REST API with a web client, a Flutter app, and Grafana and Power BI for monitoring</li>
+      </ul>
+      <div class="tags">
+        <span class="tag">PyTorch</span><span class="tag">Databricks</span><span class="tag">Azure Data Factory</span>
+        <span class="tag">PySpark</span><span class="tag">Azure SQL</span><span class="tag">Django REST</span>
+        <span class="tag">Flutter</span><span class="tag">Grafana</span>
       </div>
       <div class="card-links">
-        <a class="btn btn-sm" href="https://fitpdf-rose.vercel.app" target="_blank" rel="noopener">Open live app</a>
-        <a class="btn btn-sm" href="https://github.com/Gautamstar/fitpdf" target="_blank" rel="noopener">GitHub</a>
+        <a class="btn btn-sm" href="https://github.com/NolanMM/Capstones_Stock_Prediction" target="_blank" rel="noopener">GitHub</a>
       </div>
     </article>
 
@@ -920,32 +946,20 @@
         <a class="btn btn-sm" href="https://eda-proj.vercel.app" target="_blank" rel="noopener">Open live app</a>
       </div>
     </article>
-
-    <article class="card reveal">
-      <div class="card-top">
-        <h3><a href="https://github.com/NolanMM/Capstones_Stock_Prediction" target="_blank" rel="noopener">The Almanac</a></h3>
-        <span class="chip">Capstone</span>
-        <span class="card-year">2025</span>
-      </div>
-      <p class="lead">Cloud data pipeline and forecasting platform, built as my capstone project.</p>
-      <ul class="points">
-        <li>A three-tier pipeline on Databricks and Azure Data Factory moves raw OHLCV data through PySpark indicators into Azure SQL, which <strong>cut data latency by 35%</strong></li>
-        <li>A 2-layer PyTorch LSTM trained on 11,213 sliding windows predicts next-day price at <strong>60-70% accuracy</strong>, validated with walk-forward cross-validation</li>
-        <li>Served through a Django REST API with a web client, a Flutter app, and Grafana and Power BI for monitoring</li>
-      </ul>
-      <div class="tags">
-        <span class="tag">PyTorch</span><span class="tag">Databricks</span><span class="tag">Azure Data Factory</span>
-        <span class="tag">PySpark</span><span class="tag">Azure SQL</span><span class="tag">Django REST</span>
-        <span class="tag">Flutter</span><span class="tag">Grafana</span>
-      </div>
-      <div class="card-links">
-        <a class="btn btn-sm" href="https://github.com/NolanMM/Capstones_Stock_Prediction" target="_blank" rel="noopener">GitHub</a>
-      </div>
-    </article>
-
   </div>
 
   <div class="more-grid">
+
+    <article class="mini reveal">
+      <div class="card-top"><h3>actualbudget/actual</h3><span class="card-year">2026</span></div>
+      <p>Merged bug fix in a local-first personal finance app with <strong>29k GitHub stars</strong>. Changing a password on an account with no password method set failed without saying why, and now returns a proper error. Reproduced the open issue, wrote the fix, and took it through the project&rsquo;s review.</p>
+      <div class="tags">
+        <span class="tag">TypeScript</span><span class="tag">Open source</span><span class="tag">Code review</span>
+      </div>
+      <div class="card-links">
+        <a class="btn btn-sm" href="https://github.com/actualbudget/actual/pull/8603" target="_blank" rel="noopener">Merged PR</a>
+      </div>
+    </article>
 
     <article class="mini reveal">
       <div class="card-top"><h3>Financial Document Q&amp;A</h3><span class="card-year">2026</span></div>
@@ -1018,18 +1032,31 @@
 
   <div class="timeline">
     <div class="row reveal">
+      <div class="when"><span>Aug 2026 - Present</span></div>
+      <div>
+        <h3>Machine Learning Intern</h3>
+        <p class="org">Sphere Global &middot; Remote</p>
+        <ul class="points">
+          <li>Built the synthetic training-data generator behind a <strong>23-camera</strong> vehicle damage detection system: around <strong>12,000 labeled images</strong>, each carrying a pixel-exact segmentation mask and a YOLO label, produced on one machine with no GPU and no uploads</li>
+          <li>Benchmarked <strong>SDXL and FLUX</strong> against a procedural optical model before committing to either. The procedural path won on all three counts that mattered: it reproduced damage more accurately, ran far faster, and cost nothing per image</li>
+          <li>Added a validation layer that catches and re-segments the <strong>39% of masks</strong> that were capturing background instead of the vehicle</li>
+          <li>Handed the tool to the labelling team as a single <strong>84 MB executable</strong> so teammates without Python could run it, with part and damage labelling tabs that write the team&rsquo;s existing <strong>79-class</strong> Label Studio format</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="row reveal">
       <div class="when">
         <span>Sep 2024 - Dec 2024</span>
         <span>Sep 2025 - Dec 2025</span>
       </div>
       <div>
         <h3>ServiceNow Developer &amp; QA Specialist</h3>
-        <p class="org">PAMT Consulting · Remote</p>
+        <p class="org">PAMT Consulting, now Ateko (a Bell Canada company) &middot; Remote</p>
         <ul class="points">
-          <li>Built and updated ServiceNow apps in App Engine Studio, Flow Designer, and IntegrationHub, including an HRSD onboarding workflow that <strong>cut manual ticket handling time by about 30%</strong></li>
-          <li>Maintained update sets and validated data flows across dev, test, and production instances</li>
-          <li>Wrote and ran QA test cases covering data accuracy, integration reliability, and API output</li>
-          <li>Worked with engineering to confirm data contracts and fix integration defects before release</li>
+          <li>Cut onboarding handling time by about <strong>30%</strong> with an automated HRSD workflow in ServiceNow App Engine Studio and Flow Designer, where staff had processed each new hire by hand</li>
+          <li>Designed and ran test cases across development, test, and production instances, confirming data accuracy and integration reliability ahead of every release</li>
+          <li>Caught integration defects before end users hit them by validating data contracts with engineering, and kept update sets consistent across all three instances</li>
         </ul>
       </div>
     </div>
@@ -1076,29 +1103,33 @@
       <h3>Machine learning</h3>
       <div class="tags">
         <span class="tag">PyTorch</span><span class="tag">TensorFlow</span><span class="tag">XGBoost</span>
-        <span class="tag">LightGBM</span><span class="tag">scikit-learn</span><span class="tag">LangChain</span>
-        <span class="tag">FAISS</span><span class="tag">LSTM</span>
+        <span class="tag">LightGBM</span><span class="tag">scikit-learn</span><span class="tag">OpenCV</span>
+        <span class="tag">YOLO</span><span class="tag">LangChain</span><span class="tag">FAISS</span>
+        <span class="tag">LSTM</span>
       </div>
     </div>
     <div class="skill reveal">
       <h3>Databases</h3>
       <div class="tags">
         <span class="tag">PostgreSQL</span><span class="tag">MySQL</span><span class="tag">MongoDB</span>
-        <span class="tag">Azure SQL</span><span class="tag">Supabase</span>
+        <span class="tag">Azure SQL</span><span class="tag">DynamoDB</span><span class="tag">Redis</span>
+        <span class="tag">Supabase</span>
       </div>
     </div>
     <div class="skill reveal">
       <h3>Web &amp; tools</h3>
       <div class="tags">
         <span class="tag">Django</span><span class="tag">FastAPI</span><span class="tag">React</span>
-        <span class="tag">Streamlit</span><span class="tag">ServiceNow</span><span class="tag">JMeter</span>
+        <span class="tag">Flutter</span><span class="tag">Streamlit</span><span class="tag">MCP</span>
+        <span class="tag">ServiceNow</span><span class="tag">JMeter</span>
       </div>
     </div>
     <div class="skill reveal">
       <h3>Cloud &amp; DevOps</h3>
       <div class="tags">
-        <span class="tag">Azure</span><span class="tag">AWS</span><span class="tag">Docker</span>
-        <span class="tag">Vercel</span><span class="tag">Render</span><span class="tag">Git</span>
+        <span class="tag">Azure</span><span class="tag">AWS</span><span class="tag">AWS Lambda</span>
+        <span class="tag">Terraform</span><span class="tag">Docker</span><span class="tag">CI/CD</span>
+        <span class="tag">Vercel</span><span class="tag">Cloudflare</span><span class="tag">Git</span>
         <span class="tag">Grafana</span><span class="tag">Power BI</span><span class="tag">Tableau</span>
       </div>
     </div>
@@ -1190,8 +1221,9 @@
     "https://www.linkedin.com/in/gautam-singh-cs/"
   ],
   "knowsAbout": [
-    "Data Engineering", "Machine Learning", "Python", "SQL",
-    "Azure", "Databricks", "PyTorch", "FastAPI", "React"
+    "Data Engineering", "Machine Learning", "Computer Vision", "Python", "SQL",
+    "Rust", "TypeScript", "Azure", "AWS", "Terraform", "Databricks",
+    "PyTorch", "FastAPI", "React"
   ]
 }
 </script>
