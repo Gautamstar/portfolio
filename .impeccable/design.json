@@ -1,0 +1,299 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-11-13T00:00:00Z",
+  "title": "Design System: Gautam Singh Portfolio",
+  "extensions": {
+    "colorMeta": {
+      "paper": {
+        "role": "neutral",
+        "displayName": "Warm Paper White",
+        "canonical": "oklch(98.8% 0.004 91.4)",
+        "tonalRamp": ["oklch(15% 0.004 91.4)", "oklch(26% 0.004 91.4)", "oklch(38% 0.004 91.4)", "oklch(50% 0.004 91.4)", "oklch(62% 0.004 91.4)", "oklch(74% 0.004 91.4)", "oklch(86% 0.004 91.4)", "oklch(95% 0.004 91.4)"]
+      },
+      "ink": {
+        "role": "neutral",
+        "displayName": "Warm Near-Black Ink",
+        "canonical": "oklch(21.4% 0.008 84.6)",
+        "tonalRamp": ["oklch(15% 0.008 84.6)", "oklch(26% 0.008 84.6)", "oklch(38% 0.008 84.6)", "oklch(50% 0.008 84.6)", "oklch(62% 0.008 84.6)", "oklch(74% 0.008 84.6)", "oklch(86% 0.008 84.6)", "oklch(95% 0.008 84.6)"]
+      },
+      "ink-2": {
+        "role": "neutral",
+        "displayName": "Diluted Ink",
+        "canonical": "oklch(50.3% 0.022 80.0)",
+        "tonalRamp": ["oklch(15% 0.022 80.0)", "oklch(26% 0.022 80.0)", "oklch(38% 0.022 80.0)", "oklch(50% 0.022 80.0)", "oklch(62% 0.022 80.0)", "oklch(74% 0.022 80.0)", "oklch(86% 0.022 80.0)", "oklch(95% 0.022 80.0)"]
+      },
+      "rule": {
+        "role": "neutral",
+        "displayName": "Hairline",
+        "canonical": "oklch(86.1% 0.018 89.4)",
+        "tonalRamp": ["oklch(15% 0.018 89.4)", "oklch(26% 0.018 89.4)", "oklch(38% 0.018 89.4)", "oklch(50% 0.018 89.4)", "oklch(62% 0.018 89.4)", "oklch(74% 0.018 89.4)", "oklch(86% 0.018 89.4)", "oklch(95% 0.018 89.4)"]
+      },
+      "rule-soft": {
+        "role": "neutral",
+        "displayName": "Soft Hairline",
+        "canonical": "oklch(92.2% 0.014 88.7)",
+        "tonalRamp": ["oklch(15% 0.014 88.7)", "oklch(26% 0.014 88.7)", "oklch(38% 0.014 88.7)", "oklch(50% 0.014 88.7)", "oklch(62% 0.014 88.7)", "oklch(74% 0.014 88.7)", "oklch(86% 0.014 88.7)", "oklch(95% 0.014 88.7)"]
+      },
+      "link": {
+        "role": "primary",
+        "displayName": "Ink Blue",
+        "canonical": "oklch(40.0% 0.090 249.6)",
+        "tonalRamp": ["oklch(15% 0.090 249.6)", "oklch(26% 0.090 249.6)", "oklch(38% 0.090 249.6)", "oklch(50% 0.090 249.6)", "oklch(62% 0.090 249.6)", "oklch(74% 0.090 249.6)", "oklch(86% 0.090 249.6)", "oklch(95% 0.090 249.6)"]
+      },
+      "link-rule": {
+        "role": "primary",
+        "displayName": "Diluted Ink Blue",
+        "canonical": "oklch(65.9% 0.059 245.5)",
+        "tonalRamp": ["oklch(15% 0.059 245.5)", "oklch(26% 0.059 245.5)", "oklch(38% 0.059 245.5)", "oklch(50% 0.059 245.5)", "oklch(62% 0.059 245.5)", "oklch(74% 0.059 245.5)", "oklch(86% 0.059 245.5)", "oklch(95% 0.059 245.5)"]
+      },
+      "live": {
+        "role": "secondary",
+        "displayName": "Ink Green",
+        "canonical": "oklch(46.1% 0.085 154.0)",
+        "tonalRamp": ["oklch(15% 0.085 154.0)", "oklch(26% 0.085 154.0)", "oklch(38% 0.085 154.0)", "oklch(50% 0.085 154.0)", "oklch(62% 0.085 154.0)", "oklch(74% 0.085 154.0)", "oklch(86% 0.085 154.0)", "oklch(95% 0.085 154.0)"]
+      },
+      "sel": {
+        "role": "neutral",
+        "displayName": "Selection Wash",
+        "canonical": "oklch(91.7% 0.016 245.1)",
+        "tonalRamp": ["oklch(15% 0.016 245.1)", "oklch(26% 0.016 245.1)", "oklch(38% 0.016 245.1)", "oklch(50% 0.016 245.1)", "oklch(62% 0.016 245.1)", "oklch(74% 0.016 245.1)", "oklch(86% 0.016 245.1)", "oklch(95% 0.016 245.1)"]
+      },
+      "paper-dark": {
+        "role": "neutral",
+        "displayName": "Warm Near-Black Ground",
+        "canonical": "oklch(19.1% 0.010 97.9)",
+        "pairsWith": "paper",
+        "tonalRamp": ["oklch(15% 0.010 97.9)", "oklch(26% 0.010 97.9)", "oklch(38% 0.010 97.9)", "oklch(50% 0.010 97.9)", "oklch(62% 0.010 97.9)", "oklch(74% 0.010 97.9)", "oklch(86% 0.010 97.9)", "oklch(95% 0.010 97.9)"]
+      },
+      "ink-dark": {
+        "role": "neutral",
+        "displayName": "Warm Paper Ink",
+        "canonical": "oklch(94.0% 0.011 89.7)",
+        "pairsWith": "ink",
+        "tonalRamp": ["oklch(15% 0.011 89.7)", "oklch(26% 0.011 89.7)", "oklch(38% 0.011 89.7)", "oklch(50% 0.011 89.7)", "oklch(62% 0.011 89.7)", "oklch(74% 0.011 89.7)", "oklch(86% 0.011 89.7)", "oklch(95% 0.011 89.7)"]
+      },
+      "ink-2-dark": {
+        "role": "neutral",
+        "displayName": "Diluted Paper Ink",
+        "canonical": "oklch(69.1% 0.027 86.9)",
+        "pairsWith": "ink-2",
+        "tonalRamp": ["oklch(15% 0.027 86.9)", "oklch(26% 0.027 86.9)", "oklch(38% 0.027 86.9)", "oklch(50% 0.027 86.9)", "oklch(62% 0.027 86.9)", "oklch(74% 0.027 86.9)", "oklch(86% 0.027 86.9)", "oklch(95% 0.027 86.9)"]
+      },
+      "rule-dark": {
+        "role": "neutral",
+        "displayName": "Hairline on Dark",
+        "canonical": "oklch(31.8% 0.014 89.9)",
+        "pairsWith": "rule",
+        "tonalRamp": ["oklch(15% 0.014 89.9)", "oklch(26% 0.014 89.9)", "oklch(38% 0.014 89.9)", "oklch(50% 0.014 89.9)", "oklch(62% 0.014 89.9)", "oklch(74% 0.014 89.9)", "oklch(86% 0.014 89.9)", "oklch(95% 0.014 89.9)"]
+      },
+      "rule-soft-dark": {
+        "role": "neutral",
+        "displayName": "Soft Hairline on Dark",
+        "canonical": "oklch(26.0% 0.011 91.7)",
+        "pairsWith": "rule-soft",
+        "tonalRamp": ["oklch(15% 0.011 91.7)", "oklch(26% 0.011 91.7)", "oklch(38% 0.011 91.7)", "oklch(50% 0.011 91.7)", "oklch(62% 0.011 91.7)", "oklch(74% 0.011 91.7)", "oklch(86% 0.011 91.7)", "oklch(95% 0.011 91.7)"]
+      },
+      "link-dark": {
+        "role": "primary",
+        "displayName": "Ink Blue on Dark",
+        "canonical": "oklch(76.9% 0.061 243.2)",
+        "pairsWith": "link",
+        "tonalRamp": ["oklch(15% 0.061 243.2)", "oklch(26% 0.061 243.2)", "oklch(38% 0.061 243.2)", "oklch(50% 0.061 243.2)", "oklch(62% 0.061 243.2)", "oklch(74% 0.061 243.2)", "oklch(86% 0.061 243.2)", "oklch(95% 0.061 243.2)"]
+      },
+      "link-rule-dark": {
+        "role": "primary",
+        "displayName": "Diluted Ink Blue on Dark",
+        "canonical": "oklch(51.2% 0.040 248.6)",
+        "pairsWith": "link-rule",
+        "tonalRamp": ["oklch(15% 0.040 248.6)", "oklch(26% 0.040 248.6)", "oklch(38% 0.040 248.6)", "oklch(50% 0.040 248.6)", "oklch(62% 0.040 248.6)", "oklch(74% 0.040 248.6)", "oklch(86% 0.040 248.6)", "oklch(95% 0.040 248.6)"]
+      },
+      "live-dark": {
+        "role": "secondary",
+        "displayName": "Ink Green on Dark",
+        "canonical": "oklch(72.0% 0.091 156.1)",
+        "pairsWith": "live",
+        "tonalRamp": ["oklch(15% 0.091 156.1)", "oklch(26% 0.091 156.1)", "oklch(38% 0.091 156.1)", "oklch(50% 0.091 156.1)", "oklch(62% 0.091 156.1)", "oklch(74% 0.091 156.1)", "oklch(86% 0.091 156.1)", "oklch(95% 0.091 156.1)"]
+      },
+      "sel-dark": {
+        "role": "neutral",
+        "displayName": "Selection Wash on Dark",
+        "canonical": "oklch(34.0% 0.031 243.3)",
+        "pairsWith": "sel",
+        "tonalRamp": ["oklch(15% 0.031 243.3)", "oklch(26% 0.031 243.3)", "oklch(38% 0.031 243.3)", "oklch(50% 0.031 243.3)", "oklch(62% 0.031 243.3)", "oklch(74% 0.031 243.3)", "oklch(86% 0.031 243.3)", "oklch(95% 0.031 243.3)"]
+      }
+    },
+    "typographyMeta": {
+      "display": { "displayName": "Display", "purpose": "The name, once, at the top of the page. Balanced wrap, tight tracking." },
+      "headline": { "displayName": "Headline", "purpose": "Section titles, with 28px beneath." },
+      "title": { "displayName": "Title", "purpose": "A record's name, usually a link to the thing itself." },
+      "title-compact": { "displayName": "Title Compact", "purpose": "The same role inside a short record." },
+      "lede": { "displayName": "Lede", "purpose": "The opening paragraph and the contact paragraph, the only serif above body size." },
+      "body": { "displayName": "Body", "purpose": "All prose, held at 68ch. Proportional lining figures inside sentences." },
+      "gloss": { "displayName": "Gloss", "purpose": "One true-italic line under a record name saying what the thing is, at 58ch." },
+      "bullet": { "displayName": "Bullet", "purpose": "A record's measured facts, marked by a 5px square at 21px of indent." },
+      "label-lead": { "displayName": "Label Lead", "purpose": "First-screen action links and the contact line; the largest the mono gets." },
+      "label-mid": { "displayName": "Label Mid", "purpose": "Proof links, record figures, the availability line." },
+      "label": { "displayName": "Label", "purpose": "Nav, status, years, dates, stack names, kit values. Tabular lining figures." },
+      "caption": { "displayName": "Caption", "purpose": "The footer." }
+    },
+    "fonts": [
+      { "name": "Newsreader", "file": "newsreader.woff2", "format": "woff2", "axes": "wght 350-650, opsz instanced at 16", "bytes": 30608, "purpose": "Every sentence on the page, from the 59px name to a 17px bullet. Weights used: 400 body, 450 display, 500 headings, 600 measured figures in prose." },
+      { "name": "Newsreader Italic", "file": "newsreader-italic.woff2", "format": "woff2", "axes": "static 16pt italic", "bytes": 13984, "purpose": "The record gloss. A true italic rather than a slant." },
+      { "name": "DM Mono", "file": "dm-mono.woff2", "format": "woff2", "axes": "static; the Medium cut mapped to font-weight 400", "bytes": 14988, "purpose": "Everything a machine measured. One weight only, so the mono never bolds." }
+    ],
+    "shadows": [],
+    "motion": [
+      { "name": "ease-underline", "value": "cubic-bezier(0.2, 0.7, 0.3, 1)", "purpose": "The page's only easing, on the one animated property set: a link's underline colour, thickness and offset." },
+      { "name": "duration-underline", "value": "140ms", "purpose": "Link underline transition. Under prefers-reduced-motion the thickness and offset freeze and only the colour transitions, over 140ms linear." }
+    ],
+    "breakpoints": [
+      { "name": "narrow", "value": "680px", "purpose": "Body drops to 17.5px, gutter to 20px, record figures and kit rows collapse to one column, two-part heads stack name-first." },
+      { "name": "phone", "value": "440px", "purpose": "The wordmark leaves the running head and the four nav destinations spread across its full width at 12.5px." }
+    ],
+    "layout": {
+      "column": "44rem",
+      "gutter": "26px (20px below 680px)",
+      "sectionRhythm": "clamp(52px, 7vw, 86px)",
+      "measures": { "prose": "68ch", "availability": "62ch", "gloss": "58ch", "closing": "56ch", "monoStack": "72ch" },
+      "stickyHead": "opaque, 1px soft hairline, scroll-padding-top 76px on html"
+    },
+    "constraints": [
+      "One static index.html with all CSS in a single inline <style>, no framework and no build step.",
+      "One line of authored JavaScript (the footer year) plus a deferred analytics tag; no content may depend on a script.",
+      "No raster images anywhere. The favicon is an inline SVG data URI and it is the only graphic.",
+      "100 Lighthouse on all four categories on both the desktop and mobile presets, verified per change.",
+      "No backdrop-filter on the sticky head, no mask over an animated subtree."
+    ]
+  },
+  "components": [
+    {
+      "name": "Text Link",
+      "kind": "custom",
+      "refersTo": "link",
+      "description": "A word with a rule under it. The underline is the only animated thing on the page.",
+      "html": "<p class=\"ds-prose\">Three of my apps are <a class=\"ds-link\" href=\"#\">live in production</a>, one on its own domain.</p>",
+      "css": ".ds-prose { font-family: var(--serif, \"Newsreader\", Georgia, serif); font-size: 18px; line-height: 1.62; color: var(--ink, #1b1915); max-width: 68ch; } .ds-link { color: inherit; text-decoration: underline; text-decoration-color: var(--link-rule, #7496b4); text-decoration-thickness: 1px; text-underline-offset: 0.18em; transition: text-decoration-color 140ms cubic-bezier(0.2,0.7,0.3,1), text-decoration-thickness 140ms cubic-bezier(0.2,0.7,0.3,1), text-underline-offset 140ms cubic-bezier(0.2,0.7,0.3,1); } .ds-link:hover { color: var(--link, #1a4a76); text-decoration-color: var(--link, #1a4a76); text-decoration-thickness: 2px; text-underline-offset: 0.13em; } .ds-link:focus-visible { outline: 2px solid var(--link, #1a4a76); outline-offset: 3px; border-radius: 1px; }"
+    },
+    {
+      "name": "Running Head",
+      "kind": "nav",
+      "refersTo": "nav-link",
+      "description": "Sticky, opaque, 1px-ruled at its lower edge. The Resume link sits in full ink because it is the usual exit.",
+      "html": "<div class=\"ds-topbar\"><a class=\"ds-wordmark\" href=\"#\">Gautam Singh</a><nav class=\"ds-nav\" aria-label=\"Primary\"><a href=\"#\">Work</a><a href=\"#\">Experience</a><a href=\"#\">Contact</a><a class=\"ds-cv\" href=\"#\">Resume</a></nav></div>",
+      "css": ".ds-topbar { display: flex; align-items: baseline; justify-content: space-between; gap: 20px; padding: 15px 26px 13px; background: var(--paper, #fcfbf8); border-bottom: 1px solid var(--rule-soft, #e9e5db); } .ds-wordmark { font-family: var(--serif, \"Newsreader\", Georgia, serif); font-size: 17px; letter-spacing: -0.005em; color: var(--ink, #1b1915); text-decoration: none; } .ds-wordmark:hover { color: var(--link, #1a4a76); } .ds-nav { display: flex; align-items: baseline; gap: 20px; font-family: var(--mono, \"DM Mono\", monospace); font-size: 13px; letter-spacing: -0.01em; } .ds-nav a { color: var(--ink-2, #6b6356); text-decoration: underline; text-decoration-color: var(--link-rule, #7496b4); text-decoration-thickness: 1px; text-underline-offset: 0.18em; transition: text-decoration-color 140ms cubic-bezier(0.2,0.7,0.3,1), text-decoration-thickness 140ms cubic-bezier(0.2,0.7,0.3,1); } .ds-nav a:hover { color: var(--link, #1a4a76); text-decoration-color: var(--link, #1a4a76); text-decoration-thickness: 2px; } .ds-nav a:focus-visible { outline: 2px solid var(--link, #1a4a76); outline-offset: 3px; } .ds-nav .ds-cv { color: var(--ink, #1b1915); }"
+    },
+    {
+      "name": "Project Record",
+      "kind": "custom",
+      "refersTo": "record-title",
+      "description": "The page's central pattern and the reason there are no cards: name and status on one baseline, italic gloss, measured facts, stack, proofs, separated by a hairline and space.",
+      "html": "<article class=\"ds-rec\"><div class=\"ds-rec-head\"><h3 class=\"ds-rec-name\"><a href=\"#\">Cairn</a></h3><p class=\"ds-meta\"><span class=\"ds-on\">Live</span><span>2026</span></p></div><p class=\"ds-gloss\">Self-hosted web analytics. Rust on Lambda, no cookies, no IP addresses stored.</p><ul class=\"ds-pts\"><li>Ingest is <strong>one DynamoDB write per event</strong>. Measured on arm64 at 128 MB: <strong>184 ms cold start, 5.1 ms warm, 30 MB peak</strong></li><li>Tracker is <strong>647 bytes gzipped</strong> and writes nothing to the browser</li></ul><p class=\"ds-built\"><i>Rust</i><i>AWS Lambda</i><i>DynamoDB</i><i>Terraform</i></p><p class=\"ds-proofs\"><a href=\"#\">Live dashboard</a><a href=\"#\">Code</a></p></article>",
+      "css": ".ds-rec { padding-bottom: 46px; border-bottom: 1px solid var(--rule-soft, #e9e5db); font-family: var(--serif, \"Newsreader\", Georgia, serif); color: var(--ink, #1b1915); } .ds-rec-head { display: flex; align-items: baseline; justify-content: space-between; gap: 10px 22px; flex-wrap: wrap; margin-bottom: 9px; } .ds-rec-name { margin: 0; font-size: 21px; font-weight: 500; line-height: 1.26; letter-spacing: -0.012em; } .ds-rec-name a { color: inherit; text-decoration: underline; text-decoration-color: var(--link-rule, #7496b4); text-decoration-thickness: 1px; text-underline-offset: 0.18em; transition: text-decoration-color 140ms cubic-bezier(0.2,0.7,0.3,1), text-decoration-thickness 140ms cubic-bezier(0.2,0.7,0.3,1); } .ds-rec-name a:hover { color: var(--link, #1a4a76); text-decoration-color: var(--link, #1a4a76); text-decoration-thickness: 2px; } .ds-meta { margin: 0; flex: none; display: flex; align-items: baseline; gap: 14px; font-family: var(--mono, \"DM Mono\", monospace); font-size: 13px; letter-spacing: -0.01em; color: var(--ink-2, #6b6356); font-variant-numeric: tabular-nums lining-nums; } .ds-meta .ds-on { display: flex; align-items: baseline; gap: 7px; color: var(--live, #2c6642); } .ds-meta .ds-on::before { content: \"\"; flex: none; width: 6px; height: 6px; background: var(--live, #2c6642); transform: translateY(-1px); } .ds-gloss { margin: 0 0 18px; font-style: italic; font-size: 19px; line-height: 1.62; color: var(--ink-2, #6b6356); max-width: 58ch; } .ds-pts { margin: 0 0 20px; padding: 0; list-style: none; max-width: 68ch; } .ds-pts li { position: relative; padding-left: 21px; margin-bottom: 11px; font-size: 17px; line-height: 1.58; } .ds-pts li::before { content: \"\"; position: absolute; left: 2px; top: 0.62em; width: 5px; height: 5px; background: var(--ink-2, #6b6356); } .ds-pts strong { font-weight: 600; } .ds-built { margin: 20px 0 14px; font-family: var(--mono, \"DM Mono\", monospace); font-size: 13px; line-height: 1.8; letter-spacing: -0.012em; color: var(--ink-2, #6b6356); max-width: 72ch; } .ds-built i { font-style: normal; white-space: nowrap; } .ds-built i:not(:last-child)::after { content: \"\\002f\"; color: var(--rule, #d6d1c4); margin-left: 0.5em; } .ds-built i + i::before { content: \" \"; white-space: normal; word-spacing: 0.35em; } .ds-proofs { margin: 0; display: flex; flex-wrap: wrap; gap: 6px 22px; font-family: var(--mono, \"DM Mono\", monospace); font-size: 13.5px; letter-spacing: -0.012em; } .ds-proofs a { color: var(--ink, #1b1915); text-decoration: underline; text-decoration-color: var(--link-rule, #7496b4); text-underline-offset: 0.18em; } .ds-proofs a:hover { color: var(--link, #1a4a76); text-decoration-color: var(--link, #1a4a76); text-decoration-thickness: 2px; }"
+    },
+    {
+      "name": "Record Figures",
+      "kind": "custom",
+      "refersTo": "facts-figure",
+      "description": "Four records as a two-by-two mono table opened by a stronger hairline. Label left, figure out to the right of its own column, never a figure stacked above its label.",
+      "html": "<dl class=\"ds-facts\"><div><dt>Live in production</dt><dd>3</dd></div><div><dt>Projects shipped</dt><dd>10</dd></div><div><dt>Co-op and internship terms</dt><dd>3</dd></div><div><dt>BCS Honours, Conestoga</dt><dd>2025</dd></div></dl>",
+      "css": ".ds-facts { margin: 30px 0 0; padding: 13px 0 0; border-top: 1px solid var(--rule, #d6d1c4); display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 7px 34px; font-family: var(--mono, \"DM Mono\", monospace); font-size: 13.5px; letter-spacing: -0.012em; color: var(--ink-2, #6b6356); } .ds-facts > div { display: flex; align-items: baseline; justify-content: space-between; gap: 14px; } .ds-facts dt { margin: 0; } .ds-facts dd { margin: 0; color: var(--ink, #1b1915); font-variant-numeric: tabular-nums lining-nums; } @media (max-width: 680px) { .ds-facts { grid-template-columns: minmax(0, 1fr); } }"
+    },
+    {
+      "name": "Availability Line",
+      "kind": "chip",
+      "refersTo": "status-mark",
+      "description": "Status written as a sentence with a 7px filled square beside it. The replacement for a coloured pill, not a restyling of one.",
+      "html": "<p class=\"ds-open\"><span><b>Open to work.</b> Guelph, Ontario, and open to Kitchener-Waterloo, Toronto, or remote. I answer every message.</span></p>",
+      "css": ".ds-open { margin: 20px 0 0; display: flex; align-items: baseline; gap: 9px; font-family: var(--mono, \"DM Mono\", monospace); font-size: 13.5px; line-height: 1.7; color: var(--ink-2, #6b6356); letter-spacing: -0.01em; max-width: 62ch; } .ds-open::before { content: \"\"; flex: none; width: 7px; height: 7px; background: var(--live, #2c6642); transform: translateY(-1px); } .ds-open b { font-weight: 400; color: var(--live, #2c6642); }"
+    },
+    {
+      "name": "Experience Post Head",
+      "kind": "custom",
+      "refersTo": "record-meta",
+      "description": "Role and employer on the left, date range in a right-hand mono column that holds its alignment. A second term carries the word \"and\" so it cannot read as the tail of the first.",
+      "html": "<div class=\"ds-post-head\"><div><h3 class=\"ds-post-name\">ServiceNow Developer &amp; QA Specialist</h3><p class=\"ds-seat\">PAMT Consulting, now Ateko (a Bell Canada company) &middot;&nbsp;Remote</p></div><p class=\"ds-when\"><span>Sep 2024 to Dec 2024</span><span>Sep 2025 to Dec 2025</span></p></div>",
+      "css": ".ds-post-head { display: flex; align-items: baseline; justify-content: space-between; gap: 10px 22px; flex-wrap: nowrap; margin-bottom: 9px; font-family: var(--serif, \"Newsreader\", Georgia, serif); color: var(--ink, #1b1915); } .ds-post-head > div { min-width: 0; } .ds-post-name { margin: 0; font-size: 21px; font-weight: 500; line-height: 1.26; letter-spacing: -0.012em; } .ds-seat { margin: 3px 0 15px; font-size: 17px; line-height: 1.62; color: var(--ink-2, #6b6356); } .ds-when { margin: 0; flex: none; text-align: right; font-family: var(--mono, \"DM Mono\", monospace); font-size: 13px; line-height: 1.65; letter-spacing: -0.01em; color: var(--ink-2, #6b6356); font-variant-numeric: tabular-nums lining-nums; } .ds-when span { display: block; white-space: nowrap; } .ds-when span + span::before { content: \"and \"; } @media (max-width: 680px) { .ds-post-head { flex-direction: column; align-items: flex-start; gap: 6px; } .ds-when { text-align: left; margin-top: 3px; } .ds-when span { display: inline; } .ds-when span + span::before { content: \" and \"; white-space: normal; } }"
+    },
+    {
+      "name": "Kit Row",
+      "kind": "custom",
+      "refersTo": "stack-token",
+      "description": "A serif label in an 11.5rem column against a mono value run, rows separated by a soft hairline. The slash between values is a pseudo-element in hairline colour.",
+      "html": "<dl class=\"ds-kit\"><div><dt>Languages</dt><dd><i>Python</i><i>SQL</i><i>TypeScript</i><i>Rust</i></dd></div><div><dt>Cloud and DevOps</dt><dd><i>AWS Lambda</i><i>Terraform</i><i>Docker</i><i>Vercel</i></dd></div></dl>",
+      "css": ".ds-kit { margin: 0; font-family: var(--serif, \"Newsreader\", Georgia, serif); color: var(--ink, #1b1915); } .ds-kit > div { display: grid; grid-template-columns: 11.5rem minmax(0, 1fr); gap: 4px 20px; padding: 13px 0; border-top: 1px solid var(--rule-soft, #e9e5db); } .ds-kit > div:first-child { border-top: 0; padding-top: 0; } .ds-kit dt { margin: 0; font-size: 16.5px; color: var(--ink-2, #6b6356); } .ds-kit dd { margin: 0; font-family: var(--mono, \"DM Mono\", monospace); font-size: 13px; line-height: 1.85; letter-spacing: -0.012em; } .ds-kit i { font-style: normal; white-space: nowrap; } .ds-kit i:not(:last-child)::after { content: \"\\002f\"; color: var(--rule, #d6d1c4); margin-left: 0.5em; } .ds-kit i + i::before { content: \" \"; white-space: normal; word-spacing: 0.35em; } @media (max-width: 680px) { .ds-kit > div { grid-template-columns: minmax(0, 1fr); gap: 5px; } }"
+    },
+    {
+      "name": "Contact Line",
+      "kind": "custom",
+      "refersTo": "link",
+      "description": "The page's exit: a mono row of destinations opened by a stronger hairline, with the email set two steps larger than its neighbours.",
+      "html": "<p class=\"ds-wire\"><a class=\"ds-mail\" href=\"#\">gautamsingh2189@gmail.com</a><a href=\"#\">Resume (PDF)</a><a href=\"#\">LinkedIn</a><a href=\"#\">GitHub</a></p>",
+      "css": ".ds-wire { margin: 26px 0 0; padding-top: 18px; border-top: 1px solid var(--rule, #d6d1c4); display: flex; flex-wrap: wrap; gap: 10px 26px; align-items: baseline; font-family: var(--mono, \"DM Mono\", monospace); font-size: 14.5px; letter-spacing: -0.012em; } .ds-wire a { color: var(--ink, #1b1915); text-decoration: underline; text-decoration-color: var(--link-rule, #7496b4); text-decoration-thickness: 1px; text-underline-offset: 0.18em; transition: text-decoration-color 140ms cubic-bezier(0.2,0.7,0.3,1), text-decoration-thickness 140ms cubic-bezier(0.2,0.7,0.3,1), text-underline-offset 140ms cubic-bezier(0.2,0.7,0.3,1); } .ds-wire a:hover { color: var(--link, #1a4a76); text-decoration-color: var(--link, #1a4a76); text-decoration-thickness: 2px; text-underline-offset: 0.13em; } .ds-wire a:focus-visible { outline: 2px solid var(--link, #1a4a76); outline-offset: 3px; } .ds-wire .ds-mail { font-size: 16px; }"
+    },
+    {
+      "name": "Skip Link",
+      "kind": "custom",
+      "refersTo": "skip-link",
+      "description": "The one inverted element on the page, and it exists only while focused. Shown here in its focused state.",
+      "html": "<a class=\"ds-skip\" href=\"#main\">Skip to content</a>",
+      "css": ".ds-skip { display: inline-block; background: var(--ink, #1b1915); color: var(--paper, #fcfbf8); padding: 10px 16px; font-family: var(--mono, \"DM Mono\", monospace); font-size: 13px; text-decoration: none; } .ds-skip:focus-visible { outline: 2px solid var(--link, #1a4a76); outline-offset: 3px; }"
+    }
+  ],
+  "narrative": {
+    "northStar": "The Reference Entry",
+    "overview": "This is a working engineer's own site, set the way a well-made reference book sets an entry. A project is a record rather than a card: its name, its status, its year, one italic line of what it is, then the measured facts, then the stack, then the link to the repository that proves it. Nothing on the page is boxed. Structure is carried entirely by 1px hairline rules and the space between things, so the page has no containers to decorate and no surfaces to tint. Authority comes from density and precision.\n\nThe material is warm paper white under near-black ink, with a dark ground on the system setting. The craft bar is set by three named reference sites, simonwillison.net, overreacted.io and danluu.com: plain, typographic, and unmistakably built by the person whose work it describes. The page refuses the generated-portfolio vocabulary outright, because that vocabulary is the thing this site was rebuilt four times to escape. Equal-weight rounded cards with soft shadows, gradients, glass, saturated pill badges, emoji icons and an indigo-to-violet accent are all out, and so is any costume or theme: the look is earned from type, measure and real data.\n\nTwo faces divide the page by role rather than by subject. Newsreader, a text serif with a true italic, sets every sentence. DM Mono sets the fields a reader scans down a column instead of reading: status, years and dates, stack names and proof links. One colour event exists, a single ink blue on link underlines. One thing on the page moves, a link's underline under the cursor.",
+    "keyCharacteristics": [
+      "One column, flush left, held at 44rem with a 26px gutter",
+      "Two faces split by role, with no third face anywhere",
+      "Separation by 1px hairline and space, with no boxes and no shadows",
+      "Two real inks mixed in one warm hue family, with no grey and no opacity",
+      "A single ink blue, spent on link underlines, link hover and the focus ring",
+      "Square corners everywhere, and marks drawn as 5px and 6px CSS squares",
+      "Tabular figures in the mono columns, proportional figures inside sentences",
+      "Browser chrome themed from the same palette: selection, scrollbar, focus ring"
+    ],
+    "rules": [
+      { "name": "The Two Inks Rule", "body": "The page holds exactly two inks and one paper per scheme. The secondary ink is a mixed value in the same warm hue family as the primary, so no text colour is ever produced with opacity, color-mix against grey, or a neutral grey hex. Audit test: grep the stylesheet for opacity and for any text colour outside the nine declared tokens; both should return nothing.", "section": "colors" },
+      { "name": "The One Blue Rule", "body": "The ink blue is spent on link underlines, link hover text and the focus ring. Any other use, including a heading, a fill, a mark or a border, is a new colour event and is out.", "section": "colors" },
+      { "name": "The No Ground Rule", "body": "No element carries a background colour. The three exceptions are the page ground itself, the small CSS-drawn marks (the 6px status square, the 5px bullet square and the scrollbar thumb), and the skip link while it has focus. Separation everywhere else is a hairline and space.", "section": "colors" },
+      { "name": "The Two Faces Rule", "body": "Newsreader sets everything a person wrote. DM Mono sets everything a machine measured: status, years and dates, latencies, sizes, counts, versions, stack names and proof links. Neither face ever does the other's job, so the mono never sets a sentence and never appears as a costume for \"technical\".", "section": "typography" },
+      { "name": "The Figure-in-Sentence Rule", "body": "A measured figure inside a sentence stays in the serif at weight 600 and takes the sentence's own proportional lining figures. Tabular lining figures belong to the mono columns, where digits have to line up under each other. Audit test: any tabular-nums declaration should sit on a mono selector.", "section": "typography" },
+      { "name": "The No Kicker Rule", "body": "A mono line never sits above a heading. Where a record head stacks at narrow widths, the name stays first and the status drops beneath it, because a mono line set above a title is an eyebrow and this page does not use them.", "section": "typography" },
+      { "name": "The One Left Edge Rule", "body": "Every line on the page starts at the same left edge. Set a date or a status out to the right of the column when it has to align with its peers; centre nothing, ever.", "section": "layout" },
+      { "name": "The Scan Column Rule", "body": "A field a reader scans down the page rather than reads belongs in mono and belongs in a column of its own, aligned with the same field in the records above and below it.", "section": "layout" },
+      { "name": "The Hairline Rule", "body": "Depth has exactly two values, rule and rule-soft, both at 1px. Use the stronger one where a rule opens a block of data, and the soft one between peers. A third weight, a shadow or a tinted panel is a new material and is out.", "section": "elevation" },
+      { "name": "The Opaque Bar Rule", "body": "Nothing pinned to the viewport may blur or tint what scrolls under it. The sticky head is painted in the page ground at full opacity.", "section": "elevation" },
+      { "name": "The Square Rule", "body": "Content corners are square. A radius belongs only to browser chrome or to a focus ring that has to sit tight against a glyph.", "section": "shapes" }
+    ],
+    "dos": [
+      "Do keep one column at 44rem with a 26px gutter, and start every line at the same left edge.",
+      "Do carry separation with a 1px hairline (rule where a rule opens a data block, rule-soft between peers) and with space.",
+      "Do split the two faces by role: Newsreader for anything a person wrote, DM Mono for anything a machine measured.",
+      "Do set a measured figure inside a sentence in the serif at 600 with proportional lining figures, and reserve tabular lining figures for the mono columns.",
+      "Do hold prose at 68ch, the italic gloss at 58ch, and the availability line at 62ch.",
+      "Do write status as a mono word with a small filled square beside it, 6px in a record head and 7px beside the availability line.",
+      "Do spend the ink blue only on link underlines, link hover text and the focus ring.",
+      "Do draw every mark in CSS or inline SVG, and theme the browser's own surfaces (selection, scrollbar, caret, focus ring, underline offset) from the same palette.",
+      "Do set a date or a status out to the right of its head so it aligns with the same field in the entries above and below.",
+      "Do carry the unit and the before-and-after in a measured fact, and put a link to the thing that proves it in the same record.",
+      "Do keep the page complete with no JavaScript and with motion disabled."
+    ],
+    "donts": [
+      "Don't put a background colour on any element. The page ground, the small CSS squares, the scrollbar thumb and the focused skip link are the whole list.",
+      "Don't box a record. No card, no panel, no border on four sides, no padding box, no radius on content.",
+      "Don't add a box-shadow, a filter, a backdrop-filter or a tinted layer anywhere, and never blur what scrolls under the sticky head.",
+      "Don't introduce a third face, and never set prose in the mono or a label column in the serif.",
+      "Don't bold the mono. The self-hosted file is one weight and there is no second cut to switch to.",
+      "Don't put a mono line above a heading. Kickers and eyebrow labels are out.",
+      "Don't stack a figure above its label as a metric tile, and don't round a measured number into a headline.",
+      "Don't derive a text colour with opacity or a neutral grey. Mix a new ink in the same warm hue family or use one of the two that exist.",
+      "Don't use a pill, a chip, a badge or a tag for status, a stack name or a year.",
+      "Don't use a gradient, glass, a blurred blob, an emoji as an icon, a glyph icon font, or an indigo-to-violet accent. This page was rebuilt four times to get out of that vocabulary.",
+      "Don't add a costume. A volvelle, a pixel grid, an illuminated border and a sideways book were each built and rejected; the look is earned from type, measure and real data.",
+      "Don't ship a raster image. Decoration is CSS and inline SVG only.",
+      "Don't centre anything, and don't open with a hero carrying two buttons.",
+      "Don't animate anything but a link's underline, and keep that frozen under prefers-reduced-motion.",
+      "Don't let any text drop below WCAG AA on either ground; the current floor is the diluted ink at 5.7:1 on paper."
+    ]
+  }
+}

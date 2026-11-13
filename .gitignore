@@ -8,3 +8,11 @@
 node_modules/
 package.json
 package-lock.json
+
+# The design skill's working files. The captures, mocks and build state are
+# large and specific to one run, and this repo is the deploy root, so they stay
+# out of it; the design system's own records (design.json, the surface briefs)
+# are small, durable and tracked.
+.impeccable/review/
+.impeccable/mocks/
+.impeccable/build/

@@ -1,16 +1,26 @@
 Fonts bundled with this site
 ============================
 
-Two font files are redistributed here. Both are licensed under the SIL Open
-Font License, Version 1.1, whose full text follows.
+Three font files are redistributed here. All three are licensed under the SIL
+Open Font License, Version 1.1, whose full text follows. Each was subset to the
+characters this page uses and, where noted, instanced to a narrower range of an
+axis; both families are licensed without a Reserved Font Name, so the modified
+files keep the original family names.
 
-  plus-jakarta-sans.woff2
-    Plus Jakarta Sans, latin subset, variable weight 400-800.
-    Copyright 2020 The Plus Jakarta Sans Project Authors.
-    https://github.com/tokotype/PlusJakartaSans
+  newsreader.woff2
+    Newsreader 16pt, latin subset, variable weight 350-650, optical size
+    instanced to 16.
+    Copyright 2020 The Newsreader Project Authors.
+    https://github.com/productiontype/Newsreader
+
+  newsreader-italic.woff2
+    Newsreader 16pt Italic, latin subset, static instance at weight 400,
+    optical size 16.
+    Copyright 2020 The Newsreader Project Authors.
+    https://github.com/productiontype/Newsreader
 
   dm-mono.woff2
-    DM Mono, latin subset, weight 500.
+    DM Mono Medium, latin subset.
     Copyright 2020 The DM Mono Project Authors.
     https://github.com/googlefonts/dm-mono
 
