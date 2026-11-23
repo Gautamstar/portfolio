@@ -2,16 +2,17 @@
 
 Source for my personal website: **[gautamstar.github.io/portfolio](https://gautamstar.github.io/portfolio/)**
 
-A single-page site for anyone screening me. It opens with what I do and whether
-I'm available, then runs through my projects (live work first, each linking to
-the code that proves it), my experience, the tools I use, my education, and how
-to get in touch. The resume PDF is linked from the top bar and from the contact
-section.
+A single-page site for anyone screening me. A narrow column on the left holds my
+name, my role, the resume, the ways to reach me and whether I'm available, and it
+stays pinned to the top of the window while you scroll. The wide column on the
+right runs through my projects (live work first, each linking to the code that
+proves it), the rest of what I've shipped, my experience, the tools I use, my
+education, and how to get in touch.
 
 ## How it's built
 
-One `index.html` of 40 KB, 12 KB over the wire, with every style in a single
-`<style>` block, plus three self-hosted font files and the resume PDF. No
+One `index.html` of 43 KB, about 12 KiB gzipped, with every style in a single
+inline `<style>` block, plus three self-hosted font files and the resume PDF. No
 framework, no bundler, no build step, no dependencies. GitHub Pages serves it
 straight off `main`, so pushing is deploying and every internal link stays
 relative.
@@ -21,42 +22,61 @@ to fetch, so it keeps working without maintenance or version churn.
 
 ## The design
 
-One column of type on warm paper white, with a dark mode on the system setting.
-Nothing on the page is a card: a project is a record, the way an entry sits in a
-table of contents. Its name and status sit on one line, then one italic sentence
-of what it is, then the measured facts, then the stack, then the link to the
-repository. Separation is hairline rules and space.
+Two columns. A pinned identity column on the left, and a stream of dated records
+on the right. Nothing on the page is a card: a project is a record, and every
+record is a grid whose first column is a date rail, so the years line up down one
+edge while the prose keeps a second edge of its own. The heading comes first in
+the source and the rail is placed beside it, which means a phone reads the name
+before the date without any reordering. Separation is 1px hairline rules, the
+rail's left edge, and space.
 
-Two faces, divided by who wrote the words. **Newsreader** sets everything a
-person wrote. **DM Mono** sets everything a machine measured: years, latencies,
-file sizes, test counts, versions, stack names, status. Monospace never sets
-prose and never appears as decoration for "technical".
+The page is built dark and carries a light mode on the system setting: `:root`
+holds the dark values and `@media (prefers-color-scheme: light)` overrides them.
+The dark ground is a cold neutral grey-black under a near-white ink; the light
+ground is a faintly warm off-white under a cold near-black. Secondary text is a
+second real ink mixed from the same hue rather than the primary at reduced
+opacity.
 
-Ink is near-black on a warm off-white. Secondary text is a second real ink mixed
-from the same hue rather than the primary at reduced opacity. One ink blue is
-spent only on link underlines, and the only moving part on the page is that
-underline: on hover it thickens from 1px to 2px, rises slightly, and takes the
-blue. Live status is a 6px filled square beside a mono word, drawn in CSS.
-Figures are tabular everywhere; body prose uses old-style figures.
+One amber is the only hue in the file, and it does exactly two jobs: it carries
+every link and it marks what is live. A link's underline rests in a banked step
+of that amber and, on hover, takes the full amber while thickening from 1px to
+2px and rising slightly. The signature interaction is the jump list in the pinned
+column: a 1px rule left of each link fills its reserved 44px slot and takes the
+ink on hover and on keyboard focus, so the word beside it never moves. Live
+status is a 6px filled square beside a mono word, drawn in CSS, the same mark and
+size wherever it appears.
+
+Two faces, divided by who wrote the words. **Source Serif 4** sets everything a
+person wrote. **Geist Mono** sets everything a machine measured, plus the labels
+a reader scans: years, latencies, file sizes, test counts, versions, stack names,
+status. The section labels are mono, uppercase, tracked, and set *smaller* than
+the body they introduce, so the record names and the sentences are the only
+things on the page carrying weight. Figures are tabular in the mono columns and
+proportional inside sentences, where a measured number stays in the serif at
+weight 600.
 
 The browser's own surfaces are themed from the same palette: selection, caret,
-scrollbar, focus ring and underline offset.
+scrollbar, focus ring and underline offset. There are rules for
+`prefers-reduced-motion` (both transitions removed), `forced-colors: active` (the
+CSS marks painted in system colours), and print, which redefines the tokens to
+black on white and prints each link's `href` after its text.
 
 ## Performance
 
 100 on all four Lighthouse categories, on both the desktop and mobile presets,
 measured against a server that gzips and sets a long cache lifetime, the way
 GitHub Pages does. Mobile first contentful paint 0.8s, largest contentful paint
-1.2s, total blocking time 0ms, cumulative layout shift 0. Total transfer 73 KiB.
+1.2s, speed index 0.8s, total blocking time 0ms, cumulative layout shift 0.
+Total transfer 55 KiB.
 
 What keeps it there:
 
-- Three latin-subset woff2 fonts, all same origin: Newsreader variable (weight
-  350-650, optical size instanced to 16, 30 KB), its italic as a single static
-  instance (14 KB), and DM Mono (15 KB). The roman and the mono are preloaded,
-  since they set the first screen; the italic loads on demand. Pinning the
-  optical size axis is most of the saving, since that axis carries the bulk of
-  Newsreader's variation data.
+- Three latin-subset woff2 fonts, all same origin: Source Serif 4 variable
+  (weight 400-650, optical size instanced to 16, 21 KB), its italic as a single
+  static instance (13 KB), and Geist Mono (6 KB). The roman and the mono are
+  preloaded, since they set the first screen; the italic loads on demand.
+  Pinning the optical size axis is most of the saving, since that axis carries
+  the bulk of the serif's variation data.
 - All CSS inline in one `<style>` block, so no stylesheet request stands between
   the document and the first paint.
 - One line of JavaScript, for the footer year, plus the deferred tag for Cairn,
@@ -108,14 +128,15 @@ Everything is in `index.html`, in source order:
 
 | Section | Contents |
 | :--- | :--- |
-| `<style>` | Palette and type tokens as custom properties, then layout |
-| Top bar | Name, section links, resume |
-| Intro | Name, role, three-line lede, contact links, availability, four figures |
-| Selected work | Five records: status, name, one sentence, measured facts, stack, links |
+| `<style>` | Palette, type and layout tokens as custom properties, dark on `:root` and light in a media query, then layout |
+| Top bar | Hidden on wide screens; below 980px it carries the name, three section links and the resume |
+| Identity column | Pinned: name, role, one jump link per section, resume, email, GitHub, LinkedIn, credential, availability |
+| Opening sentence | One sentence at the top of the stream, on the prose left edge |
+| Selected work | Five records: year and live status in the rail, name, one italic sentence, measured facts, stack, links |
 | Also shipped | Six short records, same anatomy without the facts |
-| Experience | Three roles, each with its dates and what it produced |
-| Tools | Categories against their stacks, label left, mono right |
-| Education | Degree and certificate, same record anatomy |
+| Experience | Three roles, each with its years in the rail and what it produced |
+| Tools | Six categories against their stacks, label on the rail edge, mono values right |
+| Education | A degree and a certificate, same record anatomy |
 | Contact | What I'm looking for, then email, resume, LinkedIn, GitHub |
 
 Adding a project is one record pointing at its repository. A repository that is
@@ -124,5 +145,11 @@ project earns.
 
 ## Fonts
 
-Newsreader and DM Mono, both under the SIL Open Font License 1.1. The notices
-and the full licence text are in [FONT-LICENSE.txt](FONT-LICENSE.txt).
+Source Serif 4 and Geist Mono, both under the SIL Open Font License 1.1. The
+notices and the full licence text are in [FONT-LICENSE.txt](FONT-LICENSE.txt).
+
+Source Serif 4 is licensed with the Reserved Font Name "Source", and clause 3 of
+that licence forbids a modified copy from carrying a reserved name. A subset is
+a modified copy, so the two serif files declare the family name `Portfolio
+Serif`, which is the name the stylesheet asks for. Geist Mono carries no
+reserved name, so its subset keeps its own.

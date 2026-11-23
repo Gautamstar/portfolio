@@ -15,79 +15,87 @@ repositories. Constraints: one static file, no build, no raster images, 100
 Lighthouse on four categories, two private repos that must carry no GitHub
 button.
 
-Build path: code-led, forced by PRODUCT.md rather than chosen. A comp-led build
-ships raster plates; this page is constrained to SVG and CSS decoration only,
-so the comp round cannot produce a shippable asset here. The user selected a
-rendered text comp of the first viewport during the direction round, and that
-comp is the critique reference.
+Build path: code-led, forced by the absence of image generation on this machine
+and by PRODUCT.md's ban on raster images. The direction round served layout
+wireframes and palette chips; the user locked The Standing Column, the pick
+card, over the dealt Measurement Sheet and a competitive Departures Board.
 
 ## Direction contract
 
-PINNED BY USER, and it is the standing exit taken deliberately: the category
-convention played straight at full fidelity, after four themed worlds were built
-and rejected (a volvelle, a pixel RPG, an illuminated manuscript, a sideways
-book). The named craft bar is simonwillison.net, overreacted.io and danluu.com.
-Light ground with a dark mode on the system setting, chosen from the use scene:
-a bright office on a laptop.
+THESIS: The identity never leaves the screen while the evidence scrolls past it
+in dated rows. A narrow pinned column on the left holds who this person is and
+the two things a screener wants from it, the resume and the email; the wide
+column on the right is a stream of records, each one opening with its date in
+its own rail. The page refuses the arrangement it replaces as much as the
+generated-portfolio vocabulary: no centred single column that puts the name
+above an empty screen, no stat row at the top, no cards of equal weight, no
+hero with two buttons, no eyebrow above a heading, no gradient, no glass, no
+pills, no emoji. The structural claim is evidence-led: across eleven engineer
+sites read live for this round, six of them new grads hired at Shopify, Meta,
+Lyft, TD and GitHub, the one shape they share is a dated rail at the left edge
+of every row, and the page adopts it.
 
-THESIS: This is a working engineer's own site. One column of type on warm paper
-white, where the only ornament is the information. A project is a record, not a
-card: its name, its status, its year, one sentence of what it is, then the
-measured facts, then the stack, then the link to the repository that proves it.
-The page refuses the entire generated-portfolio vocabulary, which is the thing
-the user rejected four times under four different costumes: no cards of equal
-weight, no hero with two buttons, no eyebrow labels, no gradient anything, no
-glass, no pills, no emoji, no indigo. Authority comes from density and
-precision, the way it does on a well-set page of a reference book.
+OWN-WORLD: The pinned register, unchanged and user-pinned. Two faces and no
+third. Source Serif 4 carries every sentence; Geist Mono carries the fields a reader
+scans down a column rather than reads: status, dates, stack names, proof links,
+and the section labels. The page is built dark and carries a light mode on the system
+setting: a cold neutral grey-black ground with two inks mixed from the same
+cold hue, and one amber as the only hue on the page, doing two jobs and no
+others, every link and every live mark. Nothing is boxed: structure is hairline rules at 1px, the rail's own
+left edge, and space. Live status is a 6px filled square beside a mono word,
+drawn in CSS, the same mark and the same size wherever it appears. The scale inverts
+against what this page shipped before: a section label is now smaller than the
+body it introduces, 12.5px tracked mono against 17px prose, so the record names
+and the sentences are the only things on the page carrying weight. A section
+label is the section's own name standing above a list of differently-named
+records, not an eyebrow on the heading beneath it; no label and heading ever
+share a block.
 
-OWN-WORLD: Two faces and no third. Newsreader, a text serif with a true italic
-and optical sizes, carries every sentence. DM Mono carries the fields a reader
-scans down a column rather than reads: status, years and dates, stack names, and
-the proof links. The split is by role, not by subject, so a measured figure
-inside a sentence stays in the serif; monospace never appears as a costume for
-"technical" and never sets prose. Nothing on the page is boxed:
-structure is hairline rules at 1px and the space between things. Ink is
-near-black on a warm off-white, with a single diluted ink for secondary text
-mixed from the same hue rather than grayed. One ink blue, spent only on link
-underlines. Live status is a 6px filled square beside a mono word, drawn in CSS,
-never a coloured pill. Numbers are tabular wherever they stand in a column, and
-the browser's own surfaces, selection, caret, scrollbar, focus ring and
-underline offset, are themed from the same palette.
+STORY: The visitor reads the name, the role and one sentence, and the resume and
+the email are a click away before they scroll at all. They scroll the right
+column and every row answers when, what, and what changed, with the repository
+link beside the figure it produced. They act from the pinned column, which is
+still there whatever row they stopped on.
 
-STORY: The visitor reads the name, the role and three lines, and knows within
-one screen that this person ships measured work. They believe it because every
-figure sits beside a link to the repository it came from. They act by taking the
-email or the resume, both of which are reachable from the first screen and from
-the nav at every scroll position.
+FIRST VIEWPORT: Two columns, flush left, nothing centred. The left column is
+roughly a quarter of the measure: the name at display size in the serif, the
+role beneath it held to about 34 characters a line, then one jump link per
+section in mono, then the resume on its own line, then email, GitHub and
+LinkedIn, then the credential and the availability line with its square. It is
+sticky from the top and falls back to scrolling with the page on any window
+under 700px tall, where it would otherwise clip. The right column opens on the
+page's one opening sentence, then the SELECTED WORK label and the first record: FitFileSize, its year and Live
+status standing in the left rail of its own row, the italic sentence of what it
+is, and the first measured lines under it. No figure row, no boxes, no accent.
 
-FIRST VIEWPORT: Flush left, no centring anywhere. The name at display size in
-Newsreader, the role on one line under it, then a paragraph of three lines held
-at 68 characters. Under that, a single line of four text links, underlined, with
-the resume first. Then a hairline rule, and under it the four record figures in
-mono as a two-by-two table, label left and figure set out to the right of its
-own column, so the figures stand in two aligned columns. Label before figure,
-not figure above label: the stacked figure is the hero-metric template the craft
-floor refuses, and these are records rather than headline numbers. No boxes and
-no accent. The first project record begins above the fold on a laptop, so
-the visitor sees the structure of the page without scrolling.
+FORM: The Standing Column, the pick card, locked by the user over the roll.
+Seed key ed1f5977, scope direction, mode persuade, assigned index 4 of seven
+grounded candidates; the assigned Measurement Sheet and four declined catalog
+challengers are the spent hand.
 
-RAISE: the two faces divide by role, not by subject. Mono carries status,
-dates, stack names and the proof links, the fields a reader scans down a column.
-A measured figure inside a sentence stays in the reading face, set at 600, and
-takes the sentence's own proportional figures; tabular spacing belongs to the
-mono columns, where digits have to line up.
-RAISE: a project's measured facts carry the unit and the before-and-after, not a
-rounded headline number.
-RAISE: no element on the page has a background colour except the page itself and
-the dark-mode ground; separation is carried by rules and space alone.
-RAISE: the secondary ink is mixed from the primary, so the page holds two real
-inks and no opacity-derived grey.
-RAISE: the browser's own chrome is themed, because a page that leaves the
-default focus ring and the default selection blue was assembled rather than
-built.
-
-FORM: The engineer's personal site, plain and typographic. Taken as the standing
-exit rather than dealt by the roll, against the three named reference sites.
+RAISE: the date rail is the page's alignment rule. One left edge for the labels
+and the rails, a second for every sentence, held from the top of the page to the
+bottom across records, roles, education and the tool table alike.
+RAISE: the section label is smaller than the body it introduces, which is the
+inversion six hired-engineer sites share and no template performs.
+RAISE: the resume is a first-class line of its own inside the pinned column,
+not the fourth of four equal links, because it is the one destination a
+thirty-second reader wants and it is now reachable at every scroll position.
+RAISE: the two faces divide by role, not by subject. A measured figure inside a
+sentence stays in the reading face at 600 and takes the sentence's own
+proportional figures; tabular spacing belongs to the mono columns.
+RAISE: no element has a background colour except the page itself and the dark
+ground; separation is rules, the rail, and space.
+RAISE: the signature interaction is the pinned column's jump list: a 1px rule
+left of each link grows from 20px to 44px and takes the ink on hover and on
+keyboard focus, the same gesture as the link underline that is the page's one
+authored moment, applied to the one element always on screen.
+RAISE: the browser's own chrome is themed, selection, caret, scrollbar, focus
+ring and underline offset, because a page that leaves the default focus ring
+was assembled rather than built.
+RAISE: the footer links the repository this page is built from, which is free
+proof for an engineering reader and costs one line.
 
 FINISH: unreviewed and undocumented is unfinished; this build ends with the
-finish review, the verdict, and DESIGN.md.
+finish review, the verdict, DESIGN.md, and every shipping raster carrying its
+provenance.

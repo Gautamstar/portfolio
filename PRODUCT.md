@@ -59,15 +59,23 @@ reached from the nav and from the contact section.
 
 Name: Gautam Singh. The register is pinned by the user: a working engineer's
 personal site, plain and typographic, at the craft level of simonwillison.net,
-overreacted.io and danluu.com. Light ground with a dark mode on the system
-setting. The site must not read as generated, which rules out the whole
+overreacted.io and danluu.com. The page is built dark on a cold neutral grey
+ground and carries a light mode on the system setting, chosen by the user on
+2026-11-23; one amber is the only hue, and it carries every link and marks what
+is live. The structure is a pinned identity column beside a stream of dated
+records, each row opening with its year in its own rail. The site must not read
+as generated, which rules out the whole
 vocabulary those pages share: a geometric sans at every size, equal-weight
 rounded cards with soft shadows, gradient text or borders, glassmorphism,
 saturated pill badges, emoji as icons, blurred background blobs, and an
 indigo-to-violet accent. Four themed treatments were built and rejected before
 this one, a volvelle, a pixel RPG, an illuminated manuscript and a sideways
 book, so a costume of any kind is out: the page earns its look from type,
-measure and real data rather than from a theme.
+measure and real data rather than from a theme. The section labels are set
+smaller than the body they introduce, and measured figures are written into
+sentences rather than stacked as a row of statistics, both read off eleven
+engineer sites studied on 2026-11-23, six of them belonging to new grads hired
+at Shopify, Meta, Lyft, TD and GitHub.
 
 Cairn, his own analytics service, is the page's tracker and that tag stays.
 The resume PDF stays linked from the nav and the contact section. Voice is plain

@@ -7,80 +7,97 @@
 <meta name="description" content="Gautam Singh, software engineer in Guelph, Ontario. Machine learning intern on an automated vehicle damage inspection system, Computer Science honours grad, and the builder of three apps live in production. Open to work.">
 <meta name="author" content="Gautam Singh">
 <meta name="robots" content="index, follow">
-<meta name="theme-color" content="#fcfbf8" media="(prefers-color-scheme: light)">
-<meta name="theme-color" content="#15140f" media="(prefers-color-scheme: dark)">
+<meta name="theme-color" content="#f7f6f3" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#141518" media="(prefers-color-scheme: dark)">
 <meta property="og:type" content="profile">
 <meta property="og:title" content="Gautam Singh &middot; Software Engineer">
 <meta property="og:description" content="Machine learning intern and Computer Science honours grad building data pipelines, ML systems, and full-stack products. Three apps live in production, one on its own domain. Open to work.">
 <meta name="twitter:card" content="summary">
-<link rel="preload" href="newsreader.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="preload" href="dm-mono.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='2' fill='%231b1915'/%3E%3Cpath d='M6 24V8h3.4l6.1 10.6V8h3V24h-3.3L9 13.3V24z' fill='%23fcfbf8'/%3E%3C/svg%3E">
+<link rel="preload" href="portfolio-serif.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="geist-mono.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='2' fill='%23141518'/%3E%3Cpath d='M6 24V8h3.4l6.1 10.6V8h3V24h-3.3L9 13.3V24z' fill='%23e9e7e2'/%3E%3C/svg%3E">
 
 <style>
   /* ── the two faces ─────────────────────────────────────────────────
-     Newsreader sets everything a person wrote. DM Mono sets everything a
-     machine measured: years, latencies, sizes, counts, versions, stack
+     Source Serif 4 sets everything a person wrote. Geist Mono sets everything
+     a machine measured: years, latencies, sizes, counts, versions, stack
      names, status. The split is the design, so neither face is ever used
      for the other's job. */
+  /* Source Serif 4 carries the Reserved Font Name "Source", which the Open Font
+     License forbids a modified copy from using, and a subset is a modified copy.
+     The files here are therefore named for this site. See FONT-LICENSE.txt. */
   @font-face {
-    font-family: "Newsreader";
-    src: url("newsreader.woff2") format("woff2");
-    font-weight: 350 650;
+    font-family: "Portfolio Serif";
+    src: url("portfolio-serif.woff2") format("woff2");
+    font-weight: 400 650;
     font-style: normal;
     font-display: swap;
   }
   @font-face {
-    font-family: "Newsreader";
+    font-family: "Portfolio Serif";
     /* The italic ships as one static instance, since the page sets italic at a
        single weight; it declares that weight rather than the roman's range. */
-    src: url("newsreader-italic.woff2") format("woff2");
+    src: url("portfolio-serif-italic.woff2") format("woff2");
     font-weight: 400;
     font-style: italic;
     font-display: swap;
   }
   @font-face {
-    font-family: "DM Mono";
-    src: url("dm-mono.woff2") format("woff2");
+    font-family: "Geist Mono";
+    src: url("geist-mono.woff2") format("woff2");
     font-weight: 400;
     font-style: normal;
     font-display: swap;
   }
 
   :root {
-    color-scheme: light dark;
+    color-scheme: dark light;
 
-    /* Two inks and a paper. The second ink is mixed from the first toward
-       the paper rather than set as a grey or an opacity, so secondary text
-       sits in the same hue family as the primary. */
-    --paper: #fcfbf8;
-    --ink: #1b1915;
-    --ink-2: #6b6356;
-    --rule: #d6d1c4;
-    --rule-soft: #e9e5db;
-    --link: #1a4a76;
-    --link-rule: #7496b4;
-    --live: #2c6642;
-    --sel: #dbe5ee;
+    /* The page is built dark and carries a light mode, not the other way
+       around. The ground is a cold neutral grey-black; both inks are mixed
+       from the same cold hue rather than set as greys or opacities, so the
+       secondary ink sits in the primary's family. One amber is the only
+       hue on the page, and it does two jobs and no others: it carries every
+       link and it marks what is live. */
+    --ground: #141518;
+    --ink: #e9e7e2;
+    --ink-2: #8e8a83;
+    --rule: #34353a;
+    --rule-soft: #2a2b31;
+    --link: #d2954a;
+    --link-rule: #8a6230;
+    --live: #d2954a;
+    --sel: #3a2e1c;
 
-    --serif: "Newsreader", "Iowan Old Style", "Palatino Linotype", Palatino, Georgia, serif;
-    --mono: "DM Mono", ui-monospace, "SF Mono", "Cascadia Mono", Menlo, Consolas, monospace;
+    --serif: "Portfolio Serif", "Iowan Old Style", "Palatino Linotype", Palatino, Georgia, serif;
+    --mono: "Geist Mono", ui-monospace, "SF Mono", "Cascadia Mono", Menlo, Consolas, monospace;
 
-    --col: 44rem;
-    --gap: clamp(52px, 7vw, 86px);
+    /* Two left edges run the page: the rail's and the prose's. --rail is
+       the first, --shell the measure the two columns share. */
+    --shell: 75.5rem;
+    --ident: clamp(15rem, 21vw, 19rem);
+    --rail: clamp(4.75rem, 6vw, 7rem);
+    --prose: 40rem;
+    --rail-gap: 28px;
+    --gap: clamp(46px, 5.4vw, 68px);
+    --head: clamp(38px, 4.2vw, 58px);
+    --pad: 26px;
   }
 
-  @media (prefers-color-scheme: dark) {
+  /* Light mode is the same page under office light: the ground warms a
+     little so it is not a glaring white, and the amber darkens to hold its
+     contrast against it. */
+  @media (prefers-color-scheme: light) {
     :root {
-      --paper: #15140f;
-      --ink: #eeebe3;
-      --ink-2: #a39b89;
-      --rule: #35322a;
-      --rule-soft: #26241e;
-      --link: #93b9d8;
-      --link-rule: #55697d;
-      --live: #74b68d;
-      --sel: #2a3a47;
+      --ground: #f7f6f3;
+      --ink: #17181b;
+      --ink-2: #6b6861;
+      --rule: #cfc9bc;
+      --rule-soft: #e1ddd2;
+      --link: #9a6418;
+      --link-rule: #b57c30;
+      --live: #9a6418;
+      --sel: #f0e2cb;
     }
   }
 
@@ -88,15 +105,15 @@
 
   html {
     scroll-behavior: smooth;
-    scroll-padding-top: 76px;
-    background: var(--paper);
+    scroll-padding-top: 28px;
+    background: var(--ground);
     /* the browser's own chrome belongs to the page too */
-    scrollbar-color: var(--rule) var(--paper);
+    scrollbar-color: var(--rule) var(--ground);
   }
 
   body {
     margin: 0;
-    background: var(--paper);
+    background: var(--ground);
     color: var(--ink);
     font-family: var(--serif);
     font-size: 18px;
@@ -108,10 +125,10 @@
 
   ::selection { background: var(--sel); color: var(--ink); }
   ::-webkit-scrollbar { width: 12px; height: 12px; }
-  ::-webkit-scrollbar-track { background: var(--paper); }
+  ::-webkit-scrollbar-track { background: var(--ground); }
   ::-webkit-scrollbar-thumb {
     background: var(--rule);
-    border: 3px solid var(--paper);
+    border: 3px solid var(--ground);
     border-radius: 6px;
   }
   ::-webkit-scrollbar-thumb:hover { background: var(--ink-2); }
@@ -123,12 +140,12 @@
   }
 
   .skip {
-    position: absolute;
+    position: fixed;
     left: -9999px;
     top: 0;
     z-index: 100;
     background: var(--ink);
-    color: var(--paper);
+    color: var(--ground);
     padding: 10px 16px;
     font-family: var(--mono);
     font-size: 13px;
@@ -138,7 +155,7 @@
 
   /* ── links ──────────────────────────────────────────────────────────
      A link looks like a link: the text colour stays, the underline carries
-     the one blue on the page. The authored moment is here, used on every
+     the one amber on the page. The authored moment is here, used on every
      link rather than scattered across sections: the rule thickens and
      closes the gap to the baseline, which is the only thing that moves on
      this page. */
@@ -163,16 +180,17 @@
      Opaque, never blurred: a bar pinned to the viewport may not re-sample
      what scrolls beneath it. */
   .topbar {
+    display: none;
     position: sticky;
     top: 0;
     z-index: 50;
-    background: var(--paper);
+    background: var(--ground);
     border-bottom: 1px solid var(--rule-soft);
   }
   .topbar-in {
-    max-width: var(--col);
+    max-width: var(--shell);
     margin: 0 auto;
-    padding: 15px 26px 13px;
+    padding: 15px var(--pad) 13px;
     display: flex;
     align-items: baseline;
     justify-content: space-between;
@@ -196,67 +214,167 @@
   .topbar nav a:hover { color: var(--link); }
   .topbar .cv { color: var(--ink); }
 
-  main {
-    max-width: var(--col);
+  /* ── the two columns ──────────────────────────────────
+     A narrow column that holds the identity and never scrolls away, and a
+     wide one that carries the evidence. The narrow column is a quarter of
+     the measure: enough for a name, a sentence and the two destinations a
+     screener wants, and no more. */
+  .shell {
+    max-width: var(--shell);
     margin: 0 auto;
-    padding: 0 26px;
+    padding: 0 var(--pad);
+    display: grid;
+    grid-template-columns: var(--ident) minmax(0, 1fr);
+    column-gap: clamp(40px, 5vw, 78px);
+    align-items: start;
   }
 
+  .ident {
+    position: sticky;
+    top: 0;
+    padding: var(--head) 0 30px;
+  }
+  /* Pinned only where the column is certainly shorter than the window; on a
+     short viewport it scrolls with the page rather than clipping itself. */
+  @media (max-height: 700px) {
+    .ident { position: static; }
+  }
+
+  .stream { padding-bottom: 6px; }
   section { padding-top: var(--gap); }
+  .opening {
+    margin: 0 0 0 calc(var(--rail) + var(--rail-gap));
+    padding: var(--head) 0 0;
+    font-size: 19px;
+    max-width: var(--prose);
+  }
+  .opening strong { font-weight: 600; }
+  .opening + section { padding-top: var(--gap); }
   section + section { border-top: 1px solid var(--rule-soft); }
 
   h1 {
     margin: 0 0 6px;
-    font-size: clamp(40px, 7.4vw, 59px);
+    font-size: clamp(38px, 3.4vw, 46px);
     font-weight: 450;
-    line-height: 1.04;
+    line-height: 1.06;
     letter-spacing: -0.022em;
-    text-wrap: balance;
   }
+  /* The scale is inverted on purpose: a section label is smaller than the
+     prose it introduces, so the record names and the sentences are the only
+     things on the page carrying weight. The label is the section's own name
+     standing over a list of differently-named records, never an eyebrow on
+     the heading beneath it. */
   h2 {
-    margin: 0 0 28px;
-    font-size: 30px;
-    font-weight: 500;
-    line-height: 1.16;
-    letter-spacing: -0.016em;
+    margin: 0 0 26px;
+    padding-bottom: 11px;
+    border-bottom: 1px solid var(--rule);
+    font-family: var(--mono);
+    font-size: 12.5px;
+    font-weight: 400;
+    line-height: 1.4;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--ink-2);
   }
   h3 {
     margin: 0;
-    font-size: 21px;
+    font-size: 20px;
     font-weight: 500;
-    line-height: 1.26;
+    line-height: 1.28;
     letter-spacing: -0.012em;
   }
   p { margin: 0 0 16px; max-width: 68ch; }
 
   /* ── the opening ────────────────────────────────────────────────── */
-  .intro { padding-top: clamp(44px, 7vw, 72px); }
+  /* inside the standing column: a name, a sentence, the way in, the way
+     to reach him, and nothing else */
+  .ident > .role { max-width: 34ch; }
   .role {
-    margin-bottom: 20px;
-    font-size: clamp(19px, 2.4vw, 21px);
+    margin-bottom: 18px;
+    font-size: 19px;
     color: var(--ink-2);
     letter-spacing: -0.008em;
   }
-  .lede { font-size: 19px; }
-  .lede strong { font-weight: 600; }
+
+  /* The jump list, and the page's signature interaction: a 1px rule left of
+     each link grows and takes the ink, the same gesture as the underline on
+     every other link, on the one element that is always on screen. */
+  .jump {
+    margin: 26px 0 0;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+    font-family: var(--mono);
+    font-size: 13px;
+    letter-spacing: 0.03em;
+    text-transform: uppercase;
+  }
+  .jump a {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    color: var(--ink-2);
+    text-decoration: none;
+  }
+  /* The rule occupies its full length from the start and scales inside that
+     slot, so the word beside it never moves. */
+  .jump a::before {
+    content: "";
+    flex: none;
+    width: 44px;
+    height: 1px;
+    background: var(--rule);
+    transform: scaleX(0.4545);
+    transform-origin: left center;
+    transition: transform 180ms cubic-bezier(0.2, 0.7, 0.3, 1),
+                background-color 180ms cubic-bezier(0.2, 0.7, 0.3, 1);
+  }
+  .jump a:hover,
+  .jump a:focus-visible { color: var(--ink); }
+  .jump a:hover::before,
+  .jump a:focus-visible::before { transform: scaleX(1); background: var(--ink); }
+
+  /* The resume is the one destination a thirty-second reader wants, so it
+     stands on its own line rather than fourth in a row of equal links. */
+  .cvline {
+    margin: 28px 0 0;
+    font-family: var(--mono);
+    font-size: 15px;
+    letter-spacing: -0.012em;
+  }
+  .cvline a { color: var(--ink); }
 
   .actions {
-    margin: 22px 0 0;
+    margin: 12px 0 0;
     display: flex;
     flex-wrap: wrap;
     align-items: baseline;
-    gap: 7px 24px;
+    gap: 5px 18px;
     font-family: var(--mono);
-    font-size: 14.5px;
+    font-size: 13.5px;
     letter-spacing: -0.012em;
-    max-width: none;
   }
-  .actions a { color: var(--ink); }
+  .actions a { color: var(--ink-2); }
+  .actions a:hover { color: var(--link); }
+
+  .status {
+    margin: 22px 0 0;
+    padding-top: 14px;
+    border-top: 1px solid var(--rule);
+  }
+  .cred {
+    margin: 0;
+    font-family: var(--mono);
+    font-size: 13px;
+    letter-spacing: -0.012em;
+    color: var(--ink-2);
+  }
 
   /* availability, written as a line of text with a mark beside it rather
      than set in a coloured pill */
   .open {
-    margin: 20px 0 0;
+    margin: 9px 0 0;
     display: flex;
     align-items: baseline;
     gap: 9px;
@@ -265,83 +383,57 @@
     line-height: 1.7;
     color: var(--ink-2);
     letter-spacing: -0.01em;
-    max-width: 62ch;
   }
   .open::before {
     content: "";
     flex: none;
-    width: 7px;
-    height: 7px;
+    width: 6px;
+    height: 6px;
     background: var(--live);
     transform: translateY(-1px);
   }
   .open b { font-weight: 400; color: var(--live); }
 
-  /* the record figures, set as data rather than as a row of metrics */
-  .facts {
-    margin: 30px 0 0;
-    padding: 13px 0 0;
-    border-top: 1px solid var(--rule);
-    display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 7px 34px;
-    font-family: var(--mono);
-    font-size: 13.5px;
-    letter-spacing: -0.012em;
-    color: var(--ink-2);
-  }
-  /* Label left, figure set out to the right of its own column, so the four
-     stand in two aligned columns instead of wrapping as a row with an orphan. */
-  .facts > div {
-    display: flex;
-    align-items: baseline;
-    justify-content: space-between;
-    gap: 14px;
-  }
-  .facts dt { margin: 0; }
-  .facts dd {
-    margin: 0;
-    color: var(--ink);
-    font-variant-numeric: tabular-nums lining-nums;
-  }
 
   /* ── a record ───────────────────────────────────────────────────────
      Not a card. The name and its status sit on one line with the status
      set out to the right edge of the column, the way an entry sits in a
      table of contents, and a rule separates one record from the next. */
-  .rec { padding-bottom: 46px; }
-  .rec + .rec {
-    padding-top: 42px;
-    border-top: 1px solid var(--rule-soft);
+  /* Every row is a grid: its dates stand in a rail at the left edge, and
+     the prose keeps one left edge of its own from the top of the page to
+     the bottom. The heading comes first in the source, so a narrow screen
+     reads name before date and no mono line ever sits above a heading. */
+  .rec, .post, .small {
+    display: grid;
+    grid-template-columns: var(--rail) minmax(0, 1fr);
+    column-gap: var(--rail-gap);
   }
-  .rec-head {
-    display: flex;
-    align-items: baseline;
-    justify-content: space-between;
-    gap: 10px 22px;
-    flex-wrap: wrap;
-    margin-bottom: 9px;
+  .rec > *, .post > *, .small > * { grid-column: 2; }
+  .rec > .rail, .post > .rail, .small > .rail {
+    grid-area: 1 / 1 / span 40 / span 1;
+    align-self: start;
   }
-  .meta {
-    margin: 0;
-    flex: none;
-    display: flex;
-    align-items: baseline;
-    gap: 14px;
+
+  .rail {
+    margin: 0.3em 0 0;
     font-family: var(--mono);
     font-size: 13px;
+    line-height: 1.6;
     letter-spacing: -0.01em;
     color: var(--ink-2);
     font-variant-numeric: tabular-nums lining-nums;
     max-width: none;
   }
-  .meta .on {
+  /* Two terms at one employer stand as two lines in the date column, the
+     way they do on a resume. */
+  .rail span { display: block; }
+  .rail .on {
     display: flex;
     align-items: baseline;
     gap: 7px;
     color: var(--live);
   }
-  .meta .on::before {
+  .rail .on::before {
     content: "";
     flex: none;
     width: 6px;
@@ -350,19 +442,25 @@
     transform: translateY(-1px);
   }
 
+  .rec { padding-bottom: 44px; }
+  .rec + .rec {
+    padding-top: 40px;
+    border-top: 1px solid var(--rule-soft);
+  }
+
   .gloss {
-    margin-bottom: 18px;
+    margin: 8px 0 18px;
     font-style: italic;
-    font-size: 19px;
-    color: var(--ink-2);
-    max-width: 58ch;
+    font-size: 18.5px;
+    color: var(--ink);
+    max-width: 38rem;
   }
 
   .pts {
     margin: 0 0 20px;
     padding: 0;
     list-style: none;
-    max-width: 68ch;
+    max-width: var(--prose);
   }
   .pts li {
     position: relative;
@@ -400,15 +498,14 @@
     max-width: 72ch;
   }
   .built i { font-style: normal; white-space: nowrap; }
-  .built i:not(:last-child)::after {
-    content: "\002f";
-    color: var(--rule);
-    margin-left: 0.5em;
-  }
+  /* The slash belongs to the name that follows it, so a line can never end on
+     a separator. */
   .built i + i::before {
-    content: " ";
+    content: "\002f\00a0";
+    color: var(--rule);
     white-space: normal;
     word-spacing: 0.35em;
+    margin-right: 0.15em;
   }
 
   .proofs {
@@ -432,52 +529,31 @@
   }
   .small:first-of-type { border-top: 0; padding-top: 0; }
   .small:last-of-type { padding-bottom: 0; }
-  .small h3 { font-size: 18.5px; }
-  .small .rec-head { margin-bottom: 7px; }
-  .small p { font-size: 16.5px; margin-bottom: 0; max-width: 68ch; }
+  .small h3 { font-size: 18px; }
+  .small > p:not(.rail) { font-size: 16.5px; margin: 7px 0 0; max-width: var(--prose); }
   .small .built { margin: 9px 0 0; }
 
   /* ── the chronicle ──────────────────────────────────────────────────
      Dates in mono, out to the right, so the column of text keeps one left
      edge from the top of the page to the bottom. */
-  .post { padding: 0 0 36px; }
+  .post { padding: 0 0 34px; }
   .post + .post {
-    padding-top: 34px;
+    padding-top: 32px;
     border-top: 1px solid var(--rule-soft);
   }
   .post:last-of-type { padding-bottom: 0; }
   .seat {
-    margin: 3px 0 15px;
+    margin: 3px 0 14px;
     font-size: 17px;
     color: var(--ink-2);
   }
-  .when {
-    margin: 0;
-    flex: none;
-    text-align: right;
-    font-family: var(--mono);
-    font-size: 13px;
-    line-height: 1.65;
-    letter-spacing: -0.01em;
-    color: var(--ink-2);
-    font-variant-numeric: tabular-nums lining-nums;
-    max-width: none;
-  }
-  /* The date column is this section's alignment rule, so a long employer line
-     wraps inside the head rather than pushing the dates out of the column. */
-  .post .rec-head { flex-wrap: nowrap; }
-  .post .rec-head > div { min-width: 0; }
-  .when span { display: block; white-space: nowrap; }
-  /* A role held over two separate terms carries the word, so the second range
-     cannot be read as the tail of the first. */
-  .when span + span::before { content: "and "; }
 
   /* ── the kit ────────────────────────────────────────────────────── */
   .kit { margin: 0; }
   .kit > div {
     display: grid;
-    grid-template-columns: 11.5rem minmax(0, 1fr);
-    gap: 4px 20px;
+    grid-template-columns: var(--rail) minmax(0, 1fr);
+    gap: 4px var(--rail-gap);
     padding: 13px 0;
     border-top: 1px solid var(--rule-soft);
   }
@@ -495,19 +571,19 @@
     letter-spacing: -0.012em;
   }
   .kit i { font-style: normal; white-space: nowrap; }
-  .kit i:not(:last-child)::after {
-    content: "\002f";
-    color: var(--rule);
-    margin-left: 0.5em;
-  }
   .kit i + i::before {
-    content: " ";
+    content: "\002f\00a0";
+    color: var(--rule);
     white-space: normal;
     word-spacing: 0.35em;
+    margin-right: 0.15em;
   }
 
   /* ── the close ──────────────────────────────────────────────────── */
-  .close .lede { max-width: 56ch; }
+  /* The close keeps the page's second left edge: its prose starts where
+     every record's prose starts, not at the label edge. */
+  .close > .lede, .close > .wire { margin-left: calc(var(--rail) + var(--rail-gap)); }
+  .close .lede { font-size: 18px; max-width: var(--prose); }
   .wire {
     margin: 26px 0 0;
     padding-top: 18px;
@@ -525,9 +601,9 @@
   .wire a { color: var(--ink); }
 
   footer {
-    max-width: var(--col);
+    max-width: var(--shell);
     margin: 0 auto;
-    padding: 54px 26px 64px;
+    padding: 52px var(--pad) 60px;
     display: flex;
     flex-wrap: wrap;
     gap: 8px 24px;
@@ -541,28 +617,44 @@
   }
   footer a { color: var(--ink-2); }
 
-  /* ── narrow ─────────────────────────────────────────────────────── */
+  /* narrow: one column. The standing column becomes the opening block, so
+     the running head carries the sections it can no longer hold. */
+  @media (max-width: 979px) {
+    html { scroll-padding-top: 74px; }
+    .topbar { display: block; }
+    .shell { display: block; }
+    .ident {
+      position: static;
+      padding: clamp(34px, 6vw, 52px) 0 0;
+      max-width: 44rem;
+    }
+    .ident p { max-width: 64ch; }
+    .ident h1 { font-size: clamp(38px, 7.4vw, 52px); }
+    .jump { display: none; }
+    .cvline { margin-top: 22px; }
+    .actions { gap: 7px 24px; }
+    .stream, footer { max-width: 44rem; }
+    .opening { padding-top: 26px; font-size: 18.5px; }
+  }
+
+  /* The rail folds back under the name, which is where the source order
+     already puts it: a mono line set above a heading is a kicker, and this
+     page does not use them. */
   @media (max-width: 680px) {
     body { font-size: 17.5px; }
-    .topbar-in, main, footer { padding-left: 20px; padding-right: 20px; }
+    .topbar-in, .shell, footer { padding-left: 20px; padding-right: 20px; }
+    .rec, .post, .small { display: block; }
+    .rail { margin: 4px 0 0; display: flex; flex-wrap: wrap; gap: 2px 16px; }
+    .rail span { display: inline; }
+    .gloss { margin-top: 12px; }
+    .small > p:not(.rail) { margin-top: 10px; }
+    .seat { margin-top: 4px; }
     .kit > div { grid-template-columns: minmax(0, 1fr); gap: 5px; }
-    .facts { grid-template-columns: minmax(0, 1fr); }
-    .rec-head { gap: 6px; }
-    /* The head stacks rather than pushing the name and its status to opposite
-       edges of a narrow column. The name stays first: a mono line set above a
-       heading is a kicker, and this page does not use them. */
-    .rec > .rec-head,
-    .small > .rec-head,
-    .post .rec-head { flex-direction: column; align-items: flex-start; }
-    .rec > .rec-head .meta,
-    .small > .rec-head .meta { margin-top: 3px; }
-    .when { text-align: left; margin-top: 3px; }
-    .when span { display: inline; }
-    .when span + span::before { content: " and "; white-space: normal; }
+    .close > .lede, .close > .wire, .opening { margin-left: 0; }
   }
   @media (max-width: 440px) {
-    /* The bar gives its whole width to the four destinations; the name is two
-       lines below it in the heading, and in the bar it would cost a link. */
+    /* The bar gives its whole width to the four destinations; the name is
+       two lines below it in the heading, and in the bar it would cost a link. */
     .topbar .wordmark { display: none; }
     .topbar nav { flex: 1; justify-content: space-between; gap: 16px; font-size: 12.5px; }
   }
@@ -571,17 +663,45 @@
      changes colour and nothing else. */
   @media (prefers-reduced-motion: reduce) {
     html { scroll-behavior: auto; }
-    a { transition: text-decoration-color 140ms linear; }
-    a:hover { text-decoration-thickness: 1px; text-underline-offset: 0.18em; }
+    a, .jump a::before { transition: none; }
+  }
+
+  @media (forced-colors: active) {
+    .pts li::before,
+    .rail .on::before,
+    .open::before,
+    .jump a::before { background: CanvasText; forced-color-adjust: none; }
+    .jump a:hover::before,
+    .jump a:focus-visible::before { background: Highlight; }
   }
 
   @media print {
-    .topbar, .skip { display: none; }
-    body { font-size: 11pt; background: #fff; color: #000; }
-    main, footer { max-width: none; padding: 0; }
+    :root {
+      --ground: #fff;
+      --ink: #000;
+      --ink-2: #444;
+      --rule: #999;
+      --rule-soft: #c4c4c4;
+      --link: #000;
+      --live: #000;
+    }
+    .topbar, .skip, .jump { display: none; }
+    html, body { background: #fff; }
+    body { font-size: 11pt; color: #000; }
+    .shell { display: block; max-width: none; padding: 0; }
+    .ident .open { display: none; }
+    footer { max-width: none; padding: 0; }
+    .rec, .post, .small { display: block; }
+    .rail { margin: 3px 0 0; }
     section { padding-top: 20pt; break-inside: avoid; }
     .rec, .post, .small { break-inside: avoid; }
     a { color: #000; text-decoration-color: #999; }
+    .proofs a::after, .wire a::after, .actions a::after, .cvline a::after {
+      content: " " attr(href);
+      font-size: 8.5pt;
+      color: #555;
+      word-break: break-all;
+    }
   }
 </style>
 
@@ -627,38 +747,42 @@
   </div>
 </header>
 
-<main id="main">
+<main id="main" class="shell">
 
-<!-- ── the opening ───────────────────────────────────────────────── -->
-
-<section id="top" class="intro">
+<div class="ident" id="top">
   <h1>Gautam Singh</h1>
   <p class="role">Software engineer. Backend, data and ML systems.</p>
 
-  <p class="lede">
-    Computer Science honours grad, currently a machine learning intern on an
-    automated vehicle damage inspection system. I build data pipelines, ML
-    systems, and the full-stack products on top of them. Three of my apps are
-    live in production, one on its own domain with a published
-    <strong>MCP server</strong> on npm.
-  </p>
+  <nav class="jump" aria-label="Sections">
+    <a href="#work">Selected work</a>
+    <a href="#more">Also shipped</a>
+    <a href="#experience">Experience</a>
+    <a href="#skills">Tools</a>
+    <a href="#education">Education</a>
+    <a href="#contact">Contact</a>
+  </nav>
+
+  <p class="cvline"><a class="cv" href="GautamSingh_Resume.pdf" download>Resume (PDF)</a></p>
 
   <p class="actions">
-    <a class="cv" href="GautamSingh_Resume.pdf" download>Resume (PDF)</a>
     <a href="mailto:gautamsingh2189@gmail.com">gautamsingh2189@gmail.com</a>
     <a href="https://github.com/Gautamstar" target="_blank" rel="noopener">GitHub</a>
     <a href="https://www.linkedin.com/in/gautam-singh-cs/" target="_blank" rel="noopener">LinkedIn</a>
   </p>
 
-  <p class="open"><span><b>Open to work.</b> Guelph, Ontario, and open to Kitchener-Waterloo, Toronto, or remote. I answer every message.</span></p>
+  <div class="status">
+    <p class="cred">BCS Honours, Conestoga, 2025</p>
+    <p class="open"><span><b>Open to work.</b> Guelph, Kitchener-Waterloo, Toronto, or remote.</span></p>
+  </div>
+</div>
 
-  <dl class="facts">
-    <div><dt>Live in production</dt><dd>3</dd></div>
-    <div><dt>Projects shipped</dt><dd>10</dd></div>
-    <div><dt>Co-op and internship terms</dt><dd>3</dd></div>
-    <div><dt>BCS Honours, Conestoga</dt><dd>2025</dd></div>
-  </dl>
-</section>
+<div class="stream">
+
+<p class="opening">
+  Machine learning intern on an automated vehicle damage inspection system.
+  Three of my apps are live in production, one on its own domain with a
+  published <strong>MCP server</strong> on npm.
+</p>
 
 <!-- ── selected work ────────────────────────────────────────────── -->
 
@@ -666,11 +790,9 @@
   <h2>Selected work</h2>
 
   <article class="rec">
-    <div class="rec-head">
-      <h3><a href="https://fitfilesize.com" target="_blank" rel="noopener">FitFileSize</a></h3>
-      <p class="meta"><span class="on">Live</span><span>2026</span></p>
-    </div>
-    <p class="gloss">Pick an upload limit and get a file that fits under it. PDFs and images, iPhone HEIC photos included, on its own domain with its own npm package.</p>
+    <h3><a href="https://fitfilesize.com" target="_blank" rel="noopener">FitFileSize</a></h3>
+    <p class="rail"><span class="on">Live</span><span>2026</span></p>
+    <p class="gloss">Pick an upload limit and get a file that fits under it. PDFs and images, iPhone HEIC photos included, on its own domain with its own npm package and Chrome extension.</p>
     <ul class="pts">
       <li>Shipped seven file formats, <strong>37 limit-specific landing pages</strong> and <strong>12 form presets</strong> for visa and exam uploads</li>
       <li>Each preset sets the size cap, the minimum size and the exact pixel dimensions the form demands</li>
@@ -678,8 +800,9 @@
       <li>Halved renders per run from four to two, with every output byte-identical</li>
       <li>Cut the wait after Compress from <strong>3.9 s to 0.3 s</strong> by starting the run while the visitor reads the size picker</li>
       <li>Resampled large photos in the browser, so a 10.7 MB upload goes up as <strong>1.5 MB</strong>, <strong>8.9 s instead of 57.7 s</strong></li>
-      <li>Verified browser resampling reaches the same answer in <strong>23 of 24</strong> photo-and-limit pairs</li>
+      <li>Verified browser resampling reaches the same answer in <strong>23 of 24</strong> photo-and-limit&nbsp;pairs</li>
       <li>Published an <strong>MCP server to npm</strong>, listed in the official Model Context Protocol registry</li>
+      <li>Published a <strong>Chrome extension</strong> on the Chrome Web Store that resizes photos to fit an upload limit</li>
       <li>Runs the API and two workers in Docker Compose on a VPS behind a Cloudflare Tunnel, React frontend on Vercel</li>
       <li>Added a watchdog that restarts any container the health endpoint reports stuck</li>
       <li>Autodeploy ships main <strong>within two minutes</strong> of a merge</li>
@@ -689,20 +812,19 @@
       <a href="https://fitfilesize.com" target="_blank" rel="noopener">Live app</a>
       <a href="https://github.com/Gautamstar/fitfilesize" target="_blank" rel="noopener">Code</a>
       <a href="https://www.npmjs.com/package/fitfilesize-mcp" target="_blank" rel="noopener">npm package</a>
+      <a href="https://chromewebstore.google.com/detail/fitfilesize-resize-photo/eggaonpddehbhjcmckfkgfalnhbkoppi" target="_blank" rel="noopener">Chrome extension</a>
     </p>
   </article>
 
   <article class="rec">
-    <div class="rec-head">
-      <h3><a href="https://d1fspum1n48e1s.cloudfront.net/" target="_blank" rel="noopener">Cairn</a></h3>
-      <p class="meta"><span class="on">Live</span><span>2026</span></p>
-    </div>
+    <h3><a href="https://d1fspum1n48e1s.cloudfront.net/" target="_blank" rel="noopener">Cairn</a></h3>
+    <p class="rail"><span class="on">Live</span><span>2026</span></p>
     <p class="gloss">Self-hosted web analytics. Rust on Lambda, no cookies, no IP addresses stored, and it is counting this page view.</p>
     <ul class="pts">
       <li>Ingest is <strong>one DynamoDB write per event</strong>, with bot filtering, user-agent classification and URL normalization as pure CPU</li>
       <li>Measured <strong>184 ms cold start, 5.1 ms warm and 30 MB peak</strong> on arm64 at 128 MB</li>
       <li>Hashed visitor IDs with keyed BLAKE3 under a daily salt, so IDs cannot be correlated across days</li>
-      <li>The persisted type has <strong>no IP field</strong>, and query strings are stripped before write</li>
+      <li>The persisted type has <strong>no IP field</strong>, and query strings are stripped before&nbsp;write</li>
       <li>Tracker is <strong>647 bytes gzipped</strong>, wraps pushState for SPA routes and writes nothing to the browser</li>
       <li>Recomputes whole days from raw rows rather than incrementing counters, so re-runs are idempotent</li>
       <li>Deployed the stack as <strong>41 Terraform resources</strong>, <strong>$0/month</strong> on perpetual free tiers</li>
@@ -715,10 +837,8 @@
   </article>
 
   <article class="rec">
-    <div class="rec-head">
-      <h3>Distill</h3>
-      <p class="meta"><span>2026</span></p>
-    </div>
+    <h3>Distill</h3>
+    <p class="rail"><span>2026</span></p>
     <p class="gloss">Invoices and receipts into structured data, with per-field confidence and a human review queue. Runs locally on one consumer GPU.</p>
     <ul class="pts">
       <li>Raised field accuracy from <strong>0.804 F1 to 96.7%</strong> by auto-accepting only trusted fields and routing the rest to a person</li>
@@ -734,10 +854,8 @@
   </article>
 
   <article class="rec">
-    <div class="rec-head">
-      <h3><a href="https://github.com/NolanMM/Capstones_Stock_Prediction" target="_blank" rel="noopener">The Almanac</a></h3>
-      <p class="meta"><span>Capstone</span><span>2025</span></p>
-    </div>
+    <h3><a href="https://github.com/NolanMM/Capstones_Stock_Prediction" target="_blank" rel="noopener">The Almanac</a></h3>
+    <p class="rail"><span>Capstone</span><span>2025</span></p>
     <p class="gloss">Cloud data pipeline and forecasting platform, built with my capstone team at Conestoga.</p>
     <ul class="pts">
       <li>Sped up data loads <strong>~35%</strong> by redesigning the storage layer of the Databricks and Azure Data Factory pipeline</li>
@@ -751,13 +869,11 @@
   </article>
 
   <article class="rec">
-    <div class="rec-head">
-      <h3><a href="https://eda-proj.vercel.app" target="_blank" rel="noopener">EDA Web Service</a></h3>
-      <p class="meta"><span class="on">Live</span><span>2026</span></p>
-    </div>
+    <h3><a href="https://eda-proj.vercel.app" target="_blank" rel="noopener">EDA Web Service</a></h3>
+    <p class="rail"><span class="on">Live</span><span>2026</span></p>
     <p class="gloss">Upload a CSV and get back type inference, quality flags, generated insights, and a chart for every column.</p>
     <ul class="pts">
-      <li>Cut the chart bundle from <strong>5.1 MB to 1.8 MB</strong> by trimming the Plotly build</li>
+      <li>Cut the chart bundle from <strong>5.1 MB to 1.8 MB</strong> by trimming the Plotly&nbsp;build</li>
       <li>Validated uploads to CSVs under <strong>20 MB</strong> with structured error responses</li>
       <li>Reports expire after five days through a background cleanup job</li>
     </ul>
@@ -774,55 +890,43 @@
   <h2>Also shipped</h2>
 
   <article class="small">
-    <div class="rec-head">
-      <h3><a href="https://github.com/actualbudget/actual/pull/8603" target="_blank" rel="noopener">actualbudget/actual</a></h3>
-      <p class="meta"><span>2026</span></p>
-    </div>
+    <h3><a href="https://github.com/actualbudget/actual/pull/8603" target="_blank" rel="noopener">actualbudget/actual</a></h3>
+    <p class="rail"><span>2026</span></p>
     <p>Fixed a silent failure in a local-first finance app with <strong>29k GitHub stars</strong>, where changing a password on an account with no password method set returned nothing. Reproduced the open issue, wrote the fix and took it through review.</p>
     <p class="built"><i>TypeScript</i><i>Open source</i><i>Code review</i></p>
   </article>
 
   <article class="small">
-    <div class="rec-head">
-      <h3><a href="https://github.com/Gautamstar/rag-financial-qa" target="_blank" rel="noopener">Financial Document Q&amp;A</a></h3>
-      <p class="meta"><span>2026</span></p>
-    </div>
+    <h3><a href="https://github.com/Gautamstar/rag-financial-qa" target="_blank" rel="noopener">Financial Document Q&amp;A</a></h3>
+    <p class="rail"><span>2026</span></p>
     <p>Answers plain-English questions over real SEC 10-K filings. BM25 and FAISS run together with reciprocal rank fusion, which beat either retriever alone, and a local Gemma model streams the answer. Retrieval scored with RAGAS.</p>
     <p class="built"><i>LangChain</i><i>FAISS</i><i>BM25</i><i>RAGAS</i><i>Docker</i></p>
   </article>
 
   <article class="small">
-    <div class="rec-head">
-      <h3><a href="https://github.com/Gautamstar/market-data-pipeline" target="_blank" rel="noopener">Equity Market Data Pipeline</a></h3>
-      <p class="meta"><span>2026</span></p>
-    </div>
-    <p>Daily pipeline pulling OHLCV data for S&amp;P 500 stocks and sector ETFs into PostgreSQL. dbt builds staging tables, technical indicators, and rolling performance metrics. Prefect runs it at market close and feeds a Streamlit dashboard.</p>
+    <h3><a href="https://github.com/Gautamstar/market-data-pipeline" target="_blank" rel="noopener">Equity Market Data Pipeline</a></h3>
+    <p class="rail"><span>2026</span></p>
+    <p>Daily pipeline pulling OHLCV data for S&amp;P 500 stocks and sector ETFs into PostgreSQL. dbt builds staging tables, technical indicators, and rolling performance metrics. Prefect runs it at market close and feeds a Streamlit&nbsp;dashboard.</p>
     <p class="built"><i>PostgreSQL</i><i>dbt</i><i>Prefect</i><i>Streamlit</i></p>
   </article>
 
   <article class="small">
-    <div class="rec-head">
-      <h3><a href="https://github.com/Gautamstar/rates-funding-risk" target="_blank" rel="noopener">Rates Funding Risk</a></h3>
-      <p class="meta"><span>2026</span></p>
-    </div>
+    <h3><a href="https://github.com/Gautamstar/rates-funding-risk" target="_blank" rel="noopener">Rates Funding Risk</a></h3>
+    <p class="rail"><span>2026</span></p>
     <p>Fixed-income interest-rate risk framework. Computes DV01 across the curve from 3M to 30Y, runs stress scenarios including parallel shifts, bear steepeners, and bull flatteners, and attributes PnL by maturity bucket.</p>
     <p class="built"><i>Python</i><i>Pandas</i><i>NumPy</i><i>Fixed income</i></p>
   </article>
 
   <article class="small">
-    <div class="rec-head">
-      <h3><a href="https://github.com/Gautamstar/StockPredictor" target="_blank" rel="noopener">AMD Stock Predictor</a></h3>
-      <p class="meta"><span>2026</span></p>
-    </div>
+    <h3><a href="https://github.com/Gautamstar/StockPredictor" target="_blank" rel="noopener">AMD Stock Predictor</a></h3>
+    <p class="rail"><span>2026</span></p>
     <p>Classifier predicting next-day price direction for AMD. Pulls history from Yahoo Finance, builds moving averages, RSI, and MACD with the ta library, and trains a HistGradientBoostingClassifier evaluated on a held-out test set.</p>
     <p class="built"><i>scikit-learn</i><i>Pandas</i><i>ta</i></p>
   </article>
 
   <article class="small">
-    <div class="rec-head">
-      <h3><a href="https://github.com/Gautamstar/data-structs" target="_blank" rel="noopener">Data Structs</a></h3>
-      <p class="meta"><span>2026</span></p>
-    </div>
+    <h3><a href="https://github.com/Gautamstar/data-structs" target="_blank" rel="noopener">Data Structs</a></h3>
+    <p class="rail"><span>2026</span></p>
     <p>Interactive lessons on the data structures and algorithms that come up in coding interviews, with visual examples that run in the browser. Built as a study tool.</p>
     <p class="built"><i>JavaScript</i><i>Algorithms</i></p>
   </article>
@@ -834,13 +938,9 @@
   <h2>Experience</h2>
 
   <article class="post">
-    <div class="rec-head">
-      <div>
-        <h3>Machine Learning Intern</h3>
-        <p class="seat">Sphere Global &middot;&nbsp;Remote</p>
-      </div>
-      <p class="when"><span>Aug 2026 to present</span></p>
-    </div>
+    <h3>Machine Learning Intern</h3>
+    <p class="seat">Sphere Global &middot;&nbsp;Remote &middot;&nbsp;Aug 2026 to present</p>
+    <p class="rail"><span>2026</span></p>
     <ul class="pts">
       <li>Built a generator that turns clean vehicle photos into YOLO-labeled damage with pixel-exact masks, <strong>~1 s per image</strong> on CPU</li>
       <li>Produced around <strong>12,000 labeled images</strong> on one CPU-only laptop, keeping customer photos on-site</li>
@@ -852,13 +952,9 @@
   </article>
 
   <article class="post">
-    <div class="rec-head">
-      <div>
-        <h3>ServiceNow Developer &amp; QA Specialist</h3>
-        <p class="seat">PAMT Consulting, now Ateko (a Bell Canada company) &middot;&nbsp;Remote</p>
-      </div>
-      <p class="when"><span>Sep 2024 to Dec 2024</span><span>Sep 2025 to Dec 2025</span></p>
-    </div>
+    <h3>ServiceNow Developer &amp; QA Specialist</h3>
+    <p class="seat">PAMT Consulting, now Ateko (a Bell Canada company) &middot;&nbsp;Remote &middot;&nbsp;Sep to Dec 2024 and Sep to Dec 2025</p>
+    <p class="rail"><span>2024</span><span>2025</span></p>
     <ul class="pts">
       <li>Cut new-hire onboarding handling time <strong>~30%</strong> by replacing a manual process with a Flow Designer workflow</li>
       <li>Wrote and ran test cases for workflows, integrations and APIs across dev, test and production</li>
@@ -868,15 +964,11 @@
   </article>
 
   <article class="post">
-    <div class="rec-head">
-      <div>
-        <h3>Lot Associate</h3>
-        <p class="seat">The Home Depot &middot;&nbsp;Guelph, Ontario</p>
-      </div>
-      <p class="when"><span>Jan 2022 to May 2022</span></p>
-    </div>
+    <h3>Lot Associate</h3>
+    <p class="seat">The Home Depot &middot;&nbsp;Guelph, Ontario &middot;&nbsp;Jan to May 2022</p>
+    <p class="rail"><span>2022</span></p>
     <ul class="pts">
-      <li>Kept the lot stocked and organized and helped customers in a high-traffic store</li>
+      <li>Kept the lot stocked and organized and helped customers in a high-traffic&nbsp;store</li>
     </ul>
   </article>
 </section>
@@ -891,11 +983,11 @@
       <dd><i>Python</i><i>SQL</i><i>Java</i><i>JavaScript</i><i>TypeScript</i><i>C++</i><i>C</i><i>Rust</i></dd>
     </div>
     <div>
-      <dt>Data engineering</dt>
+      <dt>Pipelines</dt>
       <dd><i>Azure Data Factory</i><i>Databricks</i><i>PySpark</i><i>Spark</i><i>Hadoop</i><i>dbt</i><i>Prefect</i><i>ETL/ELT</i></dd>
     </div>
     <div>
-      <dt>Machine learning</dt>
+      <dt>Machine&nbsp;learning</dt>
       <dd><i>PyTorch</i><i>TensorFlow</i><i>XGBoost</i><i>LightGBM</i><i>scikit-learn</i><i>OpenCV</i><i>YOLO</i><i>LangChain</i><i>FAISS</i><i>LSTM</i></dd>
     </div>
     <div>
@@ -903,11 +995,11 @@
       <dd><i>PostgreSQL</i><i>MySQL</i><i>MongoDB</i><i>Azure SQL</i><i>DynamoDB</i><i>Redis</i><i>Supabase</i></dd>
     </div>
     <div>
-      <dt>Web and tools</dt>
+      <dt>Web</dt>
       <dd><i>Django</i><i>FastAPI</i><i>React</i><i>Flutter</i><i>Streamlit</i><i>MCP</i><i>ServiceNow</i><i>JMeter</i></dd>
     </div>
     <div>
-      <dt>Cloud and DevOps</dt>
+      <dt>Cloud</dt>
       <dd><i>Azure</i><i>AWS</i><i>AWS Lambda</i><i>Terraform</i><i>Docker</i><i>CI/CD</i><i>Vercel</i><i>Cloudflare</i><i>Git</i><i>Grafana</i><i>Power BI</i><i>Tableau</i></dd>
     </div>
   </dl>
@@ -919,13 +1011,9 @@
   <h2>Education</h2>
 
   <article class="post">
-    <div class="rec-head">
-      <div>
-        <h3>Bachelor of Computer Science (Honours)</h3>
-        <p class="seat">Conestoga College</p>
-      </div>
-      <p class="when"><span>Sep 2020 to Dec 2025</span></p>
-    </div>
+    <h3>Bachelor of Computer Science (Honours)</h3>
+    <p class="seat">Conestoga College &middot;&nbsp;Sep 2020 to Dec 2025</p>
+    <p class="rail"><span>2020 to 2025</span></p>
     <ul class="pts">
       <li>Machine learning, data structures and algorithms, database design, cloud computing, and software engineering</li>
       <li>Capstone: The Almanac, a cloud pipeline and forecasting platform</li>
@@ -933,13 +1021,9 @@
   </article>
 
   <article class="post">
-    <div class="rec-head">
-      <div>
-        <h3>Google Advanced Data Analytics Professional Certificate</h3>
-        <p class="seat">Google &middot;&nbsp;Coursera</p>
-      </div>
-      <p class="when"><span>Jun 2026</span></p>
-    </div>
+    <h3>Google Advanced Data Analytics Professional Certificate</h3>
+    <p class="seat">Google &middot;&nbsp;Coursera &middot;&nbsp;Jun 2026</p>
+    <p class="rail"><span>2026</span></p>
     <ul class="pts">
       <li>Seven-course program covering statistics, Python, regression analysis, machine learning, and visualization</li>
     </ul>
@@ -963,10 +1047,13 @@
   </p>
 </section>
 
+</div>
+
 </main>
 
 <footer>
   <span>Gautam Singh, <span id="yr">2026</span></span>
+  <span class="made">One static file, no framework. <a href="https://github.com/Gautamstar/portfolio" target="_blank" rel="noopener">Source</a></span>
   <a href="#top">Back to top</a>
 </footer>
 

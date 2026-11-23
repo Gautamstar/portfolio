@@ -3,27 +3,34 @@ Fonts bundled with this site
 
 Three font files are redistributed here. All three are licensed under the SIL
 Open Font License, Version 1.1, whose full text follows. Each was subset to the
-characters this page uses and, where noted, instanced to a narrower range of an
-axis; both families are licensed without a Reserved Font Name, so the modified
-files keep the original family names.
+characters this page uses and instanced to a narrower range of an axis.
 
-  newsreader.woff2
-    Newsreader 16pt, latin subset, variable weight 350-650, optical size
+  portfolio-serif.woff2
+    Source Serif 4, latin subset, variable weight 400-650, optical size
     instanced to 16.
-    Copyright 2020 The Newsreader Project Authors.
-    https://github.com/productiontype/Newsreader
+    Copyright 2014 - 2021 Adobe Systems Incorporated (http://www.adobe.com/),
+    with Reserved Font Name "Source".
+    https://github.com/adobe-fonts/source-serif
 
-  newsreader-italic.woff2
-    Newsreader 16pt Italic, latin subset, static instance at weight 400,
-    optical size 16.
-    Copyright 2020 The Newsreader Project Authors.
-    https://github.com/productiontype/Newsreader
+  portfolio-serif-italic.woff2
+    Source Serif 4 Italic, latin subset, static instance at weight 400, optical
+    size 16.
+    Copyright and Reserved Font Name as above.
 
-  dm-mono.woff2
-    DM Mono Medium, latin subset.
-    Copyright 2020 The DM Mono Project Authors.
-    https://github.com/googlefonts/dm-mono
+  geist-mono.woff2
+    Geist Mono, latin subset, static instance at weight 400.
+    Copyright 2024 The Geist Project Authors.
+    https://github.com/vercel/geist-font
 
+  The serif files are renamed
+  ---------------------------
+  Source Serif 4 is licensed with the Reserved Font Name "Source". Clause 3 of
+  the licence forbids a Modified Version from using a Reserved Font Name, and a
+  subset is a Modified Version, so the two serif files here declare the family
+  name "Portfolio Serif" and that is the name the stylesheet asks for. The
+  copyright notice and the licence are carried unchanged inside each file.
+
+  Geist Mono carries no Reserved Font Name, so its subset keeps its own name.
 
 -------------------------------------------------------------------------------
 This Font Software is licensed under the SIL Open Font License, Version 1.1.
